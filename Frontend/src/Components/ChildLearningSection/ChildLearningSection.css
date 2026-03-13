@@ -1,0 +1,245 @@
+.ChildLearningSection{
+width:100%;
+padding:100px 0;
+background:#f7f7f7;
+font-family:'Baloo 2', cursive;
+}
+
+/* HEADING */
+
+.ChildLearningSection-heading{
+width:90%;
+max-width:1200px;
+margin:0 auto 60px auto;
+}
+
+.ChildLearningSection-topText{
+color:#ff2d55;
+letter-spacing:3px;
+font-size:12px;
+font-weight:600;
+margin-bottom:15px;
+}
+
+.ChildLearningSection-title{
+font-size:48px;
+font-weight:700;
+line-height:1.2;
+color:#111;
+}
+
+/* MAIN CONTAINER */
+
+.ChildLearningSection-container{
+width:90%;
+max-width:1200px;
+margin:auto;
+display:flex;
+align-items:flex-start;
+gap:60px;
+}
+
+/* IMAGE */
+
+.ChildLearningSection-imageWrapper{
+flex:1;
+position:relative;
+max-width:520px;
+}
+
+/* BLOB IMAGE */
+
+.ChildLearningSection-image{
+width:100%;
+height:auto;
+display:block;
+object-fit:cover;
+
+clip-path: polygon(
+50% 0%,
+75% 10%,
+95% 30%,
+100% 55%,
+90% 80%,
+65% 100%,
+35% 100%,
+10% 85%,
+0% 60%,
+5% 30%,
+25% 10%
+);
+}
+
+/* BADGE */
+
+.ChildLearningSection-badge{
+position:absolute;
+top:30px;
+left:-40px;
+background:#5c267c;
+width:130px;
+height:130px;
+border-radius:50%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+color:white;
+font-weight:700;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+z-index:2;
+}
+
+/* DOTTED CIRCLE */
+
+.ChildLearningSection-badge::after{
+content:"";
+position:absolute;
+width:110px;
+height:110px;
+border-radius:50%;
+border:2px dashed rgba(255,255,255,0.7);
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+}
+
+.ChildLearningSection-badge span{
+font-size:34px;
+}
+
+.ChildLearningSection-badge p{
+font-size:14px;
+}
+
+/* CONTENT */
+
+.ChildLearningSection-content{
+flex:1.2;
+}
+
+.ChildLearningSection-description{
+color:#666;
+line-height:1.7;
+margin-bottom:30px;
+max-width:520px;
+}
+
+/* SESSION */
+
+.ChildLearningSection-session h4{
+font-weight:700;
+margin-bottom:15px;
+}
+
+.ChildLearningSection-sessionTimes{
+display:flex;
+gap:40px;
+margin-bottom:40px;
+}
+
+.ChildLearningSection-sessionTimes h5{
+color:#ff2d55;
+margin-bottom:5px;
+}
+
+/* FEATURES */
+
+.ChildLearningSection-features{
+display:flex;
+gap:40px;
+}
+
+.ChildLearningSection-featureCard{
+flex:1;
+transition:all 0.35s ease;
+}
+
+.ChildLearningSection-featureCard:hover{
+transform:translateY(-8px);
+}
+
+.ChildLearningSection-icon{
+width:70px;
+height:70px;
+background:#ffe5ea;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#ff2d55;
+font-size:28px;
+margin-bottom:18px;
+transition:all 0.35s ease;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+.ChildLearningSection-featureCard:hover .ChildLearningSection-icon{
+background:#ff2d55;
+color:#fff;
+transform:scale(1.1) rotate(5deg);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.ChildLearningSection-featureCard h3{
+font-size:22px;
+margin-bottom:10px;
+}
+
+.ChildLearningSection-featureCard p{
+color:#666;
+line-height:1.6;
+}
+
+/* RESPONSIVE */
+
+@media (max-width:992px){
+
+.ChildLearningSection-container{
+flex-direction:column;
+}
+
+.ChildLearningSection-title{
+font-size:36px;
+}
+
+.ChildLearningSection-features{
+flex-direction:column;
+}
+
+}
+
+@media (max-width:600px){
+
+.ChildLearningSection{
+padding:70px 0;
+}
+
+.ChildLearningSection-sessionTimes{
+flex-direction:column;
+gap:20px;
+}
+
+.ChildLearningSection-badge{
+width:100px;
+height:100px;
+top:20px;
+left:0;
+}
+
+.ChildLearningSection-badge span{
+font-size:26px;
+}
+
+.ChildLearningSection-icon{
+width:60px;
+height:60px;
+font-size:24px;
+}
+
+.ChildLearningSection-title{
+font-size:30px;
+}
+
+}
