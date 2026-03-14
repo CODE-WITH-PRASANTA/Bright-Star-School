@@ -1,0 +1,158 @@
+.ChildAgeSlider{
+width:100%;
+padding:120px 20px;
+background:#f4f4f4;
+text-align:center;
+font-family:'Baloo 2',cursive;
+}
+
+/* heading */
+
+.ChildAgeSlider-heading h2{
+font-size:48px;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.ChildAgeSlider-heading p{
+color:#666;
+margin-bottom:70px;
+}
+
+.ChildAgeSlider-dot{
+width:12px;
+height:12px;
+background:#ff2d55;
+border-radius:50%;
+margin:0 auto 10px auto;
+}
+
+/* slider */
+
+.ChildAgeSlider-slider{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:80px;
+flex-wrap:wrap;
+}
+
+.ChildAgeSlider-card{
+position:relative;
+text-align:center;
+transition:0.4s;
+}
+
+.ChildAgeSlider-card img{
+width:220px;
+height:220px;
+border-radius:50%;
+object-fit:cover;
+}
+
+/* center card bigger */
+
+.ChildAgeSlider-card.active img{
+width:260px;
+height:260px;
+}
+
+/* info pill */
+
+.ChildAgeSlider-info{
+position:absolute;
+bottom:-25px;
+left:50%;
+transform:translateX(-50%);
+background:#fff;
+padding:14px 40px;
+border-radius:40px;
+border:2px solid #6b2fa5;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+}
+
+.ChildAgeSlider-info h3{
+margin:0;
+font-size:22px;
+}
+
+.ChildAgeSlider-info span{
+font-size:14px;
+color:#444;
+}
+
+/* pagination */
+
+.ChildAgeSlider-pagination{
+margin-top:80px;
+}
+
+.ChildAgeSlider-pagination span{
+display:inline-block;
+width:10px;
+height:10px;
+border-radius:50%;
+background:#ccc;
+margin:0 6px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.ChildAgeSlider-pagination span.active{
+background:#ff2d55;
+}
+
+/* responsive */
+
+@media(max-width:992px){
+
+.ChildAgeSlider-slider{
+gap:40px;
+}
+
+.ChildAgeSlider-card img{
+width:180px;
+height:180px;
+}
+
+.ChildAgeSlider-card.active img{
+width:220px;
+height:220px;
+}
+
+}
+
+@media(max-width:768px){
+
+.ChildAgeSlider-heading h2{
+font-size:34px;
+}
+
+.ChildAgeSlider-slider{
+flex-direction:column;
+gap:60px;
+}
+
+.ChildAgeSlider-card.active img{
+width:200px;
+height:200px;
+}
+
+}
+
+@media(max-width:480px){
+
+.ChildAgeSlider-heading h2{
+font-size:28px;
+}
+
+.ChildAgeSlider-card img{
+width:160px;
+height:160px;
+}
+
+.ChildAgeSlider-info{
+padding:12px 30px;
+}
+
+}
