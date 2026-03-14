@@ -1,0 +1,204 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=DM+Sans:wght@400;500&display=swap");
+
+.qt-section {
+  background: #eef3f7;
+  padding: clamp(48px, 6vw, 80px) 20px;
+  overflow: hidden;
+}
+
+.qt-container {
+  max-width: 1400px;
+  margin: auto;
+  width: 100%;
+}
+
+.qt-logo {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.purple {
+  background: #5d2c8a;
+}
+.pink {
+  background: #ff4d6d;
+}
+.yellow {
+  background: #ffc928;
+}
+
+.qt-header {
+  text-align: center;
+  margin-bottom: clamp(28px, 5vw, 50px);
+}
+
+.qt-header h2 {
+  font-family: "Baloo 2", cursive;
+  font-size: clamp(32px, 5vw, 60px);
+  margin-bottom: 8px;
+  line-height: 1.05;
+}
+
+.qt-header p {
+  color: #666;
+  font-size: clamp(14px, 1.3vw, 18px);
+}
+
+.qt-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 1.15fr) minmax(280px, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.qt-principal-card {
+  background: #fff;
+  border-radius: 28px;
+  padding: clamp(16px, 2vw, 24px);
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) 1fr;
+  gap: 18px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.08);
+}
+
+.qt-principal-img img {
+  width: 100%;
+  height: clamp(200px, 26vw, 260px);
+  object-fit: cover;
+  border-radius: 22px;
+  display: block;
+}
+
+.qt-principal-content h3 {
+  font-family: "Baloo 2", cursive;
+  font-size: clamp(24px, 3vw, 38px);
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.role {
+  color: #ff4d6d;
+  font-weight: 600;
+  font-size: clamp(13px, 1.1vw, 16px);
+}
+
+.line {
+  width: 90px;
+  height: 3px;
+  background: #ddd;
+  margin: 14px 0;
+}
+
+.phone {
+  font-size: clamp(14px, 1.2vw, 18px);
+  margin-bottom: 18px;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.socials button {
+  width: clamp(40px, 4vw, 52px);
+  height: clamp(40px, 4vw, 52px);
+  border-radius: 50%;
+  border: none;
+  background: #ffd54f;
+  font-size: clamp(16px, 1.6vw, 22px);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.socials button:hover {
+  transform: scale(1.08);
+}
+
+.qt-teachers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.teacher-card {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+  transition: 0.3s;
+}
+
+.teacher-card:hover {
+  transform: translateY(-6px);
+}
+
+.teacher-card img {
+  width: 100%;
+  height: clamp(240px, 30vw, 320px);
+  object-fit: cover;
+  display: block;
+}
+
+.teacher-name {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: #fff;
+  border-radius: 999px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.teacher-name h4 {
+  font-family: "Baloo 2", cursive;
+  font-size: clamp(16px, 1.4vw, 20px);
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .qt-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .qt-teachers {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .qt-section {
+    padding: 44px 14px;
+  }
+
+  .qt-principal-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .socials {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .qt-teachers {
+    grid-template-columns: 1fr;
+  }
+
+  .teacher-name {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
