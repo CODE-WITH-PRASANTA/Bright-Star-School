@@ -156,38 +156,210 @@ transition:0.3s;
 transform:scale(1.05);
 }
 
-/* RESPONSIVE */
+/* ===============================
+   DESKTOP 1201+
+================================ */
 
-@media (max-width:992px){
+@media (min-width:1201px){
 
 .admission-container{
-flex-direction:column;
+flex-direction:row;
 }
 
 .admission-images{
-width:320px;
-height:320px;
+width:420px;
+height:420px;
 }
 
 .admission-title{
-font-size:36px;
+font-size:48px;
 }
 
 }
 
-@media (max-width:600px){
+
+/* ===============================
+   LAPTOP 993–1200
+================================ */
+
+@media (min-width:993px) and (max-width:1200px){
+
+.admission-container{
+gap:40px;
+}
+
+.admission-images{
+width:360px;
+height:360px;
+}
+
+.admission-title{
+font-size:40px;
+}
+
+}
+
+
+/* ===============================
+   TABLET 601–992
+================================ */
+
+@media (min-width:601px) and (max-width:992px){
+
+.admission-container{
+flex-direction:column;
+text-align:center;
+}
+
+.admission-images{
+width:300px;
+height:300px;
+margin:auto;
+}
+
+.admission-img-top{
+top:-40px;
+left:0;
+transform:rotate(-6deg);
+}
+
+.admission-img-bottom{
+bottom:-53px;
+left:0;
+transform:rotate(6deg);
+}
+
+.admission-content{
+max-width:100%;
+}
+
+.admission-title{
+font-size:34px;
+}
+
+.admission-features{
+justify-content:center;
+gap:40px;
+}
+
+.admission-form-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+
+/* ===============================
+   LARGE MOBILE 480–600
+================================ */
+
+@media (min-width:480px) and (max-width:600px){
+
+.admission-container{
+flex-direction:column;
+text-align:center;
+}
+
+.admission-images{
+width:260px;
+height:260px;
+margin:auto;
+}
+
+.admission-img-top{
+top:-25px;
+left:0;
+transform:rotate(-5deg);
+}
+
+.admission-img-bottom{
+bottom:-40px;
+left:0;
+transform:rotate(5deg);
+}
+
+.admission-title{
+font-size:28px;
+}
+
+.admission-features{
+flex-direction:column;
+gap:8px;
+}
 
 .admission-form-grid{
 grid-template-columns:1fr;
 }
 
-.admission-features{
+.admission-bottom{
 flex-direction:column;
-gap:10px;
+}
+
+}
+
+
+/* ===============================
+   SMALL MOBILE 320–479
+================================ */
+
+@media (max-width:479px){
+
+.admission-section{
+padding:60px 5%;
+}
+
+.admission-container{
+flex-direction:column;
+text-align:center;
+gap:30px;
+}
+
+.admission-images{
+width:220px;
+height:220px;
+margin:auto;
+}
+
+.admission-img{
+border-width:4px;
+}
+
+.admission-img-top{
+top:-20px;
+left:0;
+transform:rotate(-4deg);
+}
+
+.admission-img-bottom{
+bottom:-30px;
+left:0;
+transform:rotate(4deg);
 }
 
 .admission-title{
-font-size:28px;
+font-size:24px;
+}
+
+.admission-features{
+flex-direction:column;
+gap:6px;
+}
+
+.admission-form{
+padding:20px;
+}
+
+.admission-form-grid{
+grid-template-columns:1fr;
+}
+
+.admission-bottom{
+flex-direction:column;
+gap:15px;
+}
+
+.admission-btn{
+width:100%;
 }
 
 }

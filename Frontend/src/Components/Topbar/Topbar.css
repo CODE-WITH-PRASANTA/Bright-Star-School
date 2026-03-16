@@ -7,7 +7,7 @@ width:100%;
 background:#2f9c9c;
 color:#140202;
 font-size:14px;
-position:relative;
+position:static;
 z-index:2000; /* higher than navbar */
 }
 .topbar-container{
@@ -376,9 +376,7 @@ display:none;
 
 @media (max-width:480px){
 
-.topbar-sidebar{
-width:100%;
-}
+
 
 .topbar-sidebarHeader h2{
 font-size:22px;
