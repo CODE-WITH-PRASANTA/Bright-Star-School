@@ -53,7 +53,7 @@ return (
 
 <div className="ChildAgeSlider-heading">
 
-<div className="ChildAgeSlider-dot"></div>
+{/* <div className="ChildAgeSlider-dot"></div> */}
 
 <h2>How Old Is Your Child?</h2>
 
