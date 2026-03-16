@@ -1,0 +1,363 @@
+/* ============================
+GLOBAL RESET
+============================ */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Segoe UI",sans-serif;
+}
+
+body{
+background:#f4f6fb;
+overflow-x:hidden;
+}
+
+/* ============================
+ADMIN LAYOUT
+============================ */
+
+.admin-layout{
+display:flex;
+width:100%;
+min-height:100vh;
+}
+
+/* ============================
+SIDEBAR
+============================ */
+
+.admin-sidebar{
+position:fixed;
+top:0;
+left:0;
+width:260px;
+height:100vh;
+background:#0b1a2e;
+color:white;
+transition:.3s ease;
+overflow-y:auto;
+z-index:300;
+box-shadow:2px 0 10px rgba(0,0,0,0.15);
+}
+
+/* collapse */
+
+.admin-sidebar.close{
+width:80px;
+}
+
+/* ============================
+SIDEBAR HEADER
+============================ */
+
+.sidebar-header{
+height:60px;
+display:flex;
+align-items:center;
+padding-left:20px;
+font-size:18px;
+font-weight:600;
+border-bottom:1px solid rgba(255,255,255,0.08);
+color:white;
+}
+
+/* ============================
+SIDEBAR MENU
+============================ */
+
+.sidebar-menu{
+padding:15px 10px;
+display:flex;
+flex-direction:column;
+gap:6px;
+}
+
+/* menu */
+
+.menu-link,
+.menu-btn{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px 16px;
+border-radius:8px;
+color:#cbd5e1;
+text-decoration:none;
+border:none;
+background:none;
+cursor:pointer;
+font-size:14px;
+transition:.2s ease;
+}
+
+/* hover */
+
+.menu-link:hover,
+.menu-btn:hover{
+background:#12243f;
+color:white;
+}
+
+/* active */
+
+.menu-link.active{
+background:#2563eb;
+color:white;
+box-shadow:0 2px 8px rgba(37,99,235,0.4);
+}
+
+/* icon */
+
+.menu-icon{
+font-size:16px;
+min-width:18px;
+}
+
+/* hide text collapsed */
+
+.admin-sidebar.close .menu-link span:last-child,
+.admin-sidebar.close .menu-btn span:last-child{
+display:none;
+}
+
+/* ============================
+SUBMENU
+============================ */
+
+.submenu{
+margin-left:30px;
+display:flex;
+flex-direction:column;
+gap:4px;
+margin-top:4px;
+}
+
+.submenu-link{
+font-size:13px;
+padding:6px 10px;
+border-radius:6px;
+color:#94a3b8;
+text-decoration:none;
+}
+
+.submenu-link:hover{
+background:#1e293b;
+color:white;
+}
+
+.submenu-link.active{
+background:#1e40af;
+color:white;
+}
+
+/* ============================
+CONTENT AREA
+============================ */
+
+.admin-content{
+flex:1;
+margin-left:260px;
+transition:.3s ease;
+}
+
+/* collapse */
+
+.admin-sidebar.close ~ .admin-content{
+margin-left:80px;
+}
+
+/* ============================
+NAVBAR
+============================ */
+
+.admin-navbar{
+position:fixed;
+top:0;
+left:260px;
+right:0;
+height:60px;
+background:white;
+border-bottom:1px solid #e5e7eb;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 25px;
+z-index:200;
+transition:.3s;
+box-shadow:0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* collapse navbar */
+
+.admin-sidebar.close ~ .admin-content .admin-navbar{
+left:80px;
+}
+
+/* ============================
+NAVBAR LEFT
+============================ */
+
+.navbar-left{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.menu-btn{
+font-size:20px;
+border:none;
+background:none;
+cursor:pointer;
+color:#374151d4;
+}
+
+.menu-btn:hover{
+color:#dbdfe623;
+}
+
+.navbar-title{
+font-size:18px;
+font-weight:600;
+color:#111827;
+}
+
+/* ============================
+PROFILE
+============================ */
+
+.navbar-profile{
+position:relative;
+}
+
+.profile-img{
+width:36px;
+height:36px;
+border-radius:50%;
+border:2px solid #e5e7eb;
+cursor:pointer;
+}
+
+/* dropdown */
+
+.profile-dropdown{
+position:absolute;
+right:0;
+top:45px;
+width:180px;
+background:white;
+border:1px solid #e5e7eb;
+border-radius:8px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+overflow:hidden;
+}
+
+.dropdown-item{
+display:flex;
+align-items:center;
+gap:10px;
+width:100%;
+padding:10px 15px;
+border:none;
+background:none;
+cursor:pointer;
+font-size:14px;
+}
+
+.dropdown-item:hover{
+background:#f3f4f6;
+}
+
+.logout{
+color:#ef4444;
+}
+
+/* ============================
+MAIN CONTENT
+============================ */
+
+.admin-main{
+margin-top:60px;
+padding:25px;
+background:#f4f6fb;
+min-height:calc(100vh - 60px);
+}
+
+/* ============================
+SCROLLBAR
+============================ */
+
+::-webkit-scrollbar{
+width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#cbd5e1;
+border-radius:10px;
+}
+
+/* ============================
+TABLET
+============================ */
+
+@media(max-width:1024px){
+
+.admin-sidebar{
+transform:translateX(-100%);
+}
+
+.admin-sidebar.open{
+transform:translateX(0);
+}
+
+.admin-content{
+margin-left:0;
+}
+
+.admin-navbar{
+left:0;
+}
+
+}
+
+/* ============================
+MOBILE
+============================ */
+
+@media(max-width:768px){
+
+.navbar-title{
+font-size:16px;
+}
+
+.admin-main{
+padding:20px;
+}
+
+}
+
+/* ============================
+SMALL MOBILE
+============================ */
+
+@media(max-width:480px){
+
+.admin-navbar{
+padding:0 15px;
+}
+
+.navbar-title{
+font-size:15px;
+}
+
+.admin-main{
+padding:15px;
+}
+
+.menu-link,
+.menu-btn{
+font-size:13px;
+}
+
+}
