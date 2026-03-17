@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ClubsSection.css";
 
 import mainImg from "../../assets/Main-img.webp";
@@ -33,9 +33,9 @@ const clubsRight = [
     title: "Afternoon Club",
     image: afternoonImg,
     points: [
-      "Help parents get to work on time",
-      "Near the station",
-      "Children settled and ready to work",
+      "After school fun activities",
+      "Safe environment",
+      "Creative learning",
     ],
   },
   {
@@ -43,15 +43,15 @@ const clubsRight = [
     image: musicImg,
     points: [
       "Creative rhythm sessions",
-      "Near the station",
-      "Children settled and ready to work",
+      "Instrument learning",
+      "Confidence building",
     ],
   },
 ];
 
-function ClubCard({ title, image, points }) {
+function ClubCard({ title, image, points, delay }) {
   return (
-    <div className="club-card">
+    <div className="club-card reveal" style={{ transitionDelay: delay }}>
       <div className="club-thumb-wrap">
         <img src={image} alt={title} className="club-thumb" />
       </div>
@@ -69,48 +69,61 @@ function ClubCard({ title, image, points }) {
 }
 
 export default function ClubsSection() {
-  return (
-    <section className="clubs-section">
-      <div className="clubs-bg-shape clubs-bg-shape-1"></div>
-      <div className="clubs-bg-shape clubs-bg-shape-2"></div>
 
-      <div className="clubs-header">
-        <span className="clubs-badge">Our Programs</span>
-        <h2>Available Clubs</h2>
-        <p>We are constantly expanding the range of services offered</p>
-      </div>
+useEffect(() => {
+const elements = document.querySelectorAll(".reveal");
 
-      <div className="clubs-layout">
-        <div className="clubs-column">
-          {clubsLeft.map((club, i) => (
-            <ClubCard key={i} {...club} />
-          ))}
-        </div>
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach((entry)=>{
+if(entry.isIntersecting){
+entry.target.classList.add("active");
+}
+});
+},{threshold:0.2});
 
-        <div className="clubs-center">
-          <div className="orbit orbit-1">
-            <span className="orbit-dot"></span>
-          </div>
+elements.forEach(el=>observer.observe(el));
+},[]);
 
-          <div className="orbit orbit-2">
-            <span className="orbit-dot"></span>
-          </div>
+return (
+<section className="clubs-section">
 
-          <div className="orbit orbit-3">
-            <span className="orbit-dot"></span>
-          </div>
+<div className="clubs-bg-shape clubs-bg-shape-1"></div>
+<div className="clubs-bg-shape clubs-bg-shape-2"></div>
 
-          <div className="center-image-wrap">
-            <img src={mainImg} alt="Happy child" className="center-image" />
-          </div>
-        </div>
+<div className="clubs-header reveal">
+<span className="clubs-badge">Our Programs</span>
+<h2>Available Clubs</h2>
+<p>We are constantly expanding the range of services offered</p>
+</div>
 
-        <div className="clubs-column">
-          {clubsRight.map((club, i) => (
-            <ClubCard key={i} {...club} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
+<div className="clubs-layout">
+
+<div className="clubs-column">
+{clubsLeft.map((club, i) => (
+<ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
+))}
+</div>
+
+<div className="clubs-center reveal">
+
+<div className="orbit orbit-1"><span className="orbit-dot"></span></div>
+<div className="orbit orbit-2"><span className="orbit-dot"></span></div>
+<div className="orbit orbit-3"><span className="orbit-dot"></span></div>
+
+<div className="center-image-wrap">
+<img src={mainImg} alt="Happy child" className="center-image" />
+</div>
+
+</div>
+
+<div className="clubs-column">
+{clubsRight.map((club, i) => (
+<ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
+))}
+</div>
+
+</div>
+
+</section>
+);
 }

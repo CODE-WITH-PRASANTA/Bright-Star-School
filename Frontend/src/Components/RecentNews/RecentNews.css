@@ -1,11 +1,40 @@
-/* SECTION */
+/* ========================
+RESET
+======================== */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+/* ========================
+SCROLL REVEAL
+======================== */
+
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:all 1s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+/* ========================
+SECTION
+======================== */
 
 .recentnews-section{
 padding:30px 8%;
 background:#f5f5f5;
 }
 
-/* HEADER */
+/* ========================
+HEADER
+======================== */
 
 .recentnews-header{
 text-align:center;
@@ -23,15 +52,20 @@ color:#555;
 font-size:16px;
 }
 
-/* GRID */
+/* ========================
+GRID
+======================== */
 
 .recentnews-container{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:35px;
+align-items:stretch;
 }
 
-/* CARD */
+/* ========================
+CARD
+======================== */
 
 .recentnews-card{
 background:white;
@@ -41,9 +75,14 @@ position:relative;
 transition:0.3s;
 border-left:3px solid #f7c600;
 border-right:3px solid #f7c600;
+display:flex;
+flex-direction:column;
+height:100%;
 }
 
-/* IMAGE */
+/* ========================
+IMAGE
+======================== */
 
 .recentnews-image-wrapper{
 overflow:hidden;
@@ -56,19 +95,22 @@ display:block;
 transition:0.5s;
 }
 
-/* IMAGE ZOOM */
+/* zoom */
 
 .recentnews-card:hover .recentnews-image-wrapper img{
 transform:scale(1.12);
 }
 
-/* CONTENT */
+/* ========================
+CONTENT
+======================== */
 
 .recentnews-content{
 padding:25px;
+flex:1;
+display:flex;
+flex-direction:column;
 }
-
-/* DATE */
 
 .recentnews-date{
 display:flex;
@@ -80,17 +122,15 @@ margin-bottom:15px;
 transition:0.3s;
 }
 
-/* HEADING */
-
 .recentnews-heading{
 font-size:22px;
 font-weight:700;
 margin-bottom:15px;
 transition:0.3s;
 cursor:pointer;
+line-height:1.35;
+min-height:60px;
 }
-
-/* DESCRIPTION */
 
 .recentnews-desc{
 color:#555;
@@ -98,7 +138,9 @@ line-height:1.6;
 font-size:15px;
 }
 
-/* READ MORE BUTTON */
+/* ========================
+READ MORE
+======================== */
 
 .recentnews-readmore{
 background:#f7c600;
@@ -108,13 +150,17 @@ font-weight:600;
 border-radius:0 0 30px 30px;
 cursor:pointer;
 transition:0.3s;
+margin-top:auto;
 }
 
 .recentnews-readmore:hover{
-    background-color: purple;
-    color: white;
+background-color:purple;
+color:white;
 }
-/* HOVER EFFECTS */
+
+/* ========================
+HOVER
+======================== */
 
 .recentnews-card:hover .recentnews-heading{
 color:#ff1744;
@@ -124,8 +170,19 @@ color:#ff1744;
 color:#ff1744;
 }
 
-/* RESPONSIVE */
+/* ========================
+MOBILE PAGINATION
+======================== */
 
+.recentnews-pagination{
+display:none;
+}
+
+/* ========================
+RESPONSIVE
+======================== */
+
+/* tablet */
 @media(max-width:1024px){
 
 .recentnews-container{
@@ -138,18 +195,90 @@ font-size:36px;
 
 }
 
+/* mobile */
 @media(max-width:768px){
 
-.recentnews-container{
-grid-template-columns:1fr;
+.recentnews-section{
+padding:70px 6%;
 }
 
 .recentnews-title{
 font-size:30px;
 }
 
-.recentnews-section{
-padding:70px 6%;
+.recentnews-container{
+display:flex;
+gap:20px;
+overflow-x:auto;
+scroll-snap-type:x mandatory;
+padding-bottom:10px;
+scrollbar-width:none;
+-ms-overflow-style:none;
+}
+
+.recentnews-container::-webkit-scrollbar{
+display:none;
+}
+
+.recentnews-card{
+min-width:85%;
+max-width:85%;
+scroll-snap-align:center;
+flex:0 0 auto;
+}
+
+.recentnews-heading{
+min-height:auto;
+}
+
+.recentnews-pagination{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:22px;
+}
+
+.recentnews-dot{
+width:10px;
+height:10px;
+border:none;
+border-radius:50%;
+background:#d2d2d2;
+cursor:pointer;
+transition:0.3s;
+}
+
+.recentnews-dot.active{
+width:28px;
+border-radius:999px;
+background:#ff1744;
+}
+
+}
+
+/* small mobile */
+@media(max-width:480px){
+
+.recentnews-title{
+font-size:26px;
+}
+
+.recentnews-content{
+padding:20px;
+}
+
+.recentnews-desc{
+font-size:14px;
+}
+
+.recentnews-card{
+min-width:92%;
+max-width:92%;
+}
+
+.recentnews-readmore{
+padding:16px;
 }
 
 }
