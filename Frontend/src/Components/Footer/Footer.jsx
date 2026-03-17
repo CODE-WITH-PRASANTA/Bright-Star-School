@@ -1,7 +1,7 @@
 import React from "react";
 import "./Footer.css";
 
-import logo from "../../assets/BSM-removebg.png";
+import logo from "../../assets/LOGOBRIGHTSTAR.png";
 
 import {
   FaFacebookF,
@@ -10,9 +10,8 @@ import {
   FaYoutube,
   FaPhoneAlt,
   FaMapMarkerAlt,
+  FaArrowUp,
 } from "react-icons/fa";
-
-import { FaArrowUp } from "react-icons/fa";
 
 const Footer = () => {
   const scrollTop = () => {
@@ -24,6 +23,9 @@ const Footer = () => {
 
   return (
     <footer className="footer">
+      <div className="footer-glow footer-glow-1"></div>
+      <div className="footer-glow footer-glow-2"></div>
+
       <div className="footer-container">
         {/* LEFT SECTION */}
         <div className="footer-about">
@@ -33,53 +35,53 @@ const Footer = () => {
 
           <p>
             We are constantly expanding the range of services offered, taking
-            care of children of all ages.
+            care of children of all ages. Bright Stars Montessori provides a
+            warm, safe, and inspiring environment for every child.
           </p>
         </div>
 
         {/* MAIN CAMPUS */}
-
-        <div className="footer-campus">
+        <div className="footer-campus footer-card">
           <h3>Main Campus</h3>
-
           <div className="footer-line"></div>
 
           <p>
             <FaMapMarkerAlt className="footer-icon" />
-            Plot No. 657/1094, Haridaspur <br />
-            Naharakanta, Bhubaneswar <br />
-            Odisha - 752101, India
+            <span>
+              Plot No. 657/1094, Haridaspur <br />
+              Naharakanta, Bhubaneswar <br />
+              Odisha - 752101, India
+            </span>
           </p>
 
           <p className="footer-phone">
             <FaPhoneAlt className="footer-icon" />
-            7016201096
+            <span>7016201096</span>
           </p>
         </div>
 
         {/* NATIONAL CAMPUS */}
-
-        <div className="footer-campus">
+        <div className="footer-campus footer-card">
           <h3>National Campus</h3>
-
           <div className="footer-line"></div>
 
           <p>
             <FaMapMarkerAlt className="footer-icon" />
-            Plot No. 657/1094, Haridaspur <br />
-            Naharakanta, Bhubaneswar <br />
-            Odisha - 752101, India
+            <span>
+              Plot No. 657/1094, Haridaspur <br />
+              Naharakanta, Bhubaneswar <br />
+              Odisha - 752101, India
+            </span>
           </p>
 
           <p className="footer-phone">
             <FaPhoneAlt className="footer-icon" />
-            7016201096
+            <span>7016201096</span>
           </p>
         </div>
       </div>
 
       {/* BOTTOM BAR */}
-
       <div className="footer-bottom">
         <p className="footer-copy">
           © 2026 <strong>Bright Stars Montessori - Bhubaneswar</strong>. All
@@ -106,11 +108,9 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* SCROLL BUTTON */}
-
-      {/* <div className="footer-scrollTop" onClick={scrollTop}>
-        <FaArrowUp/>
-      </div> */}
+      <div className="footer-scrollTop" onClick={scrollTop}>
+        <FaArrowUp />
+      </div>
     </footer>
   );
 };

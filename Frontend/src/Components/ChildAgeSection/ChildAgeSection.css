@@ -3,7 +3,21 @@ width:100%;
 padding:120px 20px;
 background:#f4f4f4;
 text-align:center;
-font-family:'Baloo 2',cursive;
+font-family:'Baloo 2', cursive;
+overflow:hidden;
+}
+
+/* reveal animation */
+
+.reveal{
+opacity:0;
+transform:translateY(50px);
+transition:all 1s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
 }
 
 /* heading */
@@ -12,20 +26,16 @@ font-family:'Baloo 2',cursive;
 font-size:48px;
 font-weight:700;
 margin-bottom:10px;
+line-height:1.1;
+color:#111;
 }
 
 .ChildAgeSlider-heading p{
 color:#666;
 margin-bottom:70px;
+font-size:16px;
+line-height:1.5;
 }
-
-/* .ChildAgeSlider-dot{
-width:12px;
-height:12px;
-background:#ff2d55;
-border-radius:50%;
-margin:0 auto 10px auto;
-} */
 
 /* slider */
 
@@ -40,7 +50,7 @@ flex-wrap:wrap;
 .ChildAgeSlider-card{
 position:relative;
 text-align:center;
-transition:0.4s;
+transition:0.4s ease;
 }
 
 .ChildAgeSlider-card img{
@@ -48,6 +58,8 @@ width:220px;
 height:220px;
 border-radius:50%;
 object-fit:cover;
+display:block;
+margin:0 auto;
 }
 
 /* center card bigger */
@@ -69,11 +81,14 @@ padding:14px 40px;
 border-radius:40px;
 border:2px solid #6b2fa5;
 box-shadow:0 5px 20px rgba(0,0,0,0.1);
+white-space:nowrap;
 }
 
 .ChildAgeSlider-info h3{
 margin:0;
 font-size:22px;
+line-height:1.1;
+color:#111;
 }
 
 .ChildAgeSlider-info span{
@@ -85,26 +100,46 @@ color:#444;
 
 .ChildAgeSlider-pagination{
 margin-top:80px;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+width:100%;
 }
 
-.ChildAgeSlider-pagination span{
-display:inline-block;
+.ChildAgeSlider-pageDot{
+appearance:none;
+-webkit-appearance:none;
+-moz-appearance:none;
+border:none;
+outline:none;
+box-shadow:none;
+padding:0;
+margin:0;
 width:10px;
 height:10px;
+background:#cfcfcf;
 border-radius:50%;
-background:#ccc;
-margin:0 6px;
 cursor:pointer;
-transition:0.3s;
+transition:all 0.3s ease;
+flex:0 0 auto;
+display:inline-block;
 }
 
-.ChildAgeSlider-pagination span.active{
+.ChildAgeSlider-pageDot.active{
 background:#ff2d55;
+width:28px;
+height:10px;
+border-radius:999px;
 }
 
 /* responsive */
 
 @media(max-width:992px){
+
+.ChildAgeSlider{
+padding:100px 20px;
+}
 
 .ChildAgeSlider-slider{
 gap:40px;
@@ -120,12 +155,29 @@ width:220px;
 height:220px;
 }
 
+.ChildAgeSlider-info{
+padding:12px 28px;
+}
+
+.ChildAgeSlider-info h3{
+font-size:20px;
+}
+
 }
 
 @media(max-width:768px){
 
+.ChildAgeSlider{
+padding:80px 16px;
+}
+
 .ChildAgeSlider-heading h2{
 font-size:34px;
+}
+
+.ChildAgeSlider-heading p{
+margin-bottom:50px;
+font-size:15px;
 }
 
 .ChildAgeSlider-slider{
@@ -133,17 +185,72 @@ flex-direction:column;
 gap:60px;
 }
 
+.ChildAgeSlider-card img{
+width:170px;
+height:170px;
+}
+
 .ChildAgeSlider-card.active img{
 width:200px;
 height:200px;
+}
+
+.ChildAgeSlider-info{
+padding:12px 26px;
+bottom:-20px;
+}
+
+.ChildAgeSlider-info h3{
+font-size:18px;
+}
+
+.ChildAgeSlider-info span{
+font-size:13px;
+}
+
+/* mobile horizontal pagination */
+
+.ChildAgeSlider-pagination{
+margin-top:52px;
+gap:8px;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+.ChildAgeSlider-pageDot{
+width:9px;
+height:9px;
+background:#cfcfcf;
+border-radius:50%;
+}
+
+.ChildAgeSlider-pageDot.active{
+width:26px;
+height:9px;
+background:#ff2d55;
+border-radius:999px;
 }
 
 }
 
 @media(max-width:480px){
 
+.ChildAgeSlider{
+padding:70px 12px;
+}
+
 .ChildAgeSlider-heading h2{
 font-size:28px;
+}
+
+.ChildAgeSlider-heading p{
+font-size:14px;
+margin-bottom:42px;
+}
+
+.ChildAgeSlider-slider{
+gap:48px;
 }
 
 .ChildAgeSlider-card img{
@@ -151,8 +258,41 @@ width:160px;
 height:160px;
 }
 
+.ChildAgeSlider-card.active img{
+width:190px;
+height:190px;
+}
+
 .ChildAgeSlider-info{
-padding:12px 30px;
+padding:10px 22px;
+max-width:90%;
+white-space:normal;
+}
+
+.ChildAgeSlider-info h3{
+font-size:17px;
+}
+
+.ChildAgeSlider-info span{
+font-size:12px;
+}
+
+.ChildAgeSlider-pagination{
+margin-top:44px;
+gap:7px;
+flex-direction:row;
+justify-content:center;
+align-items:center;
+}
+
+.ChildAgeSlider-pageDot{
+width:8px;
+height:8px;
+}
+
+.ChildAgeSlider-pageDot.active{
+width:24px;
+height:8px;
 }
 
 }

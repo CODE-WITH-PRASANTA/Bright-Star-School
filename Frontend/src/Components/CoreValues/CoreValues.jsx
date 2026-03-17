@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CoreValues.css";
 
 const values = [
@@ -33,10 +33,70 @@ const values = [
 ];
 
 const CoreValues = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const gridRef = useRef(null);
+
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleScroll = () => {
+    if (!gridRef.current || window.innerWidth > 640) return;
+
+    const container = gridRef.current;
+    const cards = container.querySelectorAll(".core-card");
+    if (!cards.length) return;
+
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+    const containerCenter = container.scrollLeft + container.offsetWidth / 2;
+
+    cards.forEach((card, index) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const distance = Math.abs(containerCenter - cardCenter);
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    setActiveIndex(closestIndex);
+  };
+
+  const scrollToCard = (index) => {
+    if (!gridRef.current) return;
+    const cards = gridRef.current.querySelectorAll(".core-card");
+    if (!cards[index]) return;
+
+    cards[index].scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+
+    setActiveIndex(index);
+  };
+
   return (
     <section className="core-section">
       <div className="core-container">
-        <div className="core-header">
+        <div className="core-header reveal">
           <div className="core-left">
             <span className="core-badge">WHY CHOOSE US</span>
             <h2>Our Core Values</h2>
@@ -55,9 +115,13 @@ const CoreValues = () => {
           </div>
         </div>
 
-        <div className="core-grid">
-          {values.map((item) => (
-            <article className="core-card" key={item.id}>
+        <div className="core-grid" ref={gridRef} onScroll={handleScroll}>
+          {values.map((item, index) => (
+            <article
+              className="core-card reveal"
+              key={item.id}
+              style={{ transitionDelay: `${index * 0.15}s` }}
+            >
               <div className="circle-ring">
                 <img src={item.image} alt={item.title} />
               </div>
@@ -65,6 +129,18 @@ const CoreValues = () => {
               <h3>{item.title}</h3>
               <p>{item.desc}</p>
             </article>
+          ))}
+        </div>
+
+        <div className="core-pagination reveal" style={{ transitionDelay: "0.3s" }}>
+          {values.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              className={`core-page-dot ${activeIndex === index ? "active" : ""}`}
+              onClick={() => scrollToCard(index)}
+              aria-label={`Go to core value ${index + 1}`}
+            />
           ))}
         </div>
       </div>

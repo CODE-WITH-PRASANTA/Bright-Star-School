@@ -11,18 +11,18 @@ const HeroSection = () => {
 
 const slides = [
 {
-title: "Modern Kid's Equibment For Better Study",
-text: "Montessori classrooms and materials encourage curiosity and discovery.",
+title: "From Nursery to Class 5 - Bright Futures with Care",
+text: "Bright Stars Montessori - Bhubaneswar offers quality education from Nursery to Class 5 in a safe, caring, and joyful environment. As a top pre school in Bhubaneswar, we help children grow with confidence, values, and creativity every day.",
 img: hero1
 },
 {
-title: "World Best Children Care Program",
-text: "Montessori classrooms and materials encourage curiosity and discovery.",
+title: "Best Learning Journey from Nursery to Class 5",
+text: "Bright Stars Montessori - Bhubaneswar provides a complete learning journey from Nursery to Class 5 with engaging teaching, caring support, and child-friendly classrooms. We are committed to giving children the best education along with proper daycare for child.",
 img: hero2
 },
 {
-title: "Dive Into The Greatness of Kid Learning",
-text: "Montessori classrooms and materials encourage curiosity and discovery.",
+title: "Quality Education and Childcare Under One Roof",
+text: "Bright Stars Montessori - Bhubaneswar offers the perfect balance of learning, safety, and care from Nursery to Class 5. Our school is a trusted choice for families and working parents looking for the best education and childcare in one place.",
 img: hero3
 }
 ];
@@ -60,7 +60,7 @@ return (
 </p>
 
 <button className="HeroSection-btn">
-Start Learning Today
+Enroll Your Child Now
 </button>
 
 </div>

@@ -155,6 +155,9 @@ background:#f5f5f5;
 /* responsive */
 
 @media(max-width:992px){
+  .navbar-logo img{
+    margin-left: 0px;
+  }
 
 .navbar-menu{
 display:none;
