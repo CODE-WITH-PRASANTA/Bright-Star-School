@@ -201,50 +201,53 @@ color:#444;
 /* =========================
    GALLERY
 ========================= */
-
-.topbar-gallery{
-display:flex;
-gap:12px;
-margin-bottom:30px;
+.topbar-gallery {
+  display: flex;
+  gap: 10px;
 }
 
-.topbar-galleryItem{
-position:relative;
-overflow:hidden;
-border-radius:14px;
-cursor:pointer;
+.topbar-galleryItem img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
 }
 
-.topbar-galleryItem img{
-width:110px;
-height:80px;
-object-fit:cover;
-transition:.4s;
-display:block;
+.topbar-galleryItem img:hover {
+  transform: scale(1.05);
 }
 
-/* overlay */
 
-.topbar-galleryItem::after{
-content:"";
-position:absolute;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(255,42,79,0.55);
-opacity:0;
-transition:.3s;
+/* modal */
+.imgModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }
 
-.topbar-galleryItem:hover::after{
-opacity:1;
+.modalImg {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
 }
 
-.topbar-galleryItem:hover img{
-transform:scale(1.1);
+.closeBtn {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
 }
-
 /* =========================
    CONTACT SECTION
 ========================= */

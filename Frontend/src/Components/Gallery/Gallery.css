@@ -1,0 +1,344 @@
+.gallery {
+  width: 100%;
+  padding: 70px 20px;
+  background: #f9fafb;
+  overflow: hidden;
+}
+
+.gallery-title {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+
+/* ================= slider ================= */
+
+.gallery-slider {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 10px;
+}
+
+.gallery-slider::-webkit-scrollbar {
+  display: none;
+}
+
+
+.gallery-item {
+  min-width: 260px;
+  height: 180px;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform .3s;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+
+/* ================= overlay ================= */
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 193, 7, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+  border-radius: 14px;
+}
+
+.gallery-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay span {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+
+
+/* ================= modal ================= */
+
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9998;
+  padding: 20px;
+}
+
+
+/* image box */
+
+.modal-img-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.modal-img {
+  max-width: 75vw;
+  max-height: 65vh;
+  border-radius: 14px;
+}
+
+
+
+/* ================= close button ================= */
+
+.close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+
+  width: 34px;
+  height: 34px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: white;
+  color: black;
+
+  font-size: 18px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 4px 10px rgba(0,0,0,.4);
+}
+
+.close:hover {
+  background: #ffd000;
+}
+
+
+
+/* ================= arrows ================= */
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 42px;
+  background: rgba(255,255,255,.15);
+  border: none;
+  color: white;
+  cursor: pointer;
+
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prev:hover,
+.next:hover {
+  background: #ffd000;
+  color: black;
+}
+
+.prev {
+  left: 25px;
+}
+
+.next {
+  right: 25px;
+}
+
+
+
+/* ================= thumbs ================= */
+
+.thumbs {
+  display: flex;
+  gap: 12px;
+  margin-top: 25px;
+  overflow-x: auto;
+  max-width: 90%;
+  padding-bottom: 5px;
+}
+
+.thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.thumb {
+  width: 90px;
+  height: 65px;
+  object-fit: cover;
+  opacity: .6;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: .3s;
+}
+
+.thumb:hover {
+  opacity: 1;
+}
+
+.thumb.active {
+  opacity: 1;
+  border: 3px solid #ffd000;
+}
+
+
+
+/* ========================= */
+/* ===== RESPONSIVE ========= */
+/* ========================= */
+
+
+/* ---------- large desktop ---------- */
+
+@media (min-width: 1400px) {
+
+  .modal-img {
+    max-width: 60vw;
+    max-height: 65vh;
+  }
+
+  .gallery-item {
+    min-width: 300px;
+    height: 200px;
+  }
+
+}
+
+
+/* ---------- laptop ---------- */
+
+@media (max-width: 1200px) {
+
+  .modal-img {
+    max-width: 80vw;
+  }
+
+  .gallery-item {
+    min-width: 240px;
+    height: 170px;
+  }
+
+}
+
+
+/* ---------- tablet ---------- */
+
+@media (max-width: 992px) {
+
+  .gallery-title {
+    font-size: 28px;
+  }
+
+  .modal-img {
+    max-width: 90vw;
+    max-height: 60vh;
+  }
+
+  .gallery-item {
+    min-width: 200px;
+    height: 150px;
+  }
+
+  .thumb {
+    width: 70px;
+    height: 50px;
+  }
+
+}
+
+
+/* ---------- mobile ---------- */
+
+@media (max-width: 768px) {
+
+  .gallery {
+    padding: 50px 10px;
+  }
+
+  .gallery-item {
+    min-width: 160px;
+    height: 120px;
+  }
+
+  .modal-img {
+    max-width: 95vw;
+    max-height: 55vh;
+  }
+
+  .prev,
+  .next {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+  }
+
+  .thumb {
+    width: 60px;
+    height: 45px;
+  }
+
+}
+
+
+/* ---------- small mobile ---------- */
+
+@media (max-width: 480px) {
+
+  .gallery-title {
+    font-size: 24px;
+  }
+
+  .gallery-item {
+    min-width: 140px;
+    height: 100px;
+  }
+
+  .modal-img {
+    max-width: 100%;
+    max-height: 50vh;
+  }
+
+  .thumb {
+    width: 50px;
+    height: 40px;
+  }
+
+}

@@ -1,97 +1,93 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import { Link } from "react-router-dom";
 import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
-
-import logo from "../../assets/Logo.webp"; // import your logo
+import logo from "../../assets/BSM-removebg.png";
 
 const Navbar = () => {
+  const [navbarSidebar, setNavbarSidebar] = useState(false);
 
-  const [navbarSidebar,setNavbarSidebar] = useState(false)
+  const toggleNavbarSidebar = () => {
+    setNavbarSidebar(!navbarSidebar);
+  };
 
-  const toggleNavbarSidebar = () =>{
-    setNavbarSidebar(!navbarSidebar)
-  }
-
+  // 🔥 Section IDs for scrolling
   const navItems = [
-    {title:"Home",path:"/"},
-    {title:"About",path:"/about"},
-    {title:"Teacher",path:"/teacher"},
-    {title:"Event",path:"/event"},
-    {title:"Class",path:"/class"},
-    {title:"Pricing",path:"/pricing"},
-    {title:"Gallery",path:"/gallery"},
-    {title:"Contact",path:"/contact"}
-  ]
+    { title: "Home", id: "home" },
+    { title: "About", id: "about" },
+    { title: "Our History", id: "history" },
+    { title: "Growing Stage", id: "learning" },
+    { title: "Why choose us", id: "values" },
+    { title: "Teachers", id: "teachers" },
+    { title: "Programs", id: "programs" },
+    { title: "Gallery", id: "gallery" },
+    { title: "News", id: "news" },
+    { title: "Contact", id: "admission" },
+  ];
+
+  // 🔥 Smooth scroll function
+  const handleScroll = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+    setNavbarSidebar(false);
+  };
 
   return (
     <nav className="navbar">
-
       <div className="navbar-container">
-
-        {/* logo */}
-        <div className="navbar-logo">
-          <img src={logo} alt="logo"/>
+        {/* LOGO */}
+        <div className="navbar-logo" onClick={() => handleScroll("home")}>
+          <img src={logo} alt="logo" />
         </div>
 
-        {/* desktop menu */}
+        {/* DESKTOP MENU */}
         <ul className="navbar-menu">
-          {navItems.map((item,index)=>(
-            <li key={index}>
-              <Link to={item.path}>{item.title}</Link>
+          {navItems.map((item, index) => (
+            <li key={index} onClick={() => handleScroll(item.id)}>
+              {item.title}
             </li>
           ))}
         </ul>
 
-        {/* mobile menu icon */}
+        {/* MOBILE ICON */}
         <div className="navbar-menuIcon" onClick={toggleNavbarSidebar}>
-          <FiMenu/>
+          <FiMenu />
         </div>
-
       </div>
 
-
-      {/* overlay */}
-      <div 
-      className={`navbar-overlay ${navbarSidebar ? "active":""}`}
-      onClick={toggleNavbarSidebar}
+      {/* OVERLAY */}
+      <div
+        className={`navbar-overlay ${navbarSidebar ? "active" : ""}`}
+        onClick={toggleNavbarSidebar}
       ></div>
 
-
-      {/* mobile sidebar */}
-      <div className={`navbar-sidebar ${navbarSidebar ? "active":""}`}>
-
+      {/* SIDEBAR */}
+      <div className={`navbar-sidebar ${navbarSidebar ? "active" : ""}`}>
         <div className="navbar-sidebarHeader">
+          <img src={logo} alt="logo" />
 
-          <img src={logo} alt="logo"/>
-
-          <div 
-          className="navbar-closeIcon"
-          onClick={toggleNavbarSidebar}
+          <div
+            className="navbar-closeIcon"
+            onClick={toggleNavbarSidebar}
           >
-            <FiX/>
+            <FiX />
           </div>
-
         </div>
 
-
         <ul className="navbar-sidebarMenu">
-
-          {navItems.map((item,index)=>(
-            <li key={index} onClick={()=>setNavbarSidebar(false)}>
-              <Link to={item.path}>
-                <FiChevronRight/>
+          {navItems.map((item, index) => (
+            <li key={index} onClick={() => handleScroll(item.id)}>
+              <span>
+                <FiChevronRight />
                 {item.title}
-              </Link>
+              </span>
             </li>
           ))}
-
         </ul>
-
       </div>
-
     </nav>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;

@@ -1,122 +1,145 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ChildLearningSection.css";
 
 import mainImg from "../../assets/emoji-2.webp";
 
-import { PiStudentFill } from "react-icons/pi";
-import { TbBook2 } from "react-icons/tb";
+// ICONS
+import {
+  PiStudentFill,
+  PiLightbulbFilamentFill
+} from "react-icons/pi";
+
+import {
+  TbBook2,
+  TbShieldCheck,
+  TbUsers
+} from "react-icons/tb";
+
+import {
+  FaChalkboardTeacher,
+  FaHeart,
+  FaBrain
+} from "react-icons/fa";
+
+const featuresData = [
+  {
+    icon: <PiStudentFill />,
+    title: "Child-Centered Learning",
+    desc: "We focus on each child’s strengths and interests, making us one of the best schools in Bhubaneswar for early education.",
+  },
+  {
+    icon: <FaChalkboardTeacher />,
+    title: "Experienced Educators",
+    desc: "Our qualified teachers provide personal attention and care, ensuring strong academic and emotional development.",
+  },
+  {
+    icon: <TbShieldCheck />,
+    title: "Safe Learning Environment",
+    desc: "Bright Stars Montessori offers a secure and positive space for children to explore and grow confidently.",
+  },
+  {
+    icon: <TbBook2 />,
+    title: "Modern Montessori Approach",
+    desc: "We combine Montessori methods with modern teaching, making us a top Montessori school in Bhubaneswar.",
+  },
+  {
+    icon: <PiLightbulbFilamentFill />,
+    title: "Creative Activities",
+    desc: "We encourage creativity through art, play, and interactive learning experiences.",
+  },
+  {
+    icon: <FaBrain />,
+    title: "Strong Foundation",
+    desc: "Our programs build essential skills that prepare children for future academic success.",
+  },
+  {
+    icon: <FaHeart />,
+    title: "Parent Trust",
+    desc: "We are trusted by parents for our caring approach and consistent learning outcomes.",
+  },
+  {
+    icon: <TbUsers />,
+    title: "Holistic Development",
+    desc: "We focus on emotional, social, and intellectual growth for overall development.",
+  },
+];
 
 const ChildLearningSection = () => {
+  const [page, setPage] = useState(0);
+
+  const itemsPerPage = 2;
+  const totalPages = Math.ceil(featuresData.length / itemsPerPage);
+
+  const currentItems = featuresData.slice(
+    page * itemsPerPage,
+    page * itemsPerPage + itemsPerPage
+  );
+
   return (
     <section className="ChildLearningSection">
 
-      {/* HEADING SECTION */}
-
+      {/* HEADING */}
       <div className="ChildLearningSection-heading">
-
         <p className="ChildLearningSection-topText">
-          PART OF THE FAMILY SINCE 2001,
+          BEST SCHOOL IN BHUBANESWAR
         </p>
 
         <h2 className="ChildLearningSection-title">
-          Your Child Will Take The Lead In Their Learning
+          Bright Stars Montessori – A Trusted Learning Space for Young Minds
         </h2>
-
       </div>
 
-      {/* MAIN CONTENT */}
-
+      {/* MAIN */}
       <div className="ChildLearningSection-container">
 
         {/* IMAGE */}
-
         <div className="ChildLearningSection-imageWrapper">
-
           <div className="ChildLearningSection-badge">
             <span>100%</span>
-            <p>A+ Results</p>
+            <p>Parent Trust</p>
           </div>
 
           <img
             src={mainImg}
-            alt="kids learning"
+            alt="Best Montessori school in Bhubaneswar"
             className="ChildLearningSection-image"
           />
-
         </div>
 
-        {/* TEXT CONTENT */}
-
+        {/* CONTENT */}
         <div className="ChildLearningSection-content">
 
           <p className="ChildLearningSection-description">
-            We are constantly expanding the range of services offered, taking
-            care of children of all ages. Our goal is to carefully educate and
-            develop children in a fun way. We strive to turn the learning
-            process into a bright one.
+            Bright Stars Montessori is recognized as one of the best schools in Bhubaneswar,
+            offering a nurturing environment where children learn, grow, and build strong
+            foundations through a modern Montessori approach.
           </p>
 
-          {/* SESSION */}
+          {/* FEATURES */}
+          <div className="ChildLearningSection-features">
+            {currentItems.map((item, index) => (
+              <div className="ChildLearningSection-featureCard" key={index}>
+                <div className="ChildLearningSection-icon">
+                  {item.icon}
+                </div>
 
-          <div className="ChildLearningSection-session">
-
-            <h4>SESSIONS: MONDAY – FRIDAY</h4>
-
-            <div className="ChildLearningSection-sessionTimes">
-
-              <div>
-                <h5>Morning:</h5>
-                <p>9am – 12noon</p>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
               </div>
-
-              <div>
-                <h5>Lunch:</h5>
-                <p>12noon – 1 pm</p>
-              </div>
-
-              <div>
-                <h5>Afternoon:</h5>
-                <p>1 pm – 3.30 pm</p>
-              </div>
-
-            </div>
-
+            ))}
           </div>
 
-          {/* FEATURES */}
-
-          <div className="ChildLearningSection-features">
-
-            <div className="ChildLearningSection-featureCard">
-
-              <div className="ChildLearningSection-icon">
-                <PiStudentFill />
-              </div>
-
-              <h3>Personalized Learning</h3>
-
-              <p>
-                Our goal is to carefully educate and develop children in a fun
-                way. We strive learning process into a bright.
-              </p>
-
-            </div>
-
-            <div className="ChildLearningSection-featureCard">
-
-              <div className="ChildLearningSection-icon">
-                <TbBook2 />
-              </div>
-
-              <h3>Empower Teachers</h3>
-
-              <p>
-                Our goal is to carefully educate and develop children in a fun
-                way. We strive learning process into a bright.
-              </p>
-
-            </div>
-
+          {/* PAGINATION */}
+          <div className="ChildLearningSection-pagination">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                className={`page-btn ${page === i ? "active" : ""}`}
+                onClick={() => setPage(i)}
+              >
+                {i + 1}
+              </button>
+            ))}
           </div>
 
         </div>
