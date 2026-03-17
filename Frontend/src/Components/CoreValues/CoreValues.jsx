@@ -6,29 +6,29 @@ const values = [
     id: 1,
     image:
       "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80",
-    title: "Learn And Play",
-    desc: "We create joyful learning experiences that help children explore and grow with confidence.",
+    title: "Learning Through Play",
+    desc: "At Bright Stars Montessori, we encourage children to learn through play-based activities that make learning enjoyable and engaging.",
   },
   {
     id: 2,
     image:
       "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80",
-    title: "Great Teachers",
-    desc: "Our caring teachers guide children with patience and meaningful learning.",
+    title: "Experienced Educators",
+    desc: "Our trained and caring teachers provide personal attention, helping every child grow with confidence and strong learning habits.",
   },
   {
     id: 3,
     image:
       "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80",
-    title: "Family Environment",
-    desc: "A warm and welcoming place where children feel safe and inspired.",
+    title: "Safe & Friendly Environment",
+    desc: "We offer a secure and welcoming environment where children feel comfortable, supported, and motivated to explore new ideas.",
   },
   {
     id: 4,
     image:
       "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80",
-    title: "Excellent Programmes",
-    desc: "Thoughtfully designed programmes that build creativity and confidence.",
+    title: "Structured Learning Programs",
+    desc: "Our well-designed Montessori programs help children develop creativity, discipline, and essential skills for lifelong learning.",
   },
 ];
 
@@ -96,26 +96,36 @@ const CoreValues = () => {
   return (
     <section className="core-section">
       <div className="core-container">
+
+        {/* HEADER */}
         <div className="core-header reveal">
           <div className="core-left">
             <span className="core-badge">WHY CHOOSE US</span>
-            <h2>Our Core Values</h2>
+            <h2>Why Parents Choose Bright Stars Montessori</h2>
           </div>
 
           <div className="core-right">
             <p>
-              We continuously improve our standards to ensure every child
-              experiences a safe, inspiring, and nurturing learning environment.
+              At Bright Stars Montessori, we focus on creating a nurturing
+              environment where every child feels valued and encouraged to learn.
+              Our approach supports early childhood development through guided
+              activities, play-based learning, and individual attention.
             </p>
 
             <p>
-              Our goal is to guide children through joyful education while
-              developing creativity, confidence, and strong life foundations.
+              We understand that every child is unique. That’s why our programs
+              are designed to build confidence, creativity, and strong
+              foundational skills in a safe and positive learning space.
             </p>
           </div>
         </div>
 
-        <div className="core-grid" ref={gridRef} onScroll={handleScroll}>
+        {/* CARDS */}
+        <div
+          className="core-grid"
+          ref={gridRef}
+          onScroll={handleScroll}
+        >
           {values.map((item, index) => (
             <article
               className="core-card reveal"
@@ -132,17 +142,24 @@ const CoreValues = () => {
           ))}
         </div>
 
-        <div className="core-pagination reveal" style={{ transitionDelay: "0.3s" }}>
+        {/* PAGINATION */}
+        <div
+          className="core-pagination reveal"
+          style={{ transitionDelay: "0.3s" }}
+        >
           {values.map((_, index) => (
             <button
               key={index}
               type="button"
-              className={`core-page-dot ${activeIndex === index ? "active" : ""}`}
+              className={`core-page-dot ${
+                activeIndex === index ? "active" : ""
+              }`}
               onClick={() => scrollToCard(index)}
               aria-label={`Go to core value ${index + 1}`}
             />
           ))}
         </div>
+
       </div>
     </section>
   );
