@@ -6,6 +6,7 @@ import Topbar from "./Components/Topbar/Topbar";
 import Footer from "./Components/Footer/Footer";
 
 import Home from "./Pages/Home/Home";
+import BlogDetails from "./Pages/BlogDetails/BlogDetails";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/blog/details" element={<BlogDetails/>}/>
       </Routes>
 
       <Footer />
