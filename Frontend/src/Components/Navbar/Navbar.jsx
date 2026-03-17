@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { FiMenu, FiX, FiChevronRight } from "react-icons/fi";
 
-import logo from "../../assets/Logo.webp"; // import your logo
+import logo from "../../assets/BSM-removebg.png"; // import your logo
 
 const Navbar = () => {
 
