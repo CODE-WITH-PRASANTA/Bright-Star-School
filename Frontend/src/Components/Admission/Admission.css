@@ -120,7 +120,7 @@ FORM
 .admission-form{
 border:3px solid #4a0d57;
 border-radius:25px;
-padding:35px;
+ padding:35px; 
 background:white;
 }
 
@@ -314,7 +314,7 @@ margin-top:10px;
 }
 
 .admission-features{
-flex-direction:column;
+flex-direction:row;
 gap:8px;
 margin-bottom:24px;
 }
