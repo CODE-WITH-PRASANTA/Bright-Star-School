@@ -11,6 +11,8 @@ import Admission from "../../Components/Admission/Admission";
 import RecentNews from "../../Components/RecentNews/RecentNews";
 import Gallery from "../../Components/Gallery/Gallery";
 import AboutUs from "../../Components/AboutUs/AboutUs";
+import FaqSection from "../../Components/FaqSection/FaqSection";
+import StudentKnowledgeSection from "../../Components/StudentKnowledgeSection/StudentKnowledgeSection";
 
 const Home = () => {
   return (
@@ -54,6 +56,8 @@ const Home = () => {
       {/* GALLERY */}
       <section id="gallery">
         <Gallery />
+        <FaqSection/>
+        <StudentKnowledgeSection/>
       </section>
 
       {/* NEWS */}
