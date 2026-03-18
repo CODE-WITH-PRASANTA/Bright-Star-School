@@ -1,0 +1,336 @@
+.teacherAdmin{
+  padding:24px;
+  background:#f7f8fb;
+  min-height:100vh;
+  font-family:Arial, sans-serif;
+}
+
+.teacherAdmin *{
+  box-sizing:border-box;
+}
+
+.teacherAdmin__top{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.teacherAdmin__formBox,
+.teacherAdmin__previewBox,
+.teacherAdmin__tableBox{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:20px;
+}
+
+.teacherAdmin__title{
+  font-size:22px;
+  margin-bottom:16px;
+  color:#111827;
+}
+
+.teacherAdmin__form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+
+.teacherAdmin__field{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.teacherAdmin__field label{
+  font-size:14px;
+  font-weight:600;
+  color:#374151;
+}
+
+.teacherAdmin__field input,
+.teacherAdmin__field textarea,
+.teacherAdmin__field select{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:14px;
+  outline:none;
+}
+
+.teacherAdmin__field textarea{
+  resize:vertical;
+  min-height:100px;
+}
+
+.teacherAdmin__gridTwo{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.teacherAdmin__btnRow{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.teacherAdmin__saveBtn,
+.teacherAdmin__clearBtn,
+.teacherAdmin__actionBtn{
+  border:none;
+  border-radius:10px;
+  padding:12px 18px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.teacherAdmin__saveBtn{
+  background:#e11d48;
+  color:#fff;
+}
+
+.teacherAdmin__clearBtn{
+  background:#e5e7eb;
+  color:#111827;
+}
+
+.teacherAdmin__preview{
+  border:1px solid #e5e7eb;
+  border-radius:14px;
+  padding:18px;
+  background:#fafafa;
+}
+
+.teacherAdmin__headingArea{
+  text-align:center;
+  margin-bottom:18px;
+}
+
+.teacherAdmin__headingArea h1{
+  font-size:24px;
+  margin-bottom:6px;
+  color:#111827;
+}
+
+.teacherAdmin__headingArea h2{
+  font-size:18px;
+  margin-bottom:8px;
+  color:#374151;
+}
+
+.teacherAdmin__headingArea p{
+  font-size:14px;
+  color:#4b5563;
+  line-height:1.6;
+}
+
+.teacherAdmin__featuredCard{
+  display:grid;
+  grid-template-columns:160px 1fr;
+  gap:16px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:16px;
+}
+
+.teacherAdmin__featuredImageWrap img,
+.teacherAdmin__imagePlaceholder{
+  width:100%;
+  height:180px;
+  border-radius:10px;
+  object-fit:cover;
+}
+
+.teacherAdmin__imagePlaceholder{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#e5e7eb;
+  color:#6b7280;
+  font-size:14px;
+}
+
+.teacherAdmin__featuredContent h3{
+  font-size:18px;
+  margin-bottom:6px;
+  color:#111827;
+}
+
+.teacherAdmin__featuredContent h4{
+  font-size:14px;
+  margin-bottom:8px;
+  color:#e11d48;
+}
+
+.teacherAdmin__featuredContent p{
+  font-size:13px;
+  color:#4b5563;
+  line-height:1.6;
+  margin-bottom:10px;
+}
+
+.teacherAdmin__phone{
+  display:block;
+  font-size:14px;
+  margin-bottom:10px;
+  color:#111827;
+}
+
+.teacherAdmin__socials{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.teacherAdmin__socials a{
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  background:#f3f4f6;
+  color:#111827;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
+
+.teacherAdmin__sideCards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+
+.teacherAdmin__sideCard{
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  overflow:hidden;
+}
+
+.teacherAdmin__sideCard img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  display:block;
+}
+
+.teacherAdmin__sideCardInfo{
+  padding:12px;
+  text-align:center;
+}
+
+.teacherAdmin__sideCardInfo h5{
+  font-size:14px;
+  margin-bottom:4px;
+  color:#111827;
+}
+
+.teacherAdmin__sideCardInfo span{
+  font-size:12px;
+  color:#6b7280;
+}
+
+.teacherAdmin__tableWrap{
+  overflow-x:auto;
+}
+
+.teacherAdmin__table{
+  width:100%;
+  min-width:900px;
+  border-collapse:collapse;
+}
+
+.teacherAdmin__table th,
+.teacherAdmin__table td{
+  border-bottom:1px solid #e5e7eb;
+  padding:14px 12px;
+  text-align:left;
+  font-size:14px;
+}
+
+.teacherAdmin__table th{
+  background:#f9fafb;
+  color:#374151;
+}
+
+.teacherAdmin__table td img{
+  width:72px;
+  height:56px;
+  object-fit:cover;
+  border-radius:8px;
+}
+
+.teacherAdmin__status{
+  display:inline-block;
+  padding:6px 10px;
+  background:#eef2ff;
+  color:#4338ca;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:600;
+}
+
+.teacherAdmin__actionBtn{
+  background:#f3f4f6;
+  color:#111827;
+}
+
+.teacherAdmin__actionBtn.delete{
+  background:#fee2e2;
+  color:#b91c1c;
+}
+
+.teacherAdmin__empty{
+  text-align:center;
+  color:#6b7280;
+  padding:24px !important;
+}
+
+@media (max-width: 900px){
+  .teacherAdmin__top{
+    grid-template-columns:1fr;
+  }
+
+  .teacherAdmin__gridTwo,
+  .teacherAdmin__sideCards{
+    grid-template-columns:1fr;
+  }
+
+  .teacherAdmin__featuredCard{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width: 480px){
+  .teacherAdmin{
+    padding:14px;
+  }
+
+  .teacherAdmin__formBox,
+  .teacherAdmin__previewBox,
+  .teacherAdmin__tableBox{
+    padding:16px;
+  }
+
+  .teacherAdmin__title{
+    font-size:20px;
+  }
+
+  .teacherAdmin__headingArea h1{
+    font-size:20px;
+  }
+
+  .teacherAdmin__btnRow{
+    flex-direction:column;
+  }
+
+  .teacherAdmin__saveBtn,
+  .teacherAdmin__clearBtn{
+    width:100%;
+  }
+}

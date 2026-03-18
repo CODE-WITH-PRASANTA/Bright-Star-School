@@ -8,11 +8,11 @@ const QualifiedTeachers = () => {
 
   const teacherData = [
     {
-      name: "Nomina Leone",
+      name: "Anita Sharma",
       img: "https://images.unsplash.com/photo-1544717305-2782549b5136",
     },
     {
-      name: "Jessica Levis",
+      name: "Riya Mehta",
       img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
     },
   ];
@@ -58,39 +58,49 @@ const QualifiedTeachers = () => {
   return (
     <section className="qt-section">
       <div className="qt-container">
+
+        {/* HEADER ICON */}
         <div className="qt-logo">
           <span className="dot purple"></span>
           <span className="dot pink"></span>
           <span className="dot yellow"></span>
         </div>
 
+        {/* HEADER */}
         <div className="qt-header">
-          <h2>Qualified Teachers</h2>
-          <p>We are constantly expanding the range of services offered</p>
+          <h2>Meet Our Experienced Teachers at Bright Stars Montessori</h2>
+          <p>
+            Our dedicated team of educators is committed to guiding children with
+            care, patience, and a passion for early childhood development.
+          </p>
         </div>
 
         <div className="qt-layout">
+
+          {/* PRINCIPAL CARD */}
           <div className="qt-principal-card">
             <div className="qt-principal-img">
               <img
                 src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                alt="Principal"
+                alt="Bright Stars Montessori Principal"
               />
             </div>
 
             <div className="qt-principal-content">
-              <h3>Katie Willmore</h3>
-              <span className="role">Principal And Manager</span>
+              <h3>Mrs. Kavita Sharma</h3>
+              <span className="role">Principal & Academic Head</span>
 
               <p className="desc">
-                Dedicated to nurturing young minds with creativity and care.
-                She ensures a safe, inspiring, and joyful learning environment
-                for every child.
+                With years of experience in early childhood education, she leads
+                Bright Stars Montessori with a strong focus on nurturing young
+                minds in a safe, positive, and engaging environment. Her vision
+                is to help every child grow with confidence, curiosity, and a
+                love for learning.
               </p>
 
               <div className="line"></div>
 
-              <p className="phone">+44 (0) 207 689 7888</p>
+              <p className="phone">+91 98765 43210</p>
 
               <div className="socials">
                 <button><FaFacebookF /></button>
@@ -101,6 +111,7 @@ const QualifiedTeachers = () => {
             </div>
           </div>
 
+          {/* TEACHERS */}
           <div className="qt-teachers-wrap">
             <div
               className="qt-teachers"
@@ -109,7 +120,10 @@ const QualifiedTeachers = () => {
             >
               {teacherData.map((teacher, index) => (
                 <div className="teacher-card" key={index}>
-                  <img src={teacher.img} alt={teacher.name} />
+                  <img
+                    src={`${teacher.img}?auto=format&fit=crop&w=500&q=80`}
+                    alt={`${teacher.name} - Teacher at Bright Stars Montessori`}
+                  />
 
                   <div className="teacher-overlay">
                     <div className="overlay-icons">
@@ -122,23 +136,28 @@ const QualifiedTeachers = () => {
 
                   <div className="teacher-name">
                     <h4>{teacher.name}</h4>
+                    <p>Montessori Teacher</p>
                   </div>
                 </div>
               ))}
             </div>
 
+            {/* PAGINATION */}
             <div className="qt-pagination">
               {teacherData.map((_, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`qt-page-dot ${activeIndex === index ? "active" : ""}`}
+                  className={`qt-page-dot ${
+                    activeIndex === index ? "active" : ""
+                  }`}
                   onClick={() => scrollToTeacher(index)}
                   aria-label={`Go to teacher ${index + 1}`}
                 />
               ))}
             </div>
           </div>
+
         </div>
       </div>
     </section>

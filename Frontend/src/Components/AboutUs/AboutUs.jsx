@@ -24,7 +24,10 @@ const AboutUs = () => {
           <img src={Bordershape} alt="" className="aboutus-border" />
 
           <div className="aboutus-imageWrap">
-            <img src={lefthomeAboutimg} alt="" />
+            <img
+              src={lefthomeAboutimg}
+              alt="Bright Stars Montessori classroom in Bhubaneswar"
+            />
           </div>
 
         </div>
@@ -39,16 +42,19 @@ const AboutUs = () => {
             About Us
           </span>
 
-         <h2 className="aboutus-title">
-  Welcome To <br />
-  <span>Bright Stars Montessori</span>
-</h2>
+          <h2 className="aboutus-title">
+            Welcome To <br />
+            <span>Bright Stars Montessori</span>
+          </h2>
 
 
           <p className="aboutus-desc">
-            Founded in 2019, Bright Stars Montessori provides a
-            nurturing and inclusive environment where students grow with
-            confidence, creativity, and strong values.
+            Bright Stars Montessori is recognized as one of the best schools in Bhubaneswar,
+            offering a safe, nurturing, and engaging environment for young learners. Since our
+            journey began, we have focused on building strong foundations through a balanced
+            Montessori approach that supports creativity, confidence, and overall development.
+            As a top Montessori school in Bhubaneswar, we are committed to helping every child
+            grow academically, socially, and emotionally.
           </p>
 
 
@@ -58,13 +64,14 @@ const AboutUs = () => {
             <div className="aboutus-feature">
 
               <div className="aboutus-icon">
-                <img src={MissionIcon} alt="" />
+                <img src={MissionIcon} alt="School mission icon" />
               </div>
 
               <div>
                 <h4>Our Mission</h4>
                 <p>
-                  To inspire lifelong learners through quality education.
+                  To provide quality early education that inspires curiosity, builds confidence,
+                  and nurtures a lifelong love for learning in every child.
                 </p>
               </div>
 
@@ -74,13 +81,14 @@ const AboutUs = () => {
             <div className="aboutus-feature">
 
               <div className="aboutus-icon">
-                <img src={VisionIcon} alt="" />
+                <img src={VisionIcon} alt="School vision icon" />
               </div>
 
               <div>
                 <h4>Our Vision</h4>
                 <p>
-                  To empower students with knowledge and values.
+                  To be a leading and trusted Montessori school in Bhubaneswar, shaping young minds
+                  with strong values, creativity, and a passion for knowledge.
                 </p>
               </div>
 
@@ -97,11 +105,14 @@ const AboutUs = () => {
 
             <div className="aboutus-authorInfo">
 
-              <img src={authorimg} alt="" />
+              <img
+                src={authorimg}
+                alt="Principal of Bright Stars Montessori"
+              />
 
               <div>
-                <h5>Katie Willmore</h5>
-                <span>Principal And Manager</span>
+                <h5>Mrs. Kavita Sharma</h5>
+                <span>Principal & Academic Head</span>
               </div>
 
             </div>
