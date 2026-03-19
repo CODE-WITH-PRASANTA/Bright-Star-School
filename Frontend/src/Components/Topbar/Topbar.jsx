@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import "./Topbar.css";
 
 import { FiMenu, FiX } from "react-icons/fi";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaTimes,
+} from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 
 import img1 from "../../assets/Gal-11.webp";
@@ -14,8 +19,8 @@ import news2 from "../../assets/Gal-55.webp";
 import news3 from "../../assets/Gal-66.webp";
 
 const Topbar = () => {
-
   const [topbarSidebar, setTopbarSidebar] = useState(false);
+  const [selectedImg, setSelectedImg] = useState(null);
 
   const toggleTopbarSidebar = () => {
     setTopbarSidebar(!topbarSidebar);
@@ -23,39 +28,34 @@ const Topbar = () => {
 
   return (
     <div className="topbar">
-
       {/* TOPBAR */}
       <div className="topbar-container">
-
         <div className="topbar-left">
-
           <div className="topbar-item">
             <FaEnvelope />
-            <span>user@example.com</span>
+            <span>brightstarsmontessori26@gmail.com</span>
           </div>
 
           <div className="topbar-item">
             <FaPhoneAlt />
-            <span>+44 (0) 207 689 7888</span>
+            <span>7016201096</span>
           </div>
-
         </div>
 
         <div className="topbar-right">
-
-          <button className="topbar-contactBtn">
+          <button
+            className="topbar-contactBtn"
+            onClick={() => (window.location.href = "tel:7016201096")}
+          >
             <FaPhoneAlt />
-            +44 (0) 207 689 7888
+            +91 7016201096
           </button>
 
           <div className="topbar-menuIcon" onClick={toggleTopbarSidebar}>
             <FiMenu />
           </div>
-
         </div>
-
       </div>
-
 
       {/* overlay */}
       <div
@@ -63,99 +63,94 @@ const Topbar = () => {
         onClick={toggleTopbarSidebar}
       ></div>
 
-
       {/* SIDEBAR */}
       <div className={`topbar-sidebar ${topbarSidebar ? "active" : ""}`}>
-
         {/* Sidebar Header */}
         <div className="topbar-sidebarHeader">
-
-          <h2>Giving your child the best start in life</h2>
+          <h2>
+            Best Montessori School in Bhubaneswar – Bright Stars Montessori
+          </h2>
 
           <div className="topbar-closeIcon" onClick={toggleTopbarSidebar}>
             <FiX />
           </div>
-
         </div>
 
-
         <div className="topbar-sidebarContent">
-
           {/* ADDRESS */}
           <div className="topbar-address">
-
-            <FaMapMarkerAlt className="topbar-locationIcon"/>
+            <FaMapMarkerAlt className="topbar-locationIcon" />
 
             <p>
-              First Floor, 10A Chandos Street London
-              <br/>
-              New Town W1G 9LE
+              Plot No. 657/1094, Haridaspur <br />
+              Naharakanata, Bhubaneswar <br />
+              Odisha - 752101, India
             </p>
-
           </div>
-
 
           {/* GALLERY */}
           <div className="topbar-gallery">
-
             <div className="topbar-galleryItem">
-              <img src={img1} alt="gallery"/>
+              <img src={img1} alt="" onClick={() => setSelectedImg(img1)} />
             </div>
 
             <div className="topbar-galleryItem">
-              <img src={img2} alt="gallery"/>
+              <img src={img2} alt="" onClick={() => setSelectedImg(img2)} />
             </div>
 
             <div className="topbar-galleryItem">
-              <img src={img3} alt="gallery"/>
+              <img src={img3} alt="" onClick={() => setSelectedImg(img3)} />
             </div>
-
           </div>
 
+          {/* MODAL */}
+          {selectedImg && (
+            <div className="imgModal">
+              <FaTimes
+                className="closeBtn"
+                onClick={() => setSelectedImg(null)}
+              />
+
+              <img src={selectedImg} alt="" className="modalImg" />
+            </div>
+          )}
 
           {/* CONTACT SECTION */}
           <div className="topbar-contact">
-
             <h3>Get In Touch</h3>
 
             <div className="topbar-line"></div>
 
-            <p>Monday to Friday: <strong>8.30am – 02.00pm</strong></p>
-            <p>Saturday, Sunday: <strong>Close</strong></p>
-
+            <p>
+              Monday – Saturday: <strong>09:00 AM – 06:00 PM</strong>
+            </p>
+            <p>
+              Sunday: <strong>Closed</strong>
+            </p>
 
             <div className="topbar-contactItem">
-
               <div className="topbar-iconCircle">
                 <FaEnvelope />
               </div>
 
-              <span>Email: user@domainname.com</span>
-
+              <span>Email: brightstarsmontessori26@gmail.com</span>
             </div>
 
-
             <div className="topbar-contactItem">
-
               <div className="topbar-iconCircle">
                 <FaPhoneAlt />
               </div>
 
-              <span>Phone: +44 (0) 207 689 7888</span>
-
+              <span>Phone:7016201096</span>
             </div>
-
           </div>
-
 
           {/* LATEST NEWS */}
           <div className="topbar-news">
-
             <h3>Latest News</h3>
 
             <div className="topbar-newsItem">
-
-              <img src={news1} alt="news"/>
+              <img src={news1} alt="news" />
 
               <div>
                 <span className="topbar-newsDate">
@@ -164,13 +159,10 @@ const Topbar = () => {
 
                 <p>How to Keep Children Safe Online In</p>
               </div>
-
             </div>
 
-
             <div className="topbar-newsItem">
-
-              <img src={news2} alt="news"/>
+              <img src={news2} alt="news" />
 
               <div>
                 <span className="topbar-newsDate">
@@ -179,13 +171,10 @@ const Topbar = () => {
 
                 <p>Baby school and other secrets is yourfamily</p>
               </div>
-
             </div>
 
-
             <div className="topbar-newsItem">
-
-              <img src={news3} alt="news"/>
+              <img src={news3} alt="news" />
 
               <div>
                 <span className="topbar-newsDate">
@@ -194,15 +183,10 @@ const Topbar = () => {
 
                 <p>Easy steps for choosing to the learning</p>
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };

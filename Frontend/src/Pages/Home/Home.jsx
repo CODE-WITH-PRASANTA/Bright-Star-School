@@ -9,16 +9,20 @@ import ClubsSection from "../../Components/ClubsSection/ClubsSection";
 import Testimonial from "../../Components/Testimonial/Testimonial";
 import Admission from "../../Components/Admission/Admission";
 import RecentNews from "../../Components/RecentNews/RecentNews";
+import Gallery from "../../Components/Gallery/Gallery";
+import AboutUs from "../../Components/AboutUs/AboutUs";
 
 const Home = () => {
   return (
     <div>
       <HeroSection />
+      <AboutUs/>
       <ChildLearningSection />
       <ChildAgeSection />
       <CoreValues />
       <QualifiedTeachers />
       <ClubsSection />
+      <Gallery/>
       <Testimonial />
       <Admission />
       <RecentNews />

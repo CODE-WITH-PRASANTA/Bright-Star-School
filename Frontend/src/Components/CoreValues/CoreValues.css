@@ -6,6 +6,19 @@
   box-sizing: border-box;
 }
 
+/* reveal animation */
+
+.reveal{
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 1s ease;
+}
+
+.reveal.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .core-section {
   width: 100%;
   background: linear-gradient(180deg, #4b0261 0%, #65107c 55%, #4b0261 100%);
@@ -77,7 +90,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, opacity 1s ease;
 }
 
 .core-card:hover {
@@ -128,6 +141,11 @@
   margin: 0 auto;
 }
 
+/* mobile pagination hidden by default */
+.core-pagination {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   .core-right {
     grid-template-columns: 1fr;
@@ -143,10 +161,6 @@
     padding: 44px 14px;
   }
 
-  .core-grid {
-    grid-template-columns: 1fr;
-  }
-
   .core-header {
     gap: 18px;
   }
@@ -154,5 +168,62 @@
   .core-badge {
     font-size: 11px;
     letter-spacing: 2px;
+  }
+
+  .core-left h2 {
+    font-size: 36px;
+    line-height: 1.08;
+  }
+
+  .core-right p {
+    font-size: 14px;
+  }
+
+  /* mobile slider style */
+  .core-grid {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .core-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .core-card {
+    min-width: 88%;
+    max-width: 88%;
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+  }
+
+  .core-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .core-page-dot {
+    width: 10px;
+    height: 10px;
+    border: none;
+    border-radius: 50%;
+    background: #c9c9c9;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+  }
+
+  .core-page-dot.active {
+    width: 28px;
+    height: 10px;
+    border-radius: 999px;
+    background: #ff2d55;
   }
 }

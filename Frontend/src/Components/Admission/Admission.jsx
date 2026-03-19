@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Admission.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { FiCalendar } from "react-icons/fi";
@@ -7,116 +7,125 @@ import child1 from "../../assets/child-1.webp";
 import child2 from "../../assets/Child-2.webp";
 
 const Admission = () => {
-  return (
-    <section className="admission-section">
 
-      <div className="admission-container">
+useEffect(() => {
+const elements = document.querySelectorAll(".reveal");
 
-        {/* LEFT IMAGES */}
+const observer = new IntersectionObserver((entries)=>{
+entries.forEach((entry)=>{
+if(entry.isIntersecting){
+entry.target.classList.add("active");
+}
+});
+},{threshold:0.2});
 
-        <div className="admission-images">
+elements.forEach(el => observer.observe(el));
+},[]);
 
-          <img
-            src={child1}
-            alt="child"
-            className="admission-img admission-img-top"
-          />
+return (
+<section className="admission-section">
 
-          <img
-            src={child2}
-            alt="child"
-            className="admission-img admission-img-bottom"
-          />
+<div className="admission-container">
 
-        </div>
+{/* LEFT IMAGES */}
+<div className="admission-images reveal">
 
+<img
+src={child1}
+alt="child"
+className="admission-img admission-img-top"
+/>
 
-        {/* RIGHT CONTENT */}
+<img
+src={child2}
+alt="child"
+className="admission-img admission-img-bottom"
+/>
 
-        <div className="admission-content">
+</div>
 
-          <h2 className="admission-title">Apply For Admission</h2>
+{/* RIGHT CONTENT */}
+<div className="admission-content">
 
-          <div className="admission-features">
+<h2 className="admission-title reveal">Apply For Admission</h2>
 
-            <div>
-              <p><FaCheckCircle /> Assign practice exercises</p>
-              <p><FaCheckCircle /> Track student progress</p>
-            </div>
+<div className="admission-features">
 
-            <div>
-              <p><FaCheckCircle /> Videos and articles</p>
-              <p><FaCheckCircle /> Join millions of students</p>
-            </div>
+<div className="reveal" style={{transitionDelay:"0.1s"}}>
+<p><FaCheckCircle /> Assign practice exercises</p>
+<p><FaCheckCircle /> Track student progress</p>
+</div>
 
-          </div>
+<div className="reveal" style={{transitionDelay:"0.2s"}}>
+<p><FaCheckCircle /> Videos and articles</p>
+<p><FaCheckCircle /> Join millions of students</p>
+</div>
 
+</div>
 
-          {/* FORM */}
+{/* FORM */}
+<form className="admission-form reveal" style={{transitionDelay:"0.3s"}}>
 
-          <form className="admission-form">
+<div className="admission-form-grid">
 
-            <div className="admission-form-grid">
+<div className="admission-field">
+<label>Child's Name <span>(Required)</span></label>
+<input type="text" />
+</div>
 
-              <div className="admission-field">
-                <label>Child's Name <span>(Required)</span></label>
-                <input type="text" />
-              </div>
+<div className="admission-field">
+<label>Child's DOB <span>(Required)</span></label>
 
-              <div className="admission-field">
-                <label>Child's DOB <span>(Required)</span></label>
+<div className="admission-date">
+<input type="text" placeholder="dd-mm-yyyy"/>
+<FiCalendar />
+</div>
 
-                <div className="admission-date">
-                  <input type="text" placeholder="dd-mm-yyyy"/>
-                  <FiCalendar />
-                </div>
+</div>
 
-              </div>
+<div className="admission-field">
+<label>Parent's Name <span>(Required)</span></label>
+<input type="text"/>
+</div>
 
-              <div className="admission-field">
-                <label>Parent's Name <span>(Required)</span></label>
-                <input type="text"/>
-              </div>
+<div className="admission-field">
+<label>Parent's Designation <span>(Required)</span></label>
+<input type="text"/>
+</div>
 
-              <div className="admission-field">
-                <label>Parent's Designation <span>(Required)</span></label>
-                <input type="text"/>
-              </div>
+<div className="admission-field">
+<label>Email <span>(Required)</span></label>
+<input type="email"/>
+</div>
 
-              <div className="admission-field">
-                <label>Email <span>(Required)</span></label>
-                <input type="email"/>
-              </div>
+<div className="admission-field">
+<label>Phone No</label>
+<input type="text"/>
+</div>
 
-              <div className="admission-field">
-                <label>Phone No</label>
-                <input type="text"/>
-              </div>
+</div>
 
-            </div>
+<div className="admission-bottom">
 
+<label className="admission-checkbox">
+<input type="checkbox" />
+Notify Your child weekly progress
+</label>
 
-            <div className="admission-bottom">
+<button className="admission-btn">
+Apply Now
+</button>
 
-              <label className="admission-checkbox">
-                <input type="checkbox" />
-                Notify Your child weekly progress
-              </label>
+</div>
 
-              <button className="admission-btn">
-                Apply Now
-              </button>
+</form>
 
-            </div>
+</div>
 
-          </form>
+</div>
 
-        </div>
-
-      </div>
-
-    </section>
-  );
+</section>
+);
 };
 
 export default Admission;
