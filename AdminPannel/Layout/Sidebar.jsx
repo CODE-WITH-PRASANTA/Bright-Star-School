@@ -13,11 +13,12 @@ import {
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
-    { name: "OurHistory", path: "/admin/ourhistory", icon: <FaNewspaper /> },
-    { name: "Teacher", path: "/admin/teacher", icon: <FaNewspaper /> },
+     { name: "News Posting", path: "/admin/newsposting", icon: <FaHome /> },
+    
+    { name: "Teacher Posting", path: "/admin/teacherposting", icon: <FaNewspaper /> },
     { name: "Testimonial", path: "/admin/testimonial", icon: <FaNewspaper /> },
     
-    { name: "Admission", path: "/admin/admission", icon: <FaNewspaper /> },
+    
     { name: "Blog Posting", path: "/admin/blogposting", icon: <FaNewspaper /> },
 
     {
