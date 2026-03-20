@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "../Layout/AdminLayout";
-import DashBoard from "./Pages/Dashboard/Dashboard";
+
 
 import Teacher from "./Pages/Teacher/Teacher";
 import Testimonial from "./Pages/Testimonial/Testimonial";
@@ -12,6 +12,7 @@ import FeeCollection from "./Component/FeeCollection/FeeCollection";
 import FeeType from "./Component/FeeType/FeeType";
 
 import ProFilePicture from "./Pages/ProFilePicture/ProFilepicture";
+import DashBoard from "./Pages/DashBoard/DashBoard";
 
 
 
@@ -28,7 +29,7 @@ function App() {
    
         
 <Route element={<AdminLayout/>}>
-     <Route path="/" element={<DashBoard/>}/> 
+     <Route path="/" element={< DashBoard/>}/> 
      <Route path="/admin/newsposting" element={<NewsPosting/>}/>   
      
      <Route path="/admin/teacherposting" element={<Teacher/>}/>
