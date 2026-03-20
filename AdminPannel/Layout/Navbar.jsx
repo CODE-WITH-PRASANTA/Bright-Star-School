@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaBars, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+// import "./Navbar.css";
 
 export default function Navbar({ sidebarOpen, setSidebarOpen }) {
   const [openProfile, setOpenProfile] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -10,6 +13,17 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
 
   const handleLogout = () => {
     alert("Logout Clicked");
+    setOpenProfile(false);
+  };
+
+  const handleGoToProfile = () => {
+    navigate("/admin/profile");
+    setOpenProfile(false);
+  };
+
+  const handleGoToSettings = () => {
+    navigate("/admin/settings");
+    setOpenProfile(false);
   };
 
   return (
@@ -32,11 +46,11 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
 
         {openProfile && (
           <div className="profile-dropdown">
-            <button className="dropdown-item">
+            <button className="dropdown-item" onClick={handleGoToProfile}>
               <FaUser /> Profile
             </button>
 
-            <button className="dropdown-item">
+            <button className="dropdown-item" onClick={handleGoToSettings}>
               <FaCog /> Settings
             </button>
 
