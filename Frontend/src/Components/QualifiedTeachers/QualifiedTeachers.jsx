@@ -6,6 +6,7 @@ import {
   FaEnvelope,
   FaWhatsapp,
 } from "react-icons/fa";
+import principalImg from "../../assets/BrightPrincipal.webp";
 
 const QualifiedTeachers = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -98,20 +99,20 @@ const QualifiedTeachers = () => {
           <div className="qt-principal-card">
             <div className="qt-principal-img">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80"
-                alt="Bright Stars Montessori Principal"
+                src={principalImg}
+                alt="Mrs. Banaja Khuntia - Bright Stars Montessori Principal"
               />
             </div>
 
             <div className="qt-principal-content">
               <span className="qt-tag">Lead Mentor</span>
-              <h3>Mrs. Kavita Sharma</h3>
-              <span className="role">Principal & Academic Head</span>
+              <h3>Mrs. Banaja Khuntia</h3>
+              <span className="role">Director and Principal</span>
 
               <p className="desc">
-                She leads Bright Stars Montessori with a nurturing vision that
-                helps every child grow with confidence, curiosity, discipline,
-                and a lifelong love for learning.
+                MA in English and Early Childhood Care Education and
+                Administration Course (ECC.ED and A) from Podar Institute of
+                Education, Mumbai.
               </p>
 
               <div className="line"></div>
