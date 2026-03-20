@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "../Layout/AdminLayout";
-import DashBoard from "./Pages/Dashboard/Dashboard";
+
 
 import Teacher from "./Pages/Teacher/Teacher";
 import Testimonial from "./Pages/Testimonial/Testimonial";
 
 import NewsPosting from "./Pages/NewsPosting/NewsPosting";
+import DashBoard from "./Pages/DashBoard/DashBoard";
 
 
 
@@ -22,7 +23,7 @@ function App() {
    
         
 <Route element={<AdminLayout/>}>
-     <Route path="/" element={<DashBoard/>}/> 
+     <Route path="/" element={< DashBoard/>}/> 
      <Route path="/admin/newsposting" element={<NewsPosting/>}/>   
      
      <Route path="/admin/teacherposting" element={<Teacher/>}/>
