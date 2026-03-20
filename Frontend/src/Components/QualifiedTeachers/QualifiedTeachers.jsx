@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
 import "./QualifiedTeachers.css";
-import { FaFacebookF, FaInstagram, FaEnvelope, FaWhatsapp } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaEnvelope,
+  FaWhatsapp,
+} from "react-icons/fa";
+import principalImg from "../../assets/BrightPrincipal.webp";
 
 const QualifiedTeachers = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -9,16 +15,28 @@ const QualifiedTeachers = () => {
   const teacherData = [
     {
       name: "Anita Sharma",
+      role: "Senior Montessori Teacher",
       img: "https://images.unsplash.com/photo-1544717305-2782549b5136",
     },
     {
       name: "Riya Mehta",
+      role: "Creative Learning Teacher",
       img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
+    },
+    {
+      name: "Neha Verma",
+      role: "Early Childhood Educator",
+      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
+    },
+    {
+      name: "Pooja Sinha",
+      role: "Activity & Learning Teacher",
+      img: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df",
     },
   ];
 
   const handleScroll = () => {
-    if (!teachersRef.current || window.innerWidth > 560) return;
+    if (!teachersRef.current) return;
 
     const container = teachersRef.current;
     const cards = container.querySelectorAll(".teacher-card");
@@ -46,10 +64,15 @@ const QualifiedTeachers = () => {
     const cards = teachersRef.current.querySelectorAll(".teacher-card");
     if (!cards[index]) return;
 
-    cards[index].scrollIntoView({
+    const container = teachersRef.current;
+    const card = cards[index];
+
+    const left =
+      card.offsetLeft - (container.clientWidth - card.clientWidth) / 2;
+
+    container.scrollTo({
+      left,
       behavior: "smooth",
-      inline: "center",
-      block: "nearest",
     });
 
     setActiveIndex(index);
@@ -58,61 +81,67 @@ const QualifiedTeachers = () => {
   return (
     <section className="qt-section">
       <div className="qt-container">
-
-        {/* HEADER ICON */}
         <div className="qt-logo">
           <span className="dot purple"></span>
           <span className="dot pink"></span>
           <span className="dot yellow"></span>
         </div>
 
-        {/* HEADER */}
         <div className="qt-header">
           <h2>Meet Our Experienced Teachers at Bright Stars Montessori</h2>
           <p>
-            Our dedicated team of educators is committed to guiding children with
-            care, patience, and a passion for early childhood development.
+            Our dedicated educators guide children with care, patience,
+            creativity, and a strong passion for joyful learning.
           </p>
         </div>
 
         <div className="qt-layout">
-
-          {/* PRINCIPAL CARD */}
           <div className="qt-principal-card">
             <div className="qt-principal-img">
               <img
-                src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"
-                alt="Bright Stars Montessori Principal"
+                src={principalImg}
+                alt="Mrs. Banaja Khuntia - Bright Stars Montessori Principal"
               />
             </div>
 
             <div className="qt-principal-content">
-              <h3>Mrs. Kavita Sharma</h3>
-              <span className="role">Principal & Academic Head</span>
+              <span className="qt-tag">Lead Mentor</span>
+              <h3>Mrs. Banaja Khuntia</h3>
+              <span className="role">Director and Principal</span>
 
               <p className="desc">
-                With years of experience in early childhood education, she leads
-                Bright Stars Montessori with a strong focus on nurturing young
-                minds in a safe, positive, and engaging environment. Her vision
-                is to help every child grow with confidence, curiosity, and a
-                love for learning.
+                MA in English and Early Childhood Care Education and
+                Administration Course (ECC.ED and A) from Podar Institute of
+                Education, Mumbai.
               </p>
 
               <div className="line"></div>
 
-              <p className="phone">+91 98765 43210</p>
+              <p className="phone">+91 7016201096</p>
 
               <div className="socials">
-                <button><FaFacebookF /></button>
-                <button><FaInstagram /></button>
-                <button><FaEnvelope /></button>
-                <button><FaWhatsapp /></button>
+                <button aria-label="Facebook">
+                  <FaFacebookF />
+                </button>
+                <button aria-label="Instagram">
+                  <FaInstagram />
+                </button>
+                <button aria-label="Email">
+                  <FaEnvelope />
+                </button>
+                <button aria-label="WhatsApp">
+                  <FaWhatsapp />
+                </button>
               </div>
             </div>
           </div>
 
-          {/* TEACHERS */}
           <div className="qt-teachers-wrap">
+            <div className="qt-teachers-head">
+              <h3>Our Teaching Experts</h3>
+              <p>Skilled mentors building bright young minds every day.</p>
+            </div>
+
             <div
               className="qt-teachers"
               ref={teachersRef}
@@ -121,43 +150,39 @@ const QualifiedTeachers = () => {
               {teacherData.map((teacher, index) => (
                 <div className="teacher-card" key={index}>
                   <img
-                    src={`${teacher.img}?auto=format&fit=crop&w=500&q=80`}
+                    src={`${teacher.img}?auto=format&fit=crop&w=900&q=80`}
                     alt={`${teacher.name} - Teacher at Bright Stars Montessori`}
                   />
 
                   <div className="teacher-overlay">
                     <div className="overlay-icons">
-                      <FaFacebookF />
-                      <FaInstagram />
-                      <FaEnvelope />
-                      <FaWhatsapp />
+                      <span><FaFacebookF /></span>
+                      <span><FaInstagram /></span>
+                      <span><FaEnvelope /></span>
+                      <span><FaWhatsapp /></span>
                     </div>
                   </div>
 
                   <div className="teacher-name">
                     <h4>{teacher.name}</h4>
-                    <p>Montessori Teacher</p>
+                    <p>{teacher.role}</p>
                   </div>
                 </div>
               ))}
             </div>
 
-            {/* PAGINATION */}
             <div className="qt-pagination">
               {teacherData.map((_, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`qt-page-dot ${
-                    activeIndex === index ? "active" : ""
-                  }`}
+                  className={`qt-page-dot ${activeIndex === index ? "active" : ""}`}
                   onClick={() => scrollToTeacher(index)}
                   aria-label={`Go to teacher ${index + 1}`}
                 />
               ))}
             </div>
           </div>
-
         </div>
       </div>
     </section>

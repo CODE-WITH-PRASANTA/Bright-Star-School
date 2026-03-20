@@ -1,0 +1,639 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.schoolSidebar {
+  width: 100%;
+  background: #ffffff;
+  padding: 0;
+  font-family: "Nunito", sans-serif;
+}
+
+.schoolSidebar__wrap {
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.schoolSidebar__card,
+.schoolSidebar__ctaCard {
+  width: 100%;
+  background: #edf2f6;
+  border-radius: 34px;
+  padding: 28px 24px 30px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(18, 24, 39, 0.05);
+  animation: schoolSidebarFadeUp 0.7s ease both;
+}
+
+.schoolSidebar__card::before,
+.schoolSidebar__ctaCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.24), transparent 45%);
+  pointer-events: none;
+}
+
+.schoolSidebar__title {
+  font-family: "Baloo 2", cursive;
+  font-size: 28px;
+  line-height: 1;
+  color: #050505;
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+
+.schoolSidebar__line {
+  width: 30px;
+  height: 4px;
+  display: block;
+  border-radius: 999px;
+  background: #f3c400;
+  margin-bottom: 28px;
+}
+
+.schoolSidebar__searchForm {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  min-height: 50px;
+  box-shadow: inset 0 0 0 1px rgba(10, 10, 10, 0.04);
+}
+
+.schoolSidebar__searchForm input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 0 16px;
+  font-size: 15px;
+  color: #111827;
+  font-family: "Nunito", sans-serif;
+}
+
+.schoolSidebar__searchForm button {
+  border: none;
+  min-width: 112px;
+  padding: 0 18px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #59106f, #6f1589);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: "Nunito", sans-serif;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.schoolSidebar__searchForm button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(89, 16, 111, 0.22);
+}
+
+.schoolSidebar__newsList {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.schoolSidebar__newsItem {
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 18px;
+  align-items: center;
+  transition: transform 0.28s ease;
+}
+
+.schoolSidebar__newsItem:hover {
+  transform: translateX(4px);
+}
+
+.schoolSidebar__newsThumb {
+  width: 100%;
+  height: 92px;
+  border-radius: 22px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.schoolSidebar__newsThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s ease;
+}
+
+.schoolSidebar__newsItem:hover .schoolSidebar__newsThumb img {
+  transform: scale(1.08);
+}
+
+.schoolSidebar__newsContent {
+  min-width: 0;
+}
+
+.schoolSidebar__date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ff2957;
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.schoolSidebar__date svg {
+  font-size: 12px;
+}
+
+.schoolSidebar__newsContent h3 {
+  font-family: "Baloo 2", cursive;
+  color: #060606;
+  font-size: 22px;
+  line-height: 1.02;
+  font-weight: 700;
+}
+
+.schoolSidebar__categoryList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.schoolSidebar__categoryBtn {
+  width: 100%;
+  border: none;
+  background: #ffffff;
+  min-height: 54px;
+  border-radius: 999px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+
+.schoolSidebar__categoryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 18px rgba(17, 24, 39, 0.06);
+}
+
+.schoolSidebar__categoryIcon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: #59106f;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+}
+
+.schoolSidebar__categoryBtn span:last-child {
+  font-size: 16px;
+  font-weight: 900;
+  color: #050505;
+  letter-spacing: 0.4px;
+}
+
+.schoolSidebar__galleryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.schoolSidebar__galleryItem {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 22px;
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.28s ease;
+}
+
+.schoolSidebar__galleryItem:hover {
+  transform: translateY(-4px);
+}
+
+.schoolSidebar__galleryItem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.schoolSidebar__galleryItem:hover img {
+  transform: scale(1.08);
+}
+
+.schoolSidebar__eventList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.schoolSidebar__eventItem {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 18px;
+  align-items: center;
+}
+
+.schoolSidebar__eventDate {
+  width: 82px;
+  height: 92px;
+  border-radius: 28px;
+  background: linear-gradient(180deg, #5b106e, #63137b);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 24px rgba(89, 16, 111, 0.16);
+  animation: schoolSidebarFloat 3.4s ease-in-out infinite;
+}
+
+.schoolSidebar__eventDate span {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.schoolSidebar__eventDate strong {
+  font-size: 28px;
+  line-height: 1;
+  font-weight: 900;
+}
+
+.schoolSidebar__eventItem h3 {
+  font-family: "Baloo 2", cursive;
+  color: #050505;
+  font-size: 22px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.schoolSidebar__videoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.schoolSidebar__videoThumb {
+  position: relative;
+  width: 100%;
+  height: 228px;
+  border-radius: 28px;
+  overflow: hidden;
+}
+
+.schoolSidebar__videoThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.schoolSidebar__playBtn {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: 86px;
+  height: 86px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: #ff1f58;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: schoolSidebarPulse 2s infinite;
+}
+
+.schoolSidebar__playBtn svg {
+  margin-left: 4px;
+}
+
+.schoolSidebar__videoTitle {
+  font-family: "Baloo 2", cursive;
+  color: #050505;
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 700;
+}
+
+.schoolSidebar__ctaCard {
+  background: linear-gradient(180deg, #5c0f71 0%, #5d0f73 100%);
+  color: #ffffff;
+  padding: 34px 30px;
+}
+
+.schoolSidebar__ctaCard h2 {
+  font-family: "Baloo 2", cursive;
+  font-size: 31px;
+  line-height: 1.08;
+  font-weight: 700;
+  margin-bottom: 18px;
+  color: #ffffff;
+  max-width: 310px;
+}
+
+.schoolSidebar__ctaCard p {
+  font-size: 15px;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 290px;
+  margin-bottom: 26px;
+}
+
+.schoolSidebar__ctaBtn {
+  min-width: 190px;
+  min-height: 58px;
+  border: none;
+  border-radius: 999px;
+  padding: 14px 26px;
+  background: linear-gradient(135deg, #ff0d4d, #ff204f);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  font-family: "Nunito", sans-serif;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(255, 20, 76, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.schoolSidebar__ctaBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px rgba(255, 20, 76, 0.34);
+}
+
+.schoolSidebar__ctaShape {
+  position: absolute;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.schoolSidebar__ctaShape--rocket {
+  right: 44px;
+  bottom: 72px;
+  font-size: 40px;
+  transform: rotate(-12deg);
+}
+
+.schoolSidebar__ctaShape--star {
+  right: 22px;
+  bottom: 108px;
+  font-size: 22px;
+}
+
+.schoolSidebar__ctaShape--smile {
+  right: 22px;
+  bottom: 14px;
+  font-size: 52px;
+}
+
+@keyframes schoolSidebarFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes schoolSidebarPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 31, 88, 0.25);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 0 18px rgba(255, 31, 88, 0);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 31, 88, 0);
+  }
+}
+
+@keyframes schoolSidebarFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@media (max-width: 991px) {
+  .schoolSidebar__wrap {
+    max-width: 100%;
+  }
+
+  .schoolSidebar__title {
+    font-size: 26px;
+  }
+
+  .schoolSidebar__newsContent h3,
+  .schoolSidebar__eventItem h3 {
+    font-size: 20px;
+  }
+
+  .schoolSidebar__videoTitle {
+    font-size: 25px;
+  }
+
+  .schoolSidebar__ctaCard h2 {
+    font-size: 29px;
+  }
+}
+
+@media (max-width: 767px) {
+  .schoolSidebar__wrap {
+    gap: 22px;
+  }
+
+  .schoolSidebar__card,
+  .schoolSidebar__ctaCard {
+    border-radius: 28px;
+    padding: 24px 18px;
+  }
+
+  .schoolSidebar__title {
+    font-size: 24px;
+  }
+
+  .schoolSidebar__line {
+    margin-bottom: 22px;
+  }
+
+  .schoolSidebar__searchForm {
+    min-height: 48px;
+  }
+
+  .schoolSidebar__searchForm button {
+    min-width: 106px;
+    font-size: 15px;
+  }
+
+  .schoolSidebar__newsItem {
+    grid-template-columns: 82px 1fr;
+    gap: 14px;
+  }
+
+  .schoolSidebar__newsThumb {
+    height: 82px;
+    border-radius: 20px;
+  }
+
+  .schoolSidebar__newsContent h3,
+  .schoolSidebar__eventItem h3 {
+    font-size: 18px;
+  }
+
+  .schoolSidebar__categoryBtn span:last-child {
+    font-size: 15px;
+  }
+
+  .schoolSidebar__eventItem {
+    grid-template-columns: 78px 1fr;
+    gap: 14px;
+  }
+
+  .schoolSidebar__eventDate {
+    width: 78px;
+    height: 88px;
+    border-radius: 24px;
+  }
+
+  .schoolSidebar__eventDate strong {
+    font-size: 25px;
+  }
+
+  .schoolSidebar__videoThumb {
+    height: 210px;
+  }
+
+  .schoolSidebar__playBtn {
+    width: 76px;
+    height: 76px;
+    font-size: 24px;
+  }
+
+  .schoolSidebar__videoTitle {
+    font-size: 22px;
+  }
+
+  .schoolSidebar__ctaCard h2 {
+    font-size: 27px;
+    max-width: 100%;
+  }
+
+  .schoolSidebar__ctaCard p {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .schoolSidebar__card,
+  .schoolSidebar__ctaCard {
+    border-radius: 24px;
+    padding: 22px 16px;
+  }
+
+  .schoolSidebar__title {
+    font-size: 22px;
+  }
+
+  .schoolSidebar__newsItem {
+    grid-template-columns: 74px 1fr;
+    gap: 12px;
+  }
+
+  .schoolSidebar__newsThumb {
+    height: 74px;
+    border-radius: 18px;
+  }
+
+  .schoolSidebar__date {
+    font-size: 12px;
+  }
+
+  .schoolSidebar__newsContent h3,
+  .schoolSidebar__eventItem h3 {
+    font-size: 16px;
+  }
+
+  .schoolSidebar__galleryGrid {
+    gap: 8px;
+  }
+
+  .schoolSidebar__galleryItem {
+    border-radius: 18px;
+  }
+
+  .schoolSidebar__eventItem {
+    grid-template-columns: 72px 1fr;
+  }
+
+  .schoolSidebar__eventDate {
+    width: 72px;
+    height: 82px;
+    border-radius: 22px;
+  }
+
+  .schoolSidebar__eventDate span {
+    font-size: 12px;
+  }
+
+  .schoolSidebar__eventDate strong {
+    font-size: 23px;
+  }
+
+  .schoolSidebar__videoThumb {
+    height: 190px;
+    border-radius: 24px;
+  }
+
+  .schoolSidebar__videoTitle {
+    font-size: 20px;
+  }
+
+  .schoolSidebar__ctaCard h2 {
+    font-size: 24px;
+  }
+
+  .schoolSidebar__ctaBtn {
+    min-width: 170px;
+    min-height: 54px;
+    font-size: 15px;
+  }
+}
