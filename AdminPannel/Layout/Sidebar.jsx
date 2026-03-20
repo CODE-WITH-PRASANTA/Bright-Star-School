@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaHome,
   FaNewspaper,
@@ -11,14 +11,13 @@ import {
 } from "react-icons/fa";
 
 export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
-
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
-    { name: "Properties", path: "/admin/saleproperty", icon: <FaNewspaper /> },
-    { name: "Rent Properties", path: "/admin/rentproperty", icon: <FaNewspaper /> },
-    { name: "Pricing", path: "/admin/pricing", icon: <FaNewspaper /> },
+    { name: "OurHistory", path: "/admin/ourhistory", icon: <FaNewspaper /> },
+    { name: "Teacher", path: "/admin/teacher", icon: <FaNewspaper /> },
     { name: "Testimonial", path: "/admin/testimonial", icon: <FaNewspaper /> },
-    { name: "FAQ Posting", path: "/admin/faqposting", icon: <FaNewspaper /> },
+    
+    { name: "Admission", path: "/admin/admission", icon: <FaNewspaper /> },
     { name: "Blog Posting", path: "/admin/blogposting", icon: <FaNewspaper /> },
 
     {
@@ -46,23 +45,32 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   ];
 
   const [openMenu, setOpenMenu] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 1024);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleMenu = (name) => {
     setOpenMenu(openMenu === name ? null : name);
   };
 
   const handleMenuClick = () => {
-    if (window.innerWidth <= 1024) {
+    if (isMobile) {
       setSidebarOpen(false);
     }
   };
 
   return (
-
     <>
-    
-      {/* MOBILE OVERLAY */}
-      {sidebarOpen && window.innerWidth <= 1024 && (
+      {sidebarOpen && isMobile && (
         <div
           className="sidebar-overlay"
           onClick={() => setSidebarOpen(false)}
@@ -70,32 +78,22 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       )}
 
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : "close"}`}>
-
-        {/* LOGO */}
         <div className="sidebar-header">
           {sidebarOpen ? "Admin Panel" : "AP"}
         </div>
 
-        {/* MENU */}
         <nav className="sidebar-menu">
-
           {menu.map((item) => (
-
             <div key={item.name}>
-
               {item.submenu ? (
-
                 <button
                   className="menu-btn"
                   onClick={() => toggleMenu(item.name)}
                 >
                   <span className="menu-icon">{item.icon}</span>
-
                   {sidebarOpen && <span>{item.name}</span>}
                 </button>
-
               ) : (
-
                 <NavLink
                   to={item.path}
                   onClick={handleMenuClick}
@@ -106,16 +104,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                   <span className="menu-icon">{item.icon}</span>
                   {sidebarOpen && item.name}
                 </NavLink>
-
               )}
 
-              {/* SUBMENU */}
               {item.submenu && openMenu === item.name && sidebarOpen && (
-
                 <div className="submenu">
-
                   {item.submenu.map((sub) => (
-
                     <NavLink
                       key={sub.path}
                       to={sub.path}
@@ -126,23 +119,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
                     >
                       {sub.name}
                     </NavLink>
-
                   ))}
-
                 </div>
-
               )}
-
             </div>
-
           ))}
-
         </nav>
-
       </aside>
-
     </>
-
   );
-
 }

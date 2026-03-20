@@ -9,6 +9,7 @@ const BlogDetails = () => {
         <BlogDetailsBD/>
         <BlogDetailsContent/>
         <BlogDetalisComment/>
+        
       
     </div>
   )

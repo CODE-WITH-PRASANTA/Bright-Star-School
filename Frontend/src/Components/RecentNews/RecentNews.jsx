@@ -32,21 +32,21 @@ const RecentNews = () => {
   const newsData = [
     {
       img: news1,
-      date: "9. August 2023",
-      title: "A very warm welcome to our new Treasurer",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna",
+      date: "12 January 2026",
+      title: "New Academic Session Admissions Open",
+      desc: "Bright Stars Montessori is now accepting admissions for the new academic session. We welcome parents to visit our campus and explore our learning environment designed for young children.",
     },
     {
       img: news2,
-      date: "9. August 2023",
-      title: "Easy steps for choosing to the cearnin",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna",
+      date: "05 December 2025",
+      title: "Annual Day Celebration Highlights",
+      desc: "Our Annual Day was filled with joyful performances, creativity, and enthusiasm. Children showcased their talents while parents enjoyed a memorable celebration together.",
     },
     {
       img: news3,
-      date: "9. August 2023",
-      title: "You should know education always best",
-      desc: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna",
+      date: "20 November 2025",
+      title: "Fun Learning Activities for Young Minds",
+      desc: "We recently organized interactive classroom activities that encouraged creativity, teamwork, and hands-on learning, helping children develop essential skills in a fun way.",
     },
   ];
 
@@ -91,14 +91,19 @@ const RecentNews = () => {
 
   return (
     <section className="recentnews-section">
+
+      {/* HEADER */}
       <div className="recentnews-header reveal">
-        <h2 className="recentnews-title">Recent News</h2>
+        <h2 className="recentnews-title">
+          Latest News & Updates from Bright Stars Montessori
+        </h2>
 
         <p className="recentnews-subtitle">
-          We are constantly expanding the range of services offered
+          Stay updated with our school activities, events, and important announcements for parents and students.
         </p>
       </div>
 
+      {/* NEWS CARDS */}
       <div
         className="recentnews-container"
         ref={sliderRef}
@@ -111,7 +116,10 @@ const RecentNews = () => {
             key={index}
           >
             <div className="recentnews-image-wrapper">
-              <img src={item.img} alt="news" />
+              <img
+                src={item.img}
+                alt={`${item.title} - Bright Stars Montessori News`}
+              />
             </div>
 
             <div className="recentnews-content">
@@ -130,11 +138,14 @@ const RecentNews = () => {
         ))}
       </div>
 
+      {/* PAGINATION */}
       <div className="recentnews-pagination">
         {newsData.map((_, index) => (
           <button
             key={index}
-            className={`recentnews-dot ${activeIndex === index ? "active" : ""}`}
+            className={`recentnews-dot ${
+              activeIndex === index ? "active" : ""
+            }`}
             onClick={() => scrollToCard(index)}
             aria-label={`Go to news ${index + 1}`}
           />

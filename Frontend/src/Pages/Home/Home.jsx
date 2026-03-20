@@ -11,21 +11,68 @@ import Admission from "../../Components/Admission/Admission";
 import RecentNews from "../../Components/RecentNews/RecentNews";
 import Gallery from "../../Components/Gallery/Gallery";
 import AboutUs from "../../Components/AboutUs/AboutUs";
+import FaqSection from "../../Components/FaqSection/FaqSection";
+import StudentKnowledgeSection from "../../Components/StudentKnowledgeSection/StudentKnowledgeSection";
 
 const Home = () => {
   return (
     <div>
-      <HeroSection />
-      <AboutUs/>
-      <ChildLearningSection />
-      <ChildAgeSection />
-      <CoreValues />
-      <QualifiedTeachers />
-      <ClubsSection />
-      <Gallery/>
+
+      {/* HERO */}
+      <section id="home">
+        <HeroSection />
+      </section>
+
+      {/* ABOUT */}
+      <section id="about">
+        <AboutUs />
+      </section>
+
+      {/* LEARNING */}
+      <section id="history">
+        <ChildLearningSection />
+      </section>
+
+      {/* AGE */}
+      <section id="learning">
+        <ChildAgeSection />
+      </section>
+
+      {/* CORE VALUES */}
+      <section id="values">
+        <CoreValues />
+      </section>
+
+      {/* TEACHERS */}
+      <section id="teachers">
+        <QualifiedTeachers />
+      </section>
+
+      {/* PROGRAMS */}
+      <section id="programs">
+        <ClubsSection />
+      </section>
+
+      {/* GALLERY */}
+      <section id="gallery">
+        <Gallery />
+        <FaqSection/>
+        <StudentKnowledgeSection/>
+      </section>
+
+      {/* NEWS */}
+      <section id="news">
+        <RecentNews />
+      </section>
+
+      {/* ❌ NOT LINKED IN NAVBAR */}
       <Testimonial />
-      <Admission />
-      <RecentNews />
+
+      {/* ADMISSION / CONTACT */}
+      <section id="admission">
+        <Admission />
+      </section>
+
     </div>
   );
 };

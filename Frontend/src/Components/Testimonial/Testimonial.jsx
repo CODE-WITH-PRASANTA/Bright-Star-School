@@ -10,23 +10,23 @@ const Testimonial = () => {
 
   const testimonials = [
     {
-      name: "Vivi Marian",
-      text: "They handle all situations professionally and with genuine care. My son loves it here!",
+      name: "Priya Sharma",
+      text: "Bright Stars Montessori has been a wonderful experience for my child. The teachers are very caring and supportive, and I can see a positive change in my child's confidence and learning.",
       rating: 5
     },
     {
-      name: "Jannie Marko",
-      text: "Amazing staff and environment. Highly recommended for every parent.",
+      name: "Rahul Verma",
+      text: "We are very happy with the environment and teaching approach. The school focuses on both learning and overall development, which makes it a great choice for young children.",
       rating: 5
     },
     {
-      name: "Sophia Lee",
-      text: "A wonderful place for kids to grow and learn with happiness.",
+      name: "Neha Patel",
+      text: "The staff at Bright Stars Montessori are friendly and professional. My daughter enjoys going to school every day and loves the activities and learning sessions.",
       rating: 5
     },
     {
-      name: "Daniel Roy",
-      text: "Great experience. Very caring teachers and management.",
+      name: "Amit Singh",
+      text: "A safe and positive place for kids to grow. The teachers give personal attention, and the overall atmosphere is very welcoming for both children and parents.",
       rating: 5
     }
   ];
@@ -80,10 +80,14 @@ const Testimonial = () => {
 
   return (
     <section className="testimonial-section">
+
+      {/* HEADER */}
       <div className="testimonial-header">
         <div>
-          <p className="testimonial-subtitle">SERVICE REVIEWS</p>
-          <h2 className="testimonial-title">What Parents Say</h2>
+          <p className="testimonial-subtitle">PARENT REVIEWS</p>
+          <h2 className="testimonial-title">
+            What Parents Say About Bright Stars Montessori
+          </h2>
         </div>
 
         <div className="testimonial-arrows">
@@ -96,6 +100,7 @@ const Testimonial = () => {
         </div>
       </div>
 
+      {/* SLIDER */}
       <div className="testimonial-slider" ref={sliderRef}>
         <div className="testimonial-track">
           {[...testimonials, ...testimonials].map((item, index) => (

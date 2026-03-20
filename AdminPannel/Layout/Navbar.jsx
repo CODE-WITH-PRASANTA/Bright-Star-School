@@ -2,8 +2,7 @@ import { useState } from "react";
 import { FaBars, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 
 export default function Navbar({ sidebarOpen, setSidebarOpen }) {
-
-  const [openProfile,setOpenProfile] = useState(false);
+  const [openProfile, setOpenProfile] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -14,60 +13,39 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }) {
   };
 
   return (
+    <header className="admin-navbar">
+      <div className="navbar-left">
+        <button className="menu-btn" onClick={toggleSidebar}>
+          <FaBars />
+        </button>
 
-<header className="admin-navbar">
+        <h2 className="navbar-title">Admin Dashboard</h2>
+      </div>
 
-<div className="navbar-left">
+      <div className="navbar-profile">
+        <img
+          src="https://i.pravatar.cc/40"
+          alt="user"
+          className="profile-img"
+          onClick={() => setOpenProfile(!openProfile)}
+        />
 
-<button
-className="menu-btn"
-onClick={toggleSidebar}
->
-<FaBars/>
-</button>
+        {openProfile && (
+          <div className="profile-dropdown">
+            <button className="dropdown-item">
+              <FaUser /> Profile
+            </button>
 
-<h2 className="navbar-title">
-Admin Dashboard
-</h2>
+            <button className="dropdown-item">
+              <FaCog /> Settings
+            </button>
 
-</div>
-
-<div className="navbar-profile">
-
-<img
-src="https://i.pravatar.cc/40"
-alt="user"
-className="profile-img"
-onClick={()=>setOpenProfile(!openProfile)}
-/>
-
-{openProfile && (
-
-<div className="profile-dropdown">
-
-<button className="dropdown-item">
-<FaUser/> Profile
-</button>
-
-<button className="dropdown-item">
-<FaCog/> Settings
-</button>
-
-<button
-onClick={handleLogout}
-className="dropdown-item logout"
->
-<FaSignOutAlt/> Logout
-</button>
-
-</div>
-
-)}
-
-</div>
-
-</header>
-
+            <button onClick={handleLogout} className="dropdown-item logout">
+              <FaSignOutAlt /> Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </header>
   );
-
 }

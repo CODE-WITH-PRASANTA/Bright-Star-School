@@ -9,42 +9,42 @@ import musicImg from "../../assets/C-1.webp";
 
 const clubsLeft = [
   {
-    title: "Early Club",
+    title: "Early Learning Club",
     image: earlyImg,
     points: [
-      "Help parents get to work on time",
-      "Near the station",
-      "Children settled and ready to work",
+      "Flexible early drop-off for working parents",
+      "Calm and guided morning activities",
+      "Helps children settle comfortably into their day",
     ],
   },
   {
-    title: "Lunch Club",
+    title: "Lunch & Care Club",
     image: lunchImg,
     points: [
-      "Healthy meals and care",
-      "Near the station",
-      "Children settled and ready to work",
+      "Nutritious meals in a safe environment",
+      "Supervised care and rest time",
+      "Encourages healthy eating habits",
     ],
   },
 ];
 
 const clubsRight = [
   {
-    title: "Afternoon Club",
+    title: "Afternoon Activity Club",
     image: afternoonImg,
     points: [
-      "After school fun activities",
-      "Safe environment",
-      "Creative learning",
+      "Engaging after-school activities and games",
+      "Creative play in a safe and friendly setting",
+      "Supports social and emotional development",
     ],
   },
   {
-    title: "Music Club",
+    title: "Music & Creativity Club",
     image: musicImg,
     points: [
-      "Creative rhythm sessions",
-      "Instrument learning",
-      "Confidence building",
+      "Fun music and rhythm-based sessions",
+      "Introduction to basic instruments",
+      "Builds confidence and creative expression",
     ],
   },
 ];
@@ -53,7 +53,11 @@ function ClubCard({ title, image, points, delay }) {
   return (
     <div className="club-card reveal" style={{ transitionDelay: delay }}>
       <div className="club-thumb-wrap">
-        <img src={image} alt={title} className="club-thumb" />
+        <img
+          src={image}
+          alt={`${title} at Bright Stars Montessori`}
+          className="club-thumb"
+        />
       </div>
 
       <div className="club-info">
@@ -70,60 +74,72 @@ function ClubCard({ title, image, points, delay }) {
 
 export default function ClubsSection() {
 
-useEffect(() => {
-const elements = document.querySelectorAll(".reveal");
+  useEffect(() => {
+    const elements = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver((entries)=>{
-entries.forEach((entry)=>{
-if(entry.isIntersecting){
-entry.target.classList.add("active");
-}
-});
-},{threshold:0.2});
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, { threshold: 0.2 });
 
-elements.forEach(el=>observer.observe(el));
-},[]);
+    elements.forEach(el => observer.observe(el));
+  }, []);
 
-return (
-<section className="clubs-section">
+  return (
+    <section className="clubs-section">
 
-<div className="clubs-bg-shape clubs-bg-shape-1"></div>
-<div className="clubs-bg-shape clubs-bg-shape-2"></div>
+      <div className="clubs-bg-shape clubs-bg-shape-1"></div>
+      <div className="clubs-bg-shape clubs-bg-shape-2"></div>
 
-<div className="clubs-header reveal">
-<span className="clubs-badge">Our Programs</span>
-<h2>Available Clubs</h2>
-<p>We are constantly expanding the range of services offered</p>
-</div>
+      {/* HEADER */}
+      <div className="clubs-header reveal">
+        <span className="clubs-badge">Our Programs</span>
+        <h2>Explore Our Learning Programs at Bright Stars Montessori</h2>
+        <p>
+          We offer thoughtfully designed programs that support early childhood
+          development, helping children learn, explore, and grow in a safe and
+          engaging environment.
+        </p>
+      </div>
 
-<div className="clubs-layout">
+      <div className="clubs-layout">
 
-<div className="clubs-column">
-{clubsLeft.map((club, i) => (
-<ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
-))}
-</div>
+        {/* LEFT */}
+        <div className="clubs-column">
+          {clubsLeft.map((club, i) => (
+            <ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
+          ))}
+        </div>
 
-<div className="clubs-center reveal">
+        {/* CENTER IMAGE */}
+        <div className="clubs-center reveal">
 
-<div className="orbit orbit-1"><span className="orbit-dot"></span></div>
-<div className="orbit orbit-2"><span className="orbit-dot"></span></div>
-<div className="orbit orbit-3"><span className="orbit-dot"></span></div>
+          <div className="orbit orbit-1"><span className="orbit-dot"></span></div>
+          <div className="orbit orbit-2"><span className="orbit-dot"></span></div>
+          <div className="orbit orbit-3"><span className="orbit-dot"></span></div>
 
-<div className="center-image-wrap">
-<img src={mainImg} alt="Happy child" className="center-image" />
-</div>
+          <div className="center-image-wrap">
+            <img
+              src={mainImg}
+              alt="Children learning and playing at Bright Stars Montessori"
+              className="center-image"
+            />
+          </div>
 
-</div>
+        </div>
 
-<div className="clubs-column">
-{clubsRight.map((club, i) => (
-<ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
-))}
-</div>
+        {/* RIGHT */}
+        <div className="clubs-column">
+          {clubsRight.map((club, i) => (
+            <ClubCard key={i} {...club} delay={`${i * 0.2}s`} />
+          ))}
+        </div>
 
-</div>
+      </div>
 
-</section>
-);
+    </section>
+  );
 }

@@ -108,9 +108,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="footer-scrollTop" onClick={scrollTop}>
-        <FaArrowUp />
-      </div>
+      
     </footer>
   );
 };
