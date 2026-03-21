@@ -4,7 +4,7 @@ import "./AboutUs.css";
 // Assets
 import MissionIcon from "../../assets/Mission-icon.svg";
 import VisionIcon from "../../assets/Vision-icon.svg";
-import authorimg from "../../assets/child-1.webp";
+import authorimg from "../../assets/BrightPrincipal.webp";
 import Bordershape from "../../assets/border-shape.png";
 import lefthomeAboutimg from "../../assets/Home-About.webp";
 import frame from "../../assets/frame.png";
@@ -111,8 +111,8 @@ const AboutUs = () => {
               />
 
               <div>
-                <h5>Mrs. Kavita Sharma</h5>
-                <span>Principal & Academic Head</span>
+                <h5>Mrs. Banaja Khuntia </h5>
+                <span>Director and principal </span>
               </div>
 
             </div>

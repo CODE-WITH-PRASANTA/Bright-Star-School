@@ -21,10 +21,15 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const menu = [
     { name: "Dashboard", path: "/", icon: <FaHome /> },
 
-   
+      { name: "Cold Lead", path: "/admin/cold-lead", icon: <FaChalkboardTeacher /> },   
+      { name: "Cold Lead Table", path: "/admin/cold-lead-table", icon: <FaChalkboardTeacher /> },   
+
         { name: "News Posting", path: "/admin/newsposting", icon: <FaNewspaper /> },
         { name: "Teacher Posting", path: "/admin/teacherposting", icon: <FaChalkboardTeacher /> },
         { name: "Testimonial", path: "/admin/testimonial", icon: <FaQuoteLeft /> },
+
+        { name: "Gallery posting", path: "/admin/gallery", icon: <FaMoneyBillWave /> },
+         { name: "Admission Table", path: "/admin/Admission-Table", icon: <FaImages /> },
      
 
     // {
