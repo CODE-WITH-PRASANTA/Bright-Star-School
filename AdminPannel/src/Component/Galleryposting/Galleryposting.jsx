@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Galleryposting.css";
+import API, { IMAGE_URL } from "../../api/axios"; // ✅ ADDED
 
 const Galleryposting = () => {
   const [gallerypostingForm, setGallerypostingForm] = useState({
@@ -14,90 +15,65 @@ const Galleryposting = () => {
   const gallerypostingFileRef = useRef(null);
   const gallerypostingItemsPerPage = 5;
 
+  /* ================= FETCH ================= */
+  const fetchGallery = async () => {
+    try {
+      const res = await API.get("/gallery");
+
+      const data = (res.data.data || []).map((item) => ({
+        id: item._id,
+        image: item.image,
+        preview: IMAGE_URL + item.image, // ✅ show image
+      }));
+
+      setGallerypostingList(data);
+    } catch (err) {
+      console.error("FETCH ERROR:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+  }, []);
+
+  /* ================= IMAGE CHANGE ================= */
   const handleGallerypostingImageChange = (e) => {
     const file = e.target.files[0];
-
     if (!file) return;
 
     const imageUrl = URL.createObjectURL(file);
 
     setGallerypostingForm({
-      image: file,
+      image: file, // ✅ send file
       preview: imageUrl,
     });
   };
 
-  const handleGallerypostingSubmit = (e) => {
+  /* ================= SUBMIT ================= */
+  const handleGallerypostingSubmit = async (e) => {
     e.preventDefault();
 
-    if (!gallerypostingForm.image && !gallerypostingForm.preview) {
+    if (!gallerypostingForm.image && !gallerypostingEditId) {
       alert("Please upload a gallery image.");
       return;
     }
 
-    if (gallerypostingEditId !== null) {
-      setGallerypostingList((prev) =>
-        prev.map((item) =>
-          item.id === gallerypostingEditId
-            ? {
-                ...item,
-                image: gallerypostingForm.image,
-                preview: gallerypostingForm.preview,
-              }
-            : item
-        )
-      );
-      setGallerypostingEditId(null);
-    } else {
-      const newGallerypostingItem = {
-        id: Date.now(),
-        image: gallerypostingForm.image,
-        preview: gallerypostingForm.preview,
-      };
+    try {
+      const formData = new FormData();
 
-      setGallerypostingList((prev) => [newGallerypostingItem, ...prev]);
-    }
+      if (gallerypostingForm.image) {
+        formData.append("image", gallerypostingForm.image);
+      }
 
-    setGallerypostingForm({
-      image: null,
-      preview: "",
-    });
+      if (gallerypostingEditId !== null) {
+        await API.put(`/gallery/${gallerypostingEditId}`, formData);
+        setGallerypostingEditId(null);
+      } else {
+        await API.post("/gallery", formData);
+      }
 
-    if (gallerypostingFileRef.current) {
-      gallerypostingFileRef.current.value = "";
-    }
+      fetchGallery(); // ✅ refresh list
 
-    setGallerypostingCurrentPage(1);
-  };
-
-  const handleGallerypostingEdit = (item) => {
-    setGallerypostingForm({
-      image: item.image,
-      preview: item.preview,
-    });
-    setGallerypostingEditId(item.id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleGallerypostingDelete = (id) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this image?"
-    );
-
-    if (!confirmDelete) return;
-
-    const updatedList = gallerypostingList.filter((item) => item.id !== id);
-    setGallerypostingList(updatedList);
-
-    const updatedTotalPages =
-      Math.ceil(updatedList.length / gallerypostingItemsPerPage) || 1;
-
-    if (gallerypostingCurrentPage > updatedTotalPages) {
-      setGallerypostingCurrentPage(updatedTotalPages);
-    }
-
-    if (gallerypostingEditId === id) {
-      setGallerypostingEditId(null);
       setGallerypostingForm({
         image: null,
         preview: "",
@@ -106,9 +82,41 @@ const Galleryposting = () => {
       if (gallerypostingFileRef.current) {
         gallerypostingFileRef.current.value = "";
       }
+
+      setGallerypostingCurrentPage(1);
+    } catch (err) {
+      console.error("SUBMIT ERROR:", err);
     }
   };
 
+  /* ================= EDIT ================= */
+  const handleGallerypostingEdit = (item) => {
+    setGallerypostingForm({
+      image: null,
+      preview: item.preview, // ✅ show existing
+    });
+
+    setGallerypostingEditId(item.id);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  /* ================= DELETE ================= */
+  const handleGallerypostingDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this image?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await API.delete(`/gallery/${id}`);
+      fetchGallery();
+    } catch (err) {
+      console.error("DELETE ERROR:", err);
+    }
+  };
+
+  /* ================= PAGINATION ================= */
   const gallerypostingTotalPages =
     Math.ceil(gallerypostingList.length / gallerypostingItemsPerPage) || 1;
 
@@ -275,7 +283,9 @@ const Galleryposting = () => {
                         : gallerypostingTotalPages
                     )
                   }
-                  disabled={gallerypostingCurrentPage === gallerypostingTotalPages}
+                  disabled={
+                    gallerypostingCurrentPage === gallerypostingTotalPages
+                  }
                 >
                   Next
                 </button>

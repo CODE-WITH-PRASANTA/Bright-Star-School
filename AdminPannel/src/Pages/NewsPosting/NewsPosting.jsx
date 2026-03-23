@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import React, { useMemo, useState } from "react";
 import "./NewsPosting.css";
+import API, { IMAGE_URL } from "../../api/axios";
 import {
   FaCalendarAlt,
   FaEdit,
@@ -32,37 +34,20 @@ const NewsPosting = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [editId, setEditId] = useState(null);
   const [viewPost, setViewPost] = useState(null);
+  const [posts, setPosts] = useState([]);
 
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=900&q=80",
-      date: "2026-01-12",
-      title: "New Academic Session Admissions Open",
-      description:
-        "Bright Stars Montessori is now accepting admissions for the new academic session. Parents are welcome to visit our campus and explore our learning environment designed for young children.",
-      buttonText: "Read More",
-      link: "",
-      status: "Active",
-      featured: true,
-      order: 1,
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=900&q=80",
-      date: "2025-12-05",
-      title: "Annual Day Celebration Highlights",
-      description:
-        "Our Annual Day was filled with joyful performances, creativity, and enthusiasm. Children showcased their talents while parents enjoyed a memorable celebration together.",
-      buttonText: "Read More",
-      link: "",
-      status: "Active",
-      featured: false,
-      order: 2,
-    },
-  ]);
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await API.get("/news");
+        setPosts(res.data.data || []);
+      } catch (err) {
+        console.error("FETCH ERROR:", err);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "12 January 2026";
@@ -83,17 +68,26 @@ const NewsPosting = () => {
     () => ({
       image:
         previewImage ||
-        form.image ||
+        (typeof form.image === "string" && form.image
+          ? IMAGE_URL + form.image
+          : "") ||
         "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80",
+
       date: formatDate(form.date),
+
       title: form.title || "New Academic Session Admissions Open",
+
       description: truncateText(form.description),
+
       buttonText: form.buttonText || "Read More",
+
       featured: form.featured,
+
       status: form.status,
+
       link: form.link,
     }),
-    [form, previewImage]
+    [form, previewImage],
   );
 
   const handleChange = (e) => {
@@ -112,32 +106,39 @@ const NewsPosting = () => {
     setPreviewImage(imageUrl);
     setForm((prev) => ({
       ...prev,
-      image: imageUrl,
+      image: file, // ✅ IMPORTANT
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      ...form,
-      id: editId || Date.now(),
-      order: Number(form.order) || 1,
-    };
+    const formData = new FormData();
 
-    if (editId) {
-      setPosts((prev) =>
-        prev.map((item) => (item.id === editId ? payload : item))
-      );
-      setEditId(null);
-    } else {
-      setPosts((prev) => [...prev, payload]);
+    Object.keys(form).forEach((key) => {
+      formData.append(key, form[key]);
+    });
+
+    try {
+      if (editId) {
+        const res = await API.put(`/news/${editId}`, formData);
+
+        setPosts((prev) =>
+          prev.map((item) => (item._id === editId ? res.data.data : item)),
+        );
+
+        setEditId(null);
+      } else {
+        const res = await API.post("/news", formData);
+        setPosts((prev) => [...prev, res.data.data]);
+      }
+
+      setForm(initialForm);
+      setPreviewImage("");
+    } catch (err) {
+      console.error("SUBMIT ERROR:", err);
     }
-
-    setForm(initialForm);
-    setPreviewImage("");
   };
-
   const handleClear = () => {
     setForm(initialForm);
     setPreviewImage("");
@@ -145,42 +146,33 @@ const NewsPosting = () => {
   };
 
   const handleEdit = (post) => {
-    setForm({
-      image: post.image,
-      date: post.date,
-      title: post.title,
-      description: post.description,
-      buttonText: post.buttonText,
-      link: post.link,
-      status: post.status,
-      featured: post.featured,
-      order: post.order,
-    });
-    setPreviewImage(post.image);
-    setEditId(post.id);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setForm(post);
+    setPreviewImage(IMAGE_URL + post.image);
+    setEditId(post._id);
   };
 
-  const handleDelete = (id) => {
-    setPosts((prev) => prev.filter((item) => item.id !== id));
-    if (editId === id) handleClear();
-    if (viewPost?.id === id) setViewPost(null);
+  const handleDelete = async (id) => {
+    try {
+      await API.delete(`/news/${id}`);
+      setPosts((prev) => prev.filter((item) => item._id !== id));
+    } catch (err) {
+      console.error("DELETE ERROR:", err);
+    }
+  };
+  const handleToggleStatus = async (id) => {
+    try {
+      const res = await API.put(`/news/${id}/status`);
+      setPosts((prev) =>
+        prev.map((item) => (item._id === id ? res.data.data : item)),
+      );
+    } catch (err) {
+      console.error("STATUS ERROR:", err);
+    }
   };
 
-  const handleToggleStatus = (id) => {
-    setPosts((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? {
-              ...item,
-              status: item.status === "Active" ? "Inactive" : "Active",
-            }
-          : item
-      )
-    );
-  };
-
-  const sortedPosts = [...posts].sort((a, b) => Number(a.order) - Number(b.order));
+  const sortedPosts = [...posts].sort(
+    (a, b) => Number(a.order) - Number(b.order),
+  );
 
   return (
     <>
@@ -208,7 +200,11 @@ const NewsPosting = () => {
                   <input type="file" accept="image/*" onChange={handleImage} />
                   <div className={`${base}__uploadContent`}>
                     <FaImage />
-                    <span>{previewImage || form.image ? "Change Image" : "Choose Image"}</span>
+                    <span>
+                      {previewImage || form.image
+                        ? "Change Image"
+                        : "Choose Image"}
+                    </span>
                   </div>
                 </label>
               </div>
@@ -401,10 +397,10 @@ const NewsPosting = () => {
               <tbody>
                 {sortedPosts.length > 0 ? (
                   sortedPosts.map((post) => (
-                    <tr key={post.id}>
+                    <tr key={post._id}>
                       <td>
                         <img
-                          src={post.image}
+                          src={IMAGE_URL + post.image}
                           alt={post.title}
                           className={`${base}__tableImage`}
                         />
@@ -453,16 +449,20 @@ const NewsPosting = () => {
 
                           <button
                             className={`${base}__iconBtn toggle`}
-                            onClick={() => handleToggleStatus(post.id)}
+                            onClick={() => handleToggleStatus(post._id)}
                             type="button"
                             title="Activate / Deactivate"
                           >
-                            {post.status === "Active" ? <FaToggleOn /> : <FaToggleOff />}
+                            {post.status === "Active" ? (
+                              <FaToggleOn />
+                            ) : (
+                              <FaToggleOff />
+                            )}
                           </button>
 
                           <button
                             className={`${base}__iconBtn delete`}
-                            onClick={() => handleDelete(post.id)}
+                            onClick={() => handleDelete(post._id)}
                             type="button"
                             title="Delete"
                           >
@@ -486,7 +486,10 @@ const NewsPosting = () => {
       </section>
 
       {viewPost && (
-        <div className={`${base}__modalOverlay`} onClick={() => setViewPost(null)}>
+        <div
+          className={`${base}__modalOverlay`}
+          onClick={() => setViewPost(null)}
+        >
           <div
             className={`${base}__modal`}
             onClick={(e) => e.stopPropagation()}
@@ -500,7 +503,7 @@ const NewsPosting = () => {
             </button>
 
             <div className={`${base}__modalImageWrap`}>
-              <img src={viewPost.image} alt={viewPost.title} />
+              <img src={IMAGE_URL + viewPost.image} alt={viewPost.title} />{" "}
             </div>
 
             <div className={`${base}__modalBody`}>
