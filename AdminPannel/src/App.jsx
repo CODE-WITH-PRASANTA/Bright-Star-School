@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdminLayout from "../Layout/AdminLayout";
 
-
 import Teacher from "./Pages/Teacher/Teacher";
 import Testimonial from "./Pages/Testimonial/Testimonial";
 
@@ -21,30 +20,30 @@ import ColdLeadTable from "./Component/ColdLeadTable/ColdLeadTable";
 function App() {
   return (
     <BrowserRouter>
-
       <Routes>
-
         {/* Only Layout Route */}
-        <Route element={<AdminLayout/>}>
-     <Route path="/" element={< DashBoard/>}/> 
-     <Route path="/admin/newsposting" element={<NewsPosting/>}/>   
-     <Route path="/admin/teacherposting" element={<Teacher/>}/>
-     <Route path="/admin/testimonial" element={<Testimonial/>}/>
-     <Route path="/student/admission" element={<StudentAdmission />} />
-     <Route path="/student/admission/details" element={<StudentAdmsnDetails />} />
-     <Route path="/fee-collect" element={<FeeCollection />} />
-     <Route path="/fee-type" element={<FeeType />} />
-     <Route  path="/admin/profile" element={< ProFilePicture />} />
 
-     <Route path="/admin/cold-lead" element={<ColdLead />} />
-     <Route path="/admin/gallery" element={<Galleryposting />} />
-     <Route path="/admin/Admission-Table" element={<AdmissionTable />} />
-     <Route path="/admin/cold-lead-table" element={<ColdLeadTable />} />
-  
+        <Route element={<AdminLayout />}>
+          <Route path="/" element={<DashBoard />} />
+          <Route path="/admin/newsposting" element={<NewsPosting />} />
+
+          <Route path="/admin/teacherposting" element={<Teacher />} />
+          <Route path="/admin/testimonial" element={<Testimonial />} />
+          <Route path="/student/admission" element={<StudentAdmission />} />
+          <Route
+            path="/student/admission/details"
+            element={<StudentAdmsnDetails />}
+          />
+          <Route path="/fee-collect" element={<FeeCollection />} />
+          <Route path="/fee-type" element={<FeeType />} />
+          <Route path="/admin/profile" element={<ProFilePicture />} />
+
+          <Route path="/admin/gallery" element={<Galleryposting />} />
+          <Route path="/admin/Admission-Table" element={<AdmissionTable />} />
+          <Route path="/admin/cold-lead" element={<ColdLead />} />
+          <Route path="/admin/cold-lead-table" element={<ColdLeadTable />} />
         </Route>
-
       </Routes>
-
     </BrowserRouter>
   );
 }

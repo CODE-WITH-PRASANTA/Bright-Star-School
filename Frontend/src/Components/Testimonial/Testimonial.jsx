@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Testimonial.css";
 import { FaQuoteLeft, FaStar, FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import API from "../../api/axios"; // ✅ ADDED
 
 const Testimonial = () => {
   const sliderRef = useRef(null);
@@ -8,29 +9,35 @@ const Testimonial = () => {
   const pauseRef = useRef(false);
   const pauseTimeoutRef = useRef(null);
 
-  const testimonials = [
-    {
-      name: "Priya Sharma",
-      text: "Bright Stars Montessori has been a wonderful experience for my child. The teachers are very caring and supportive, and I can see a positive change in my child's confidence and learning.",
-      rating: 5
-    },
-    {
-      name: "Rahul Verma",
-      text: "We are very happy with the environment and teaching approach. The school focuses on both learning and overall development, which makes it a great choice for young children.",
-      rating: 5
-    },
-    {
-      name: "Neha Patel",
-      text: "The staff at Bright Stars Montessori are friendly and professional. My daughter enjoys going to school every day and loves the activities and learning sessions.",
-      rating: 5
-    },
-    {
-      name: "Amit Singh",
-      text: "A safe and positive place for kids to grow. The teachers give personal attention, and the overall atmosphere is very welcoming for both children and parents.",
-      rating: 5
-    }
-  ];
+  const [testimonials, setTestimonials] = useState([]); // ✅ BACKEND DATA
 
+  /* ================= FETCH ================= */
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const res = await API.get("/testimonials");
+
+        // ✅ Only Active testimonials
+        const activeData = (res.data.data || []).filter(
+          (item) => item.status === "Active"
+        );
+
+        const formatted = activeData.map((item) => ({
+          name: item.parentName,
+          text: item.reviewText,
+          rating: item.rating,
+        }));
+
+        setTestimonials(formatted);
+      } catch (err) {
+        console.error("FETCH ERROR:", err);
+      }
+    };
+
+    fetchTestimonials();
+  }, []);
+
+  /* ================= AUTO SCROLL ================= */
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -53,8 +60,9 @@ const Testimonial = () => {
       cancelAnimationFrame(animationRef.current);
       clearTimeout(pauseTimeoutRef.current);
     };
-  }, []);
+  }, [testimonials]); // ✅ re-run when data loads
 
+  /* ================= MANUAL SCROLL ================= */
   const scroll = (dir) => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -70,7 +78,7 @@ const Testimonial = () => {
 
     slider.scrollBy({
       left: dir === "left" ? -width : width,
-      behavior: "smooth"
+      behavior: "smooth",
     });
 
     pauseTimeoutRef.current = setTimeout(() => {

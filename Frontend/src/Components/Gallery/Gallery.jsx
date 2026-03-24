@@ -1,22 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import "./Gallery.css";
-
-import g1 from "../../assets/child-1.webp";
-import g2 from "../../assets/Child-2.webp";
-import g3 from "../../assets/Gal-11.webp";
-import g4 from "../../assets/Gal-22.webp";
-import g5 from "../../assets/Gal-44.webp";
-import g6 from "../../assets/Gal-55.webp";
-import g7 from "../../assets/Gal-66.webp";
-import g8 from "../../assets/Gal_33.webp";
-import g9 from "../../assets/emoji-2.webp";
-
-const images = [g1, g2, g3, g4, g5, g6, g7, g8, g9];
-const sliderImages = [...images, ...images];
+import API, { IMAGE_URL } from "../../api/axios"; // ✅ ADDED
 
 export default function Gallery() {
   const sliderRef = useRef(null);
   const autoRef = useRef(null);
+
+  const [images, setImages] = useState([]); // ✅ BACKEND DATA
+  const [sliderImages, setSliderImages] = useState([]);
 
   const [index, setIndex] = useState(0);
   const [open, setOpen] = useState(false);
@@ -29,13 +20,32 @@ export default function Gallery() {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
+  /* ================= FETCH ================= */
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await API.get("/gallery");
+
+        const data = (res.data.data || []).map(
+          (item) => IMAGE_URL + item.image
+        );
+
+        setImages(data);
+        setSliderImages([...data, ...data]); // ✅ duplicate for infinite
+      } catch (err) {
+        console.error("FETCH ERROR:", err);
+      }
+    };
+
+    fetchGallery();
+  }, []);
+
+  /* ================= AUTO SCROLL ================= */
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider || pause || open) return;
 
     const autoScroll = () => {
-      if (!slider) return;
-
       slider.scrollLeft += 0.65;
 
       if (slider.scrollLeft >= slider.scrollWidth / 2) {
@@ -48,8 +58,9 @@ export default function Gallery() {
     autoRef.current = requestAnimationFrame(autoScroll);
 
     return () => cancelAnimationFrame(autoRef.current);
-  }, [pause, open]);
+  }, [pause, open, sliderImages]);
 
+  /* ================= WHEEL ================= */
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -68,20 +79,16 @@ export default function Gallery() {
     };
 
     slider.addEventListener("wheel", handleWheel, { passive: false });
-
-    return () => {
-      slider.removeEventListener("wheel", handleWheel);
-    };
+    return () => slider.removeEventListener("wheel", handleWheel);
   }, []);
 
+  /* ================= MODAL LOCK ================= */
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
-
-    return () => {
-      document.body.style.overflow = "auto";
-    };
+    return () => (document.body.style.overflow = "auto");
   }, [open]);
 
+  /* ================= DRAG ================= */
   const handleMouseDown = (e) => {
     const slider = sliderRef.current;
     if (!slider) return;
@@ -100,7 +107,6 @@ export default function Gallery() {
 
     isDown.current = false;
     slider.classList.remove("dragging");
-
     if (!open) setPause(false);
   };
 
@@ -110,7 +116,6 @@ export default function Gallery() {
 
     isDown.current = false;
     slider.classList.remove("dragging");
-
     if (!open) setPause(false);
   };
 
@@ -130,6 +135,7 @@ export default function Gallery() {
     }
   };
 
+  /* ================= MODAL ================= */
   const openImage = (i) => {
     setIndex(i % images.length);
     setOpen(true);
@@ -146,7 +152,9 @@ export default function Gallery() {
   };
 
   const prev = () => {
-    setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    setIndex((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1
+    );
   };
 
   const handleTouchStart = (e) => {
@@ -176,18 +184,13 @@ export default function Gallery() {
 
   return (
     <section className="gallery">
-      <div className="gallery-shape gallery-shape-one"></div>
-      <div className="gallery-shape gallery-shape-two"></div>
-      <div className="gallery-shape gallery-shape-three"></div>
-
       <div className="gallery-header">
         <span className="gallery-badge">Captured Moments</span>
         <h2 className="gallery-title">
           Our <span>Beautiful Gallery</span>
         </h2>
         <p className="gallery-text">
-          Explore joyful memories, creative activities, celebrations, and
-          inspiring classroom moments that reflect the happiness of learning.
+          Explore joyful memories and activities.
         </p>
       </div>
 
@@ -211,7 +214,9 @@ export default function Gallery() {
 
               <div className="gallery-overlay">
                 <div className="gallery-overlay-content">
-                  <span className="gallery-overlay-btn">View Photo</span>
+                  <span className="gallery-overlay-btn">
+                    View Photo
+                  </span>
                 </div>
               </div>
             </div>
@@ -227,7 +232,6 @@ export default function Gallery() {
               e.stopPropagation();
               prev();
             }}
-            aria-label="Previous image"
           >
             ❮
           </button>
@@ -238,24 +242,10 @@ export default function Gallery() {
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <div className="gallery-modal-top">
-              <div className="gallery-count">
-                {index + 1} / {images.length}
-              </div>
-
-              <button
-                className="gallery-close"
-                onClick={closeImage}
-                aria-label="Close gallery"
-              >
-                ✕
-              </button>
-            </div>
-
             <div className="gallery-modal-img-box">
               <img
                 src={images[index]}
-                alt={`preview-${index}`}
+                alt="preview"
                 className="gallery-modal-img"
               />
             </div>
@@ -265,8 +255,12 @@ export default function Gallery() {
                 <img
                   key={i}
                   src={img}
-                  alt={`thumb-${i}`}
-                  className={i === index ? "gallery-thumb active" : "gallery-thumb"}
+                  alt="thumb"
+                  className={
+                    i === index
+                      ? "gallery-thumb active"
+                      : "gallery-thumb"
+                  }
                   onClick={() => setIndex(i)}
                 />
               ))}
@@ -279,7 +273,6 @@ export default function Gallery() {
               e.stopPropagation();
               next();
             }}
-            aria-label="Next image"
           >
             ❯
           </button>

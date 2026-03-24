@@ -1,7 +1,7 @@
-/* IMPORT FONT */
+/* ================= FONT ================= */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
 
-/* NAVBAR */
+/* ================= NAVBAR ================= */
 .navbar {
   width: 100%;
   background: #fff;
@@ -13,49 +13,45 @@
 }
 
 .navbar-container {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 10px 20px;
 }
 
-/* LOGO */
+/* ================= LOGO ================= */
 .navbar-logo img {
-  height: 90px;
+  height: 70px;
   width: auto;
   object-fit: contain;
   display: block;
-  margin-left: 70px;
 }
 
-/* DESKTOP MENU */
+/* ================= DESKTOP MENU ================= */
 .navbar-menu {
   display: flex;
-  gap: 35px;
+  gap: 30px;
   list-style: none;
 }
 
 .navbar-menu li {
   position: relative;
   cursor: pointer;
-}
-
-/* TEXT STYLE */
-.navbar-menu li {
-  font-size: 17px;
-  font-weight: 600; /* increased */
+  font-size: 16px;
+  font-weight: 600;
   color: #222;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
-/* HOVER COLOR */
+/* HOVER */
 .navbar-menu li:hover {
   color: #ff2a4f;
 }
 
-/* UNDERLINE HOVER EFFECT */
+/* UNDERLINE */
 .navbar-menu li::after {
   content: "";
   position: absolute;
@@ -71,21 +67,21 @@
   width: 100%;
 }
 
-/* MENU ICON */
+/* ================= MENU ICON ================= */
 .navbar-menuIcon {
   display: none;
-  font-size: 28px;
+  font-size: 26px;
   cursor: pointer;
 }
 
-/* OVERLAY */
+/* ================= OVERLAY ================= */
 .navbar-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.5);
   opacity: 0;
   visibility: hidden;
   transition: 0.3s;
@@ -97,16 +93,16 @@
   visibility: visible;
 }
 
-/* SIDEBAR */
+/* ================= SIDEBAR ================= */
 .navbar-sidebar {
   position: fixed;
   top: 0;
-  left: -300px;
-  width: 300px;
+  left: -320px;
+  width: 280px;
   height: 100%;
   background: #fff;
   z-index: 999;
-  transition: 0.4s;
+  transition: 0.4s ease;
   display: flex;
   flex-direction: column;
 }
@@ -115,33 +111,33 @@
   left: 0;
 }
 
-/* SIDEBAR HEADER */
+/* ================= SIDEBAR HEADER ================= */
 .navbar-sidebarHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 20px;
+  padding: 18px;
   border-bottom: 1px solid #eee;
 }
 
 .navbar-sidebarHeader img {
-  height: 50px;
+  height: 45px;
 }
 
 .navbar-closeIcon {
-  font-size: 24px;
+  font-size: 20px;
   cursor: pointer;
   background: #ff2a4f;
   color: #fff;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
 }
 
-/* SIDEBAR MENU */
+/* ================= SIDEBAR MENU ================= */
 .navbar-sidebarMenu {
   list-style: none;
   padding: 10px 0;
@@ -151,35 +147,77 @@
   border-bottom: 1px solid #eee;
 }
 
-/* SIDEBAR TEXT */
 .navbar-sidebarMenu li span {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 15px 20px;
+  gap: 12px;
+  padding: 14px 20px;
   color: #333;
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
   transition: 0.3s;
 }
 
-/* SIDEBAR HOVER */
 .navbar-sidebarMenu li span:hover {
   background: #f5f5f5;
   color: #ff2a4f;
 }
 
-/* RESPONSIVE */
-@media (max-width: 992px) {
-  .navbar-logo img {
-    margin-left: 0px;
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+  .navbar-container {
+    padding: 10px 15px;
   }
 
+  .navbar-menu {
+    gap: 20px;
+  }
+
+  .navbar-logo img {
+    height: 60px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 1080px) {
   .navbar-menu {
     display: none;
   }
 
   .navbar-menuIcon {
     display: block;
+  }
+
+  .navbar-logo img {
+    height: 55px;
+  }
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 576px) {
+  .navbar-container {
+    padding: 10px 12px;
+  }
+
+  .navbar-logo img {
+    height: 50px;
+  }
+
+  .navbar-sidebar {
+    width: 250px;
+  }
+
+  .navbar-sidebarHeader img {
+    height: 40px;
+  }
+}
+
+/* ================= EXTRA SMALL ================= */
+@media (max-width: 400px) {
+  .navbar-logo img {
+    height: 45px;
+  }
+
+  .navbar-sidebar {
+    width: 220px;
   }
 }
