@@ -8,6 +8,10 @@ const enquiryRoutes = require("./routes/enquiry.routes");
 const newsRoutes = require("./routes/news.routes");
 const testimonialRoutes = require("./routes/testimonial.routes");
 const galleryRoutes = require("./routes/gallery.routes");
+const teacherRoutes = require("./routes/teacher.routes");
+const studentAdmissionRoutes = require("./routes/studentAdmission.routes");
+const feeRoutes = require("./routes/fee.routes");
+
 
 
 
@@ -29,6 +33,9 @@ app.use("/api/enquiries", enquiryRoutes); // ✅ FIXED
 app.use("/api/news", newsRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/gallery", galleryRoutes);
+app.use("/api", teacherRoutes);
+app.use("/api/students", studentAdmissionRoutes);
+app.use("/api/admission/fees", feeRoutes);
 
 /* ================= DB CONNECT ================= */
 connectDB();

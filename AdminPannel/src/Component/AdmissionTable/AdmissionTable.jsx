@@ -1,109 +1,9 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./AdmissionTable.css";
+import API from "../../api/axios";
 
 const AdmissionTable = () => {
-  const [admissionTableList, setAdmissionTableList] = useState([
-    {
-      id: 1,
-      childName: "Aarav Sharma",
-      childDob: "12-04-2018",
-      parentName: "Rohit Sharma",
-      parentDesignation: "Software Engineer",
-      email: "rohit.sharma@gmail.com",
-      phoneNo: "9876543210",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 2,
-      childName: "Anaya Das",
-      childDob: "03-09-2019",
-      parentName: "Suman Das",
-      parentDesignation: "Teacher",
-      email: "suman.das@gmail.com",
-      phoneNo: "9123456780",
-      notifyProgress: "No",
-    },
-    {
-      id: 3,
-      childName: "Vivaan Patel",
-      childDob: "25-01-2018",
-      parentName: "Ketan Patel",
-      parentDesignation: "Businessman",
-      email: "ketan.patel@gmail.com",
-      phoneNo: "9988776655",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 4,
-      childName: "Diya Nayak",
-      childDob: "16-07-2019",
-      parentName: "Prakash Nayak",
-      parentDesignation: "Bank Manager",
-      email: "prakash.nayak@gmail.com",
-      phoneNo: "9090909090",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 5,
-      childName: "Ishaan Verma",
-      childDob: "08-12-2017",
-      parentName: "Neha Verma",
-      parentDesignation: "Doctor",
-      email: "neha.verma@gmail.com",
-      phoneNo: "9012345678",
-      notifyProgress: "No",
-    },
-    {
-      id: 6,
-      childName: "Myra Sahoo",
-      childDob: "21-06-2018",
-      parentName: "Rakesh Sahoo",
-      parentDesignation: "Civil Engineer",
-      email: "rakesh.sahoo@gmail.com",
-      phoneNo: "9345678912",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 7,
-      childName: "Advik Singh",
-      childDob: "14-02-2019",
-      parentName: "Pooja Singh",
-      parentDesignation: "Lawyer",
-      email: "pooja.singh@gmail.com",
-      phoneNo: "9776655443",
-      notifyProgress: "No",
-    },
-    {
-      id: 8,
-      childName: "Kiara Mishra",
-      childDob: "30-10-2018",
-      parentName: "Amit Mishra",
-      parentDesignation: "Accountant",
-      email: "amit.mishra@gmail.com",
-      phoneNo: "9456781234",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 9,
-      childName: "Reyansh Gupta",
-      childDob: "11-03-2019",
-      parentName: "Sneha Gupta",
-      parentDesignation: "HR Manager",
-      email: "sneha.gupta@gmail.com",
-      phoneNo: "9881122334",
-      notifyProgress: "Yes",
-    },
-    {
-      id: 10,
-      childName: "Sara Khan",
-      childDob: "19-08-2018",
-      parentName: "Imran Khan",
-      parentDesignation: "Architect",
-      email: "imran.khan@gmail.com",
-      phoneNo: "9765432101",
-      notifyProgress: "No",
-    },
-  ]);
+  const [admissionTableList, setAdmissionTableList] = useState([]);
 
   const [admissionTableEditId, setAdmissionTableEditId] = useState(null);
   const [admissionTableCurrentPage, setAdmissionTableCurrentPage] = useState(1);
@@ -118,52 +18,54 @@ const AdmissionTable = () => {
     notifyProgress: "No",
   });
 
+  useEffect(() => {
+    fetchAdmissions();
+  }, []);
+
+  const fetchAdmissions = async () => {
+    try {
+      const res = await API.get("/students");
+
+      const data = res.data?.data || res.data?.students || res.data || [];
+
+      const formatted = data.map((item) => ({
+        id: item._id,
+        childName: `${item.firstName || ""} ${item.lastName || ""}`,
+        childDob: item.dob ? item.dob.split("T")[0] : "",
+        parentName: item.guardianName,
+        parentDesignation: item.guardianOccupation,
+        email: item.email,
+        phoneNo: item.guardianPhone,
+        notifyProgress: "Yes",
+      }));
+
+      setAdmissionTableList(formatted);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const admissionTableItemsPerPage = 8;
 
   const handleAdmissionTableEdit = (item) => {
-    setAdmissionTableEditId(item.id);
-    setAdmissionTableForm({
-      childName: item.childName,
-      childDob: item.childDob,
-      parentName: item.parentName,
-      parentDesignation: item.parentDesignation,
-      email: item.email,
-      phoneNo: item.phoneNo,
-      notifyProgress: item.notifyProgress,
-    });
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    localStorage.setItem("editStudentId", item.id);
+    window.location.href = "/student/admission";
   };
 
-  const handleAdmissionTableDelete = (id) => {
-    const admissionTableConfirmDelete = window.confirm(
-      "Are you sure you want to delete this admission record?"
+  const handleAdmissionTableDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this admission record?",
     );
 
-    if (!admissionTableConfirmDelete) return;
+    if (!confirmDelete) return;
 
-    const admissionTableUpdatedList = admissionTableList.filter(
-      (item) => item.id !== id
-    );
-    setAdmissionTableList(admissionTableUpdatedList);
+    try {
+      await API.delete(`/students/${id}`);
 
-    const admissionTableUpdatedPages =
-      Math.ceil(admissionTableUpdatedList.length / admissionTableItemsPerPage) || 1;
-
-    if (admissionTableCurrentPage > admissionTableUpdatedPages) {
-      setAdmissionTableCurrentPage(admissionTableUpdatedPages);
-    }
-
-    if (admissionTableEditId === id) {
-      setAdmissionTableEditId(null);
-      setAdmissionTableForm({
-        childName: "",
-        childDob: "",
-        parentName: "",
-        parentDesignation: "",
-        email: "",
-        phoneNo: "",
-        notifyProgress: "No",
-      });
+      fetchAdmissions(); // refresh list
+    } catch (err) {
+      console.error(err);
+      alert("Delete failed");
     }
   };
 
@@ -189,23 +91,6 @@ const AdmissionTable = () => {
       return;
     }
 
-    setAdmissionTableList((prev) =>
-      prev.map((item) =>
-        item.id === admissionTableEditId
-          ? {
-              ...item,
-              childName: admissionTableForm.childName,
-              childDob: admissionTableForm.childDob,
-              parentName: admissionTableForm.parentName,
-              parentDesignation: admissionTableForm.parentDesignation,
-              email: admissionTableForm.email,
-              phoneNo: admissionTableForm.phoneNo,
-              notifyProgress: admissionTableForm.notifyProgress,
-            }
-          : item
-      )
-    );
-
     setAdmissionTableEditId(null);
     setAdmissionTableForm({
       childName: "",
@@ -227,7 +112,7 @@ const AdmissionTable = () => {
   const admissionTablePaginatedList = useMemo(() => {
     return admissionTableList.slice(
       admissionTableStartIndex,
-      admissionTableStartIndex + admissionTableItemsPerPage
+      admissionTableStartIndex + admissionTableItemsPerPage,
     );
   }, [admissionTableList, admissionTableStartIndex]);
 
@@ -285,7 +170,9 @@ const AdmissionTable = () => {
               </div>
 
               <div className="admissionTable__formGroup">
-                <label className="admissionTable__label">Parent's Designation</label>
+                <label className="admissionTable__label">
+                  Parent's Designation
+                </label>
                 <input
                   type="text"
                   name="parentDesignation"
@@ -318,7 +205,9 @@ const AdmissionTable = () => {
               </div>
 
               <div className="admissionTable__formGroup">
-                <label className="admissionTable__label">Notify Weekly Progress</label>
+                <label className="admissionTable__label">
+                  Notify Weekly Progress
+                </label>
                 <select
                   name="notifyProgress"
                   className="admissionTable__input"
@@ -434,7 +323,7 @@ const AdmissionTable = () => {
                 handleAdmissionTablePageChange(
                   admissionTableCurrentPage > 1
                     ? admissionTableCurrentPage - 1
-                    : 1
+                    : 1,
                 )
               }
               disabled={admissionTableCurrentPage === 1}
@@ -462,7 +351,7 @@ const AdmissionTable = () => {
                 handleAdmissionTablePageChange(
                   admissionTableCurrentPage < admissionTableTotalPages
                     ? admissionTableCurrentPage + 1
-                    : admissionTableTotalPages
+                    : admissionTableTotalPages,
                 )
               }
               disabled={admissionTableCurrentPage === admissionTableTotalPages}

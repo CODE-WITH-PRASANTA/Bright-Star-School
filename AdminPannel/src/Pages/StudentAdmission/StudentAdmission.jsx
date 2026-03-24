@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AccordionSection from "../../Component/AccordionSection/AccordionSection";
 import API, { IMAGE_URL } from "../../api/axios";
 import { Download } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
 import "./StudentAdmission.css";
 
 const initialFormState = {
@@ -66,6 +68,7 @@ const initialFormState = {
   hostelName: "",
   roomType: "",
   room: "",
+  documents: {},
 
   bankAccountNumber: "",
   bankName: "",
@@ -82,6 +85,7 @@ export default function StudentAdmission() {
   const [files, setFiles] = useState({});
   const [loading, setLoading] = useState(false);
   const [editId, setEditId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const id = localStorage.getItem("editStudentId");
@@ -97,6 +101,8 @@ export default function StudentAdmission() {
         setFormData({
           ...initialFormState,
           ...studentData,
+          documents: studentData.documents || {},
+
           studentBehaviour: Array.isArray(studentData.studentBehaviour)
             ? studentData.studentBehaviour
             : studentData.studentBehaviour
@@ -210,7 +216,7 @@ export default function StudentAdmission() {
       Object.keys(formData).forEach((key) => {
         const value = formData[key];
 
-        if (value !== undefined && value !== null && value !== "") {
+        if (value !== undefined && value !== null) {
           if (Array.isArray(value)) {
             data.append(key, JSON.stringify(value));
           } else {
@@ -237,7 +243,7 @@ export default function StudentAdmission() {
         alert("Student Updated Successfully");
 
         localStorage.removeItem("editStudentId");
-        window.location.href = "/student/admission/details";
+        navigate("/student/admission/details");
       } else {
         await API.post("/students", data, {
           headers: {
