@@ -214,7 +214,7 @@ const FeeType = () => {
       {showModal && (
         <div className="FeeType-modal">
           <div className="FeeType-modalContent">
-            <FiX className="close" onClick={() => setShowModal(false)} />
+            <FiX className="feetype-close" onClick={() => setShowModal(false)} />
 
             <h3>{editItem ? "Edit Fees Type" : "Add New Fees Type"}</h3>
 

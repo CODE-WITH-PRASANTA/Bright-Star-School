@@ -151,34 +151,63 @@
     align-items: center;
   }
 }
-
-/* ================= PRINT (A4 PERFECT) ================= */
 @media print {
 
-  body {
-    margin: 0;
+  /* HIDE EVERYTHING */
+  body * {
+    display: none !important;
   }
 
+  /* SHOW ONLY RECEIPT + ITS PARENT */
+  .receipt-overlay,
+  #receipt-print-area,
+  #receipt-print-area * {
+    display: block !important;
+  }
+
+  /* REMOVE OVERLAY STYLE */
   .receipt-overlay {
-    position: static;
-    background: none;
-    padding: 0;
+    position: static !important;
+    background: none !important;
+    padding: 0 !important;
   }
 
-  .receipt-card {
-    width: 210mm !important;
-    min-height: 297mm;
-    padding: 15mm;            /* ✅ PERFECT PRINT SPACING */
-    border-radius: 0;
-    box-shadow: none;
+  /* PERFECT A4 */
+  #receipt-print-area {
+    width: 190mm;
+    min-height: 277mm;
+    margin: auto;
+    padding: 15mm;
+    background: #fff;
+    color: #000;
+  }
+
+  /* REMOVE BUTTONS */
+  .receipt-overlay > div:last-child {
+    display: none !important;
   }
 
   .receipt-close {
-    display: none;
+    display: none !important;
   }
 
-  /* ✅ HIDE BUTTONS */
-  .receipt-overlay > div:last-child {
-    display: none;
+  /* FIX FLEX BREAK */
+  .receipt-header,
+  .receipt-top,
+  .receipt-footer {
+    display: flex !important;
+    justify-content: space-between;
+  }
+
+  /* TABLE FIX */
+  .receipt-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .receipt-table th,
+  .receipt-table td {
+    border: 1px solid #000;
+    padding: 10px;
   }
 }

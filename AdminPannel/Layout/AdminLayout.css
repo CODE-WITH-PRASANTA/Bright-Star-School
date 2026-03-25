@@ -130,13 +130,6 @@ align-items:center;
 justify-content:center;
 }
 
-/* hide text collapsed */
-
-.admin-sidebar.close .menu-link span:last-child,
-.admin-sidebar.close .menu-btn span:last-child{
-display:none;
-}
-
 /* center items in collapsed mode */
 
 .admin-sidebar.close .sidebar-menu .menu-link,

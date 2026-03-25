@@ -1,5 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./QualifiedTeachers.css";
+import API, { IMAGE_URL } from "../../api/axios";
 import {
   FaFacebookF,
   FaInstagram,
@@ -10,31 +11,53 @@ import principalImg from "../../assets/BrightPrincipal.webp";
 
 const QualifiedTeachers = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [teacherData, setTeacherData] = useState([]); // ✅ from backend
   const teachersRef = useRef(null);
+  const intervalRef = useRef(null);
 
-  const teacherData = [
-    {
-      name: "Anita Sharma",
-      role: "Senior Montessori Teacher",
-      img: "https://images.unsplash.com/photo-1544717305-2782549b5136",
-    },
-    {
-      name: "Riya Mehta",
-      role: "Creative Learning Teacher",
-      img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80",
-    },
-    {
-      name: "Neha Verma",
-      role: "Early Childhood Educator",
-      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
-    },
-    {
-      name: "Pooja Sinha",
-      role: "Activity & Learning Teacher",
-      img: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df",
-    },
-  ];
+  /* ================= FETCH TEACHERS ================= */
+  const fetchTeachers = async () => {
+    try {
+      const res = await API.get("/teachers");
 
+      // only active teachers
+      const data = (res.data.data || []).filter((t) => t.status === "Active");
+
+      setTeacherData(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTeachers();
+  }, []);
+
+  useEffect(() => {
+    if (!teacherData.length) return;
+
+    startAutoScroll();
+
+    return () => stopAutoScroll();
+  }, [teacherData, activeIndex]);
+
+  const startAutoScroll = () => {
+    stopAutoScroll(); // prevent multiple intervals
+
+    intervalRef.current = setInterval(() => {
+      const nextIndex =
+        activeIndex === teacherData.length - 1 ? 0 : activeIndex + 1;
+
+      scrollToTeacher(nextIndex);
+    }, 3000);
+  };
+
+  const stopAutoScroll = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+  /* ================= SCROLL ================= */
   const handleScroll = () => {
     if (!teachersRef.current) return;
 
@@ -96,12 +119,10 @@ const QualifiedTeachers = () => {
         </div>
 
         <div className="qt-layout">
+          {/* ===== PRINCIPAL (STATIC - NO CHANGE) ===== */}
           <div className="qt-principal-card">
             <div className="qt-principal-img">
-              <img
-                src={principalImg}
-                alt="Mrs. Banaja Khuntia - Bright Stars Montessori Principal"
-              />
+              <img src={principalImg} alt="Principal" />
             </div>
 
             <div className="qt-principal-content">
@@ -111,8 +132,7 @@ const QualifiedTeachers = () => {
 
               <p className="desc">
                 MA in English and Early Childhood Care Education and
-                Administration Course (ECC.ED and A) from Podar Institute of
-                Education, Mumbai.
+                Administration Course.
               </p>
 
               <div className="line"></div>
@@ -120,22 +140,23 @@ const QualifiedTeachers = () => {
               <p className="phone">+91 7016201096</p>
 
               <div className="socials">
-                <button aria-label="Facebook">
+                <button>
                   <FaFacebookF />
                 </button>
-                <button aria-label="Instagram">
+                <button>
                   <FaInstagram />
                 </button>
-                <button aria-label="Email">
+                <button>
                   <FaEnvelope />
                 </button>
-                <button aria-label="WhatsApp">
+                <button>
                   <FaWhatsapp />
                 </button>
               </div>
             </div>
           </div>
 
+          {/* ===== TEACHERS ===== */}
           <div className="qt-teachers-wrap">
             <div className="qt-teachers-head">
               <h3>Our Teaching Experts</h3>
@@ -146,20 +167,34 @@ const QualifiedTeachers = () => {
               className="qt-teachers"
               ref={teachersRef}
               onScroll={handleScroll}
+              onMouseEnter={stopAutoScroll}
+              onMouseLeave={startAutoScroll}
             >
               {teacherData.map((teacher, index) => (
-                <div className="teacher-card" key={index}>
+                <div className="teacher-card" key={teacher._id}>
                   <img
-                    src={`${teacher.img}?auto=format&fit=crop&w=900&q=80`}
-                    alt={`${teacher.name} - Teacher at Bright Stars Montessori`}
+                    src={
+                      teacher.image
+                        ? IMAGE_URL + teacher.image
+                        : "https://images.unsplash.com/photo-1544717305-2782549b5136"
+                    }
+                    alt={teacher.name}
                   />
 
                   <div className="teacher-overlay">
                     <div className="overlay-icons">
-                      <span><FaFacebookF /></span>
-                      <span><FaInstagram /></span>
-                      <span><FaEnvelope /></span>
-                      <span><FaWhatsapp /></span>
+                      <span>
+                        <FaFacebookF />
+                      </span>
+                      <span>
+                        <FaInstagram />
+                      </span>
+                      <span>
+                        <FaEnvelope />
+                      </span>
+                      <span>
+                        <FaWhatsapp />
+                      </span>
                     </div>
                   </div>
 
@@ -171,14 +206,16 @@ const QualifiedTeachers = () => {
               ))}
             </div>
 
+            {/* ===== PAGINATION ===== */}
             <div className="qt-pagination">
               {teacherData.map((_, index) => (
                 <button
                   key={index}
                   type="button"
-                  className={`qt-page-dot ${activeIndex === index ? "active" : ""}`}
+                  className={`qt-page-dot ${
+                    activeIndex === index ? "active" : ""
+                  }`}
                   onClick={() => scrollToTeacher(index)}
-                  aria-label={`Go to teacher ${index + 1}`}
                 />
               ))}
             </div>
