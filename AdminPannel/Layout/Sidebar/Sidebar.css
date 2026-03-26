@@ -73,7 +73,7 @@
 /* 🔥 UPDATED TITLE */
 .sidebar-brand-text h2 {
   margin: 0;
-  font-size: 28px;
+  font-size: 16px;
   font-weight: 800;
   color: #ffffff;
   letter-spacing: 0.5px;
@@ -83,7 +83,7 @@
 /* 🔥 UPDATED SUBTITLE */
 .sidebar-brand-text p {
   margin: 6px 0 0;
-  font-size: 15px;
+  font-size: 13px;
   color: #cbd5f5;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -166,6 +166,7 @@
   align-items: center;
   justify-content: center;
 }
+
 
 /* TEXT */
 .menu-text {
@@ -263,3 +264,4 @@
     font-size: 14px;
   }
 }
+
