@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Topbar.css";
 
 import { FiMenu, FiX } from "react-icons/fi";
@@ -10,21 +10,56 @@ import {
 } from "react-icons/fa";
 import { FaCalendarAlt } from "react-icons/fa";
 
-import img1 from "../../assets/Gal-11.webp";
-import img2 from "../../assets/Gal-22.webp";
-import img3 from "../../assets/Gal_33.webp";
-
-import news1 from "../../assets/Gal-44.webp";
-import news2 from "../../assets/Gal-55.webp";
-import news3 from "../../assets/Gal-66.webp";
-
+import API, { IMAGE_URL } from "../../api/axios";
 const Topbar = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [topbarSidebar, setTopbarSidebar] = useState(false);
   const [selectedImg, setSelectedImg] = useState(null);
+
+  const [gallery, setGallery] = useState([]);
+  const [news, setNews] = useState([]);
 
   const toggleTopbarSidebar = () => {
     setTopbarSidebar(!topbarSidebar);
   };
+
+  useEffect(() => {
+    if (gallery.length <= 3) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= gallery.length - 3 ? 0 : prev + 1));
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, [gallery]);
+
+  // ✅ FETCH GALLERY
+  const fetchGallery = async () => {
+    try {
+      const res = await API.get("/gallery");
+      setGallery(res.data.data || []);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // ✅ FETCH NEWS (LATEST 3)
+  const fetchNews = async () => {
+    try {
+      const res = await API.get("/news");
+
+      const latestNews = (res.data.data || []).slice(0, 3); // 🔥 latest 3
+
+      setNews(latestNews);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchGallery();
+    fetchNews();
+  }, []);
 
   return (
     <div className="topbar">
@@ -65,7 +100,7 @@ const Topbar = () => {
 
       {/* SIDEBAR */}
       <div className={`topbar-sidebar ${topbarSidebar ? "active" : ""}`}>
-        {/* Sidebar Header */}
+        {/* HEADER */}
         <div className="topbar-sidebarHeader">
           <h2>
             Best Montessori School in Bhubaneswar – Bright Stars Montessori
@@ -80,7 +115,6 @@ const Topbar = () => {
           {/* ADDRESS */}
           <div className="topbar-address">
             <FaMapMarkerAlt className="topbar-locationIcon" />
-
             <p>
               Plot No. 657/1094, Haridaspur <br />
               Naharakanata, Bhubaneswar <br />
@@ -88,18 +122,48 @@ const Topbar = () => {
             </p>
           </div>
 
-          {/* GALLERY */}
-          <div className="topbar-gallery">
-            <div className="topbar-galleryItem">
-              <img src={img1} alt="" onClick={() => setSelectedImg(img1)} />
+          <div className="topbar-gallery" style={{ position: "relative" }}>
+            {/* IMAGE ROW */}
+            <div style={{ display: "flex", gap: "8px" }}>
+              {gallery.slice(currentIndex, currentIndex + 3).map((img, i) => (
+                <div key={i} className="topbar-galleryItem">
+                  <img
+                    src={`${IMAGE_URL}${img.image}`}
+                    alt=""
+                    onClick={() => setSelectedImg(`${IMAGE_URL}${img.image}`)}
+                  />
+                </div>
+              ))}
             </div>
 
-            <div className="topbar-galleryItem">
-              <img src={img2} alt="" onClick={() => setSelectedImg(img2)} />
-            </div>
-
-            <div className="topbar-galleryItem">
-              <img src={img3} alt="" onClick={() => setSelectedImg(img3)} />
+            {/* 🔥 PAGINATION (BOTTOM OVERLAY) */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "-15px",
+                left: "38%",
+                transform: "translateX(-50%)",
+                display: "flex",
+                gap: "6px",
+                background: "rgba(0,0,0,0.4)",
+                padding: "4px 8px",
+                borderRadius: "20px",
+                // margin:"18px 0px"
+              }}
+            >
+              {gallery.map((_, i) => (
+                <span
+                  key={i}
+                  onClick={() => setCurrentIndex(i)}
+                  style={{
+                    width: "6px",
+                    height: "6px",
+                    borderRadius: "50%",
+                    cursor: "pointer",
+                    background: currentIndex === i ? "#3b82f6" : "#ddd",
+                  }}
+                />
+              ))}
             </div>
           </div>
 
@@ -110,15 +174,13 @@ const Topbar = () => {
                 className="closeBtn"
                 onClick={() => setSelectedImg(null)}
               />
-
               <img src={selectedImg} alt="" className="modalImg" />
             </div>
           )}
 
-          {/* CONTACT SECTION */}
+          {/* CONTACT */}
           <div className="topbar-contact">
             <h3>Get In Touch</h3>
-
             <div className="topbar-line"></div>
 
             <p>
@@ -132,7 +194,6 @@ const Topbar = () => {
               <div className="topbar-iconCircle">
                 <FaEnvelope />
               </div>
-
               <span>Email: brightstarsmontessori26@gmail.com</span>
             </div>
 
@@ -140,50 +201,29 @@ const Topbar = () => {
               <div className="topbar-iconCircle">
                 <FaPhoneAlt />
               </div>
-
               <span>Phone:7016201096</span>
             </div>
           </div>
 
-          {/* LATEST NEWS */}
+          {/* 🔥 LATEST NEWS (DYNAMIC) */}
           <div className="topbar-news">
             <h3>Latest News</h3>
 
-            <div className="topbar-newsItem">
-              <img src={news1} alt="news" />
+            {news.map((item, i) => (
+              <div key={i} className="topbar-newsItem">
+                <img src={`${IMAGE_URL}${item.image}`} alt="news" />
+                <div>
+                  <span className="topbar-newsDate">
+                    <FaCalendarAlt />{" "}
+                    {item.date
+                      ? new Date(item.date).toLocaleDateString("en-IN")
+                      : "No Date"}
+                  </span>
 
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 26 September 2023
-                </span>
-
-                <p>How to Keep Children Safe Online In</p>
+                  <p>{item.title}</p>
+                </div>
               </div>
-            </div>
-
-            <div className="topbar-newsItem">
-              <img src={news2} alt="news" />
-
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 09 August 2023
-                </span>
-
-                <p>Baby school and other secrets is yourfamily</p>
-              </div>
-            </div>
-
-            <div className="topbar-newsItem">
-              <img src={news3} alt="news" />
-
-              <div>
-                <span className="topbar-newsDate">
-                  <FaCalendarAlt /> 09 August 2023
-                </span>
-
-                <p>Easy steps for choosing to the learning</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
