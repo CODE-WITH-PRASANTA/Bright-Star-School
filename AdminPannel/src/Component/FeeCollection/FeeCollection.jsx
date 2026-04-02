@@ -473,7 +473,7 @@ const FeeCollection = () => {
       {showCollect && (
         <div className="FeeCollection-modal">
           <div className="FeeCollection-modalContent">
-            <FiX className="close" onClick={() => setShowCollect(false)} />
+            <FiX className="fee-close" onClick={() => setShowCollect(false)} />
 
             <h3>Collect Fees</h3>
 
