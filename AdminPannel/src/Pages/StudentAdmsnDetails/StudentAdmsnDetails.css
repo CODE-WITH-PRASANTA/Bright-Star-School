@@ -4,11 +4,12 @@
 
 .Student-Details-Wrapper{
   display:flex;
+  flex-direction: column;
   gap:24px;
   padding:24px;
   background:#f3f6fb;
   min-height:100vh;
-  align-items:flex-start;
+  align-items: center;
 }
 
 /* =========================
@@ -16,7 +17,7 @@
 ========================= */
 
 .Student-Search-Panel{
-  width:32%;
+  width:80%;
   background:#ffffff;
   padding:20px;
   border-radius:12px;
@@ -114,7 +115,7 @@
 ========================= */
 
 .Student-Details-Page{
-  width:68%;
+  width:80%;
   background:#ffffff;
   border-radius:12px;
   padding:24px;

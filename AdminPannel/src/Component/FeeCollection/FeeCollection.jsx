@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./FeeCollection.css";
 import API from "../../api/axios";
-import logo from "../../Assets/LOGOBRIGHTSTAR.png";
+import logo from "../../assets/logo.png";
 import {
   FiMoreVertical,
   FiSearch,
@@ -12,6 +12,8 @@ import {
 import ReceiptModal from "../../Component/ReceiptModal/ReceiptModal";
 
 const FeeCollection = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const [filterClass, setFilterClass] = useState("");
   const [filterMonth, setFilterMonth] = useState("");
   const [filterFromDate, setFilterFromDate] = useState("");
@@ -21,8 +23,6 @@ const FeeCollection = () => {
   const [note, setNote] = useState("");
   const [feeType, setFeeType] = useState("");
   const [status, setStatus] = useState("Paid");
-
-  const [feeTypes, setFeeTypes] = useState([]);
 
   const [discount, setDiscount] = useState(0);
 
@@ -47,19 +47,6 @@ const FeeCollection = () => {
   const rowsPerPage = 5;
   const indexLast = page * rowsPerPage;
   const indexFirst = indexLast - rowsPerPage;
-
-  useEffect(() => {
-    const fetchFeeTypes = async () => {
-      try {
-        const res = await API.get("/feetypes");
-        setFeeTypes(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchFeeTypes();
-  }, []);
 
   useEffect(() => {
     if (showCollect || showReceipt) {
@@ -254,6 +241,14 @@ const FeeCollection = () => {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    const handleClick = () => setShowDropdown(false);
+    window.addEventListener("click", handleClick);
+
+    return () => window.removeEventListener("click", handleClick);
+  }, []);
+
   return (
     <div className="FeeCollection">
       {/* HEADER */}
@@ -279,107 +274,68 @@ const FeeCollection = () => {
         <div className="FeeCollection-search">
           <FiSearch />
           <input
-            placeholder="Search name / admission / roll"
+            placeholder="Search..."
             value={tableSearch}
             onChange={(e) => setTableSearch(e.target.value)}
           />
         </div>
 
-        {/* FILTER BUTTON (UI SAME) */}
-        <div style={{ position: "relative" }}>
-          <button
-            className="FeeCollection-filterBtn"
-            onClick={(e) => {
-              e.stopPropagation();
-              setActiveMenu(activeMenu === "filter" ? null : "filter");
-            }}
-          >
-            Filter <FiChevronDown />
-          </button>
+        {/* CLASS DROPDOWN */}
+        <select
+          className="FeeCollection-select"
+          value={filterClass}
+          onChange={(e) => setFilterClass(e.target.value)}
+        >
+          <option value="">All Classes</option>
+          {[...new Set(fees.map((f) => f.class))].map((cls, i) => (
+            <option key={i} value={cls}>
+              {cls}
+            </option>
+          ))}
+        </select>
 
-          {/* ✅ FILTER DROPDOWN */}
-          {activeMenu === "filter" && (
-            <div
-              style={{
-                position: "absolute",
-                right: 0,
-                top: "40px",
-                background: "#fff",
-                padding: "15px",
-                borderRadius: "8px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
-                zIndex: 999,
-                minWidth: "250px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "10px",
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* CLASS FILTER */}
-              <select
-                value={filterClass}
-                onChange={(e) => setFilterClass(e.target.value)}
-              >
-                <option value="">All Classes</option>
-                {[...new Set(fees.map((f) => f.class))].map((cls, i) => (
-                  <option key={i} value={cls}>
-                    {cls}
-                  </option>
-                ))}
-              </select>
+        {/* MONTH DROPDOWN */}
+        <select
+          className="FeeCollection-select"
+          value={filterMonth}
+          onChange={(e) => setFilterMonth(e.target.value)}
+        >
+          <option value="">All Months</option>
+          {[...Array(12)].map((_, i) => (
+            <option key={i} value={i + 1}>
+              {new Date(0, i).toLocaleString("default", { month: "long" })}
+            </option>
+          ))}
+        </select>
 
-              {/* MONTH FILTER */}
-              <select
-                value={filterMonth}
-                onChange={(e) => setFilterMonth(e.target.value)}
-              >
-                <option value="">All Months</option>
-                {[...Array(12)].map((_, i) => (
-                  <option key={i} value={i + 1}>
-                    {new Date(0, i).toLocaleString("default", {
-                      month: "long",
-                    })}
-                  </option>
-                ))}
-              </select>
+        {/* DATE FROM */}
+        <input
+          type="date"
+          className="FeeCollection-date"
+          value={filterFromDate}
+          onChange={(e) => setFilterFromDate(e.target.value)}
+        />
 
-              {/* FROM DATE */}
-              <input
-                type="date"
-                value={filterFromDate}
-                onChange={(e) => setFilterFromDate(e.target.value)}
-              />
+        {/* DATE TO */}
+        <input
+          type="date"
+          className="FeeCollection-date"
+          value={filterToDate}
+          onChange={(e) => setFilterToDate(e.target.value)}
+        />
 
-              {/* TO DATE */}
-              <input
-                type="date"
-                value={filterToDate}
-                onChange={(e) => setFilterToDate(e.target.value)}
-              />
-
-              {/* RESET */}
-              <button
-                style={{
-                  padding: "6px",
-                  background: "#ef4444",
-                  color: "#fff",
-                  border: "none",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  setFilterClass("");
-                  setFilterMonth("");
-                  setFilterFromDate("");
-                  setFilterToDate("");
-                }}
-              >
-                Reset Filters
-              </button>
-            </div>
-          )}
-        </div>
+        {/* RESET */}
+        <button
+          className="FeeCollection-resetBtn"
+          onClick={() => {
+            setFilterClass("");
+            setFilterMonth("");
+            setFilterFromDate("");
+            setFilterToDate("");
+          }}
+        >
+          Reset
+        </button>
       </div>
 
       {/* TABLE */}
@@ -405,7 +361,6 @@ const FeeCollection = () => {
 
           <tbody>
             {currentRows.map((s, i) => {
-              console.log("Fee Row:", s);
               const amountValue = Number(s.amount || 0);
               const discountPercent =
                 s.discount !== undefined && s.discount !== null
@@ -468,7 +423,7 @@ const FeeCollection = () => {
                               setActiveMenu(null);
                             }}
                           >
-                            View Details
+                            View
                           </button>
 
                           <button
@@ -526,10 +481,13 @@ const FeeCollection = () => {
               <input
                 placeholder="Search Name / Roll No"
                 value={studentSearch}
-                onChange={(e) => setStudentSearch(e.target.value)}
+                onChange={(e) => {
+                  setStudentSearch(e.target.value);
+                  setShowDropdown(true); // ✅ show dropdown
+                }}
               />
 
-              {studentSearch && (
+              {showDropdown && studentSearch && (
                 <div className="FeeCollection-studentResults">
                   {filteredStudents.slice(0, 5).map((s) => (
                     <div
@@ -538,6 +496,7 @@ const FeeCollection = () => {
                       onClick={() => {
                         setSelectedStudent(s);
                         setStudentSearch(`${s.firstName} ${s.lastName}`);
+                        setShowDropdown(false); // ✅ HIDE DROPDOWN
                       }}
                     >
                       <strong>
@@ -610,12 +569,11 @@ const FeeCollection = () => {
                 onChange={(e) => setFeeType(e.target.value)}
               >
                 <option value="">Select Fee Type</option>
-
-                {feeTypes.map((f) => (
-                  <option key={f._id} value={f.name}>
-                    {f.name}
-                  </option>
-                ))}
+                <option value="Monthly Fee">Monthly Fee</option>
+                <option value="Admission Fee">Admission Fee</option>
+                <option value="Transport Fee">Transport Fee</option>
+                <option value="Exam Fee">Exam Fee</option>
+                <option value="Hostel Fee">Hostel Fee</option>
               </select>
 
               <select

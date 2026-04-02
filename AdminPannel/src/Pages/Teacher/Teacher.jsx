@@ -1,5 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./Teacher.css";
+import API, { IMAGE_URL } from "../../api/axios"; // ✅ use your api
 import {
   FaFacebookF,
   FaInstagram,
@@ -8,12 +9,10 @@ import {
   FaPhoneAlt,
   FaEdit,
   FaTrash,
+  FaChevronDown,
   FaPlus,
   FaTimes,
   FaImage,
-  FaChalkboardTeacher,
-  FaUserCheck,
-  FaEllipsisV,
 } from "react-icons/fa";
 
 const Teacher = () => {
@@ -30,55 +29,32 @@ const Teacher = () => {
 
   const [form, setForm] = useState(initialForm);
   const [previewImage, setPreviewImage] = useState("");
-  const [teachers, setTeachers] = useState([
-    {
-      id: 1,
-      image:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
-      name: "Mrs. Kavita Sharma",
-      role: "Principal & Academic Head",
-      description:
-        "She leads Bright Stars Montessori with a nurturing vision that helps every child grow with confidence, curiosity, discipline, and a lifelong love for learning.",
-      phone: "+91 7016201096",
-      status: "Active",
-      tag: "Lead Mentor",
-      order: 1,
-    },
-    {
-      id: 2,
-      image:
-        "https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80",
-      name: "Anita Sharma",
-      role: "Senior Montessori Teacher",
-      description:
-        "A caring mentor focused on joyful learning, creativity, and strong early childhood development.",
-      phone: "+91 9876543210",
-      status: "Active",
-      tag: "Teacher",
-      order: 2,
-    },
-  ]);
+  const [teachers, setTeachers] = useState([]);
+  const [imageFile, setImageFile] = useState(null);
 
   const [editId, setEditId] = useState(null);
   const [openMenu, setOpenMenu] = useState(null);
-  const menuRef = useRef(null);
+
+  /* ================= FETCH ================= */
+  const fetchTeachers = async () => {
+    try {
+      const res = await API.get("/teachers");
+      setTeachers(res.data.data || []);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setOpenMenu(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    fetchTeachers();
   }, []);
 
+  /* ================= PREVIEW ================= */
   const displayPreview = useMemo(
     () => ({
       image:
         previewImage ||
-        form.image ||
+        (form.image ? IMAGE_URL + form.image : "") ||
         "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
       name: form.name || "Mrs. Kavita Sharma",
       role: form.role || "Principal & Academic Head",
@@ -86,11 +62,12 @@ const Teacher = () => {
         form.description ||
         "She leads Bright Stars Montessori with a nurturing vision that helps every child grow with confidence, curiosity, discipline, and a lifelong love for learning.",
       phone: form.phone || "+91 7016201096",
-      status: form.status || "Active",
+      status: form.status,
     }),
     [form, previewImage]
   );
 
+  /* ================= CHANGE ================= */
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({
@@ -99,53 +76,54 @@ const Teacher = () => {
     }));
   };
 
+  /* ================= IMAGE ================= */
   const handleImage = (e) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const imageUrl = URL.createObjectURL(file);
-    setPreviewImage(imageUrl);
-    setForm((prev) => ({
-      ...prev,
-      image: imageUrl,
-    }));
+    setImageFile(file);
+    setPreviewImage(URL.createObjectURL(file));
   };
 
-  const handleSubmit = (e) => {
+  /* ================= SUBMIT ================= */
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      ...form,
-      id: editId || Date.now(),
-      tag: editId
-        ? teachers.find((item) => item.id === editId)?.tag || "Teacher"
-        : teachers.length === 0
-        ? "Lead Mentor"
-        : "Teacher",
-      order: editId
-        ? teachers.find((item) => item.id === editId)?.order || teachers.length + 1
-        : teachers.length + 1,
-    };
+    try {
+      const formData = new FormData();
 
-    if (editId) {
-      setTeachers((prev) =>
-        prev.map((item) => (item.id === editId ? payload : item))
-      );
-      setEditId(null);
-    } else {
-      setTeachers((prev) => [...prev, payload]);
+      formData.append("name", form.name);
+      formData.append("role", form.role);
+      formData.append("description", form.description);
+      formData.append("phone", form.phone);
+      formData.append("status", form.status);
+
+      if (imageFile) {
+        formData.append("image", imageFile);
+      }
+
+      if (editId) {
+        await API.put(`/teachers/${editId}`, formData);
+      } else {
+        await API.post("/teachers", formData);
+      }
+
+      fetchTeachers();
+      handleClear();
+    } catch (err) {
+      console.log(err);
     }
-
-    setForm(initialForm);
-    setPreviewImage("");
   };
 
+  /* ================= CLEAR ================= */
   const handleClear = () => {
     setForm(initialForm);
     setPreviewImage("");
+    setImageFile(null);
     setEditId(null);
   };
 
+  /* ================= EDIT ================= */
   const handleEdit = (teacher) => {
     setForm({
       image: teacher.image,
@@ -156,16 +134,22 @@ const Teacher = () => {
       status: teacher.status,
     });
 
-    setPreviewImage(teacher.image);
-    setEditId(teacher.id);
+    setPreviewImage(IMAGE_URL + teacher.image);
+    setEditId(teacher._id);
     setOpenMenu(null);
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleDelete = (id) => {
-    setTeachers((prev) => prev.filter((item) => item.id !== id));
-    if (editId === id) handleClear();
-    setOpenMenu(null);
+  /* ================= DELETE ================= */
+  const handleDelete = async (id) => {
+    try {
+      await API.delete(`/teachers/${id}`);
+      fetchTeachers();
+      setOpenMenu(null);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const sortedTeachers = [...teachers].sort(
@@ -174,310 +158,178 @@ const Teacher = () => {
 
   return (
     <section className={base}>
-      <div className={`${base}__shell`}>
-        <div className={`${base}__hero`}>
-          <div className={`${base}__heroContent`}>
-            <span className={`${base}__heroLabel`}>Admin Panel</span>
-            <h2>Teacher Post Management</h2>
-            <p>
-              Add teacher profiles, preview the design live, and manage all teacher
-              cards in one clean premium dashboard.
-            </p>
-          </div>
-
-          <div className={`${base}__heroStats`}>
-            <div className={`${base}__statCard`}>
-              <div className={`${base}__statIcon`}>
-                <FaChalkboardTeacher />
-              </div>
-              <div>
-                <h4>{teachers.length}</h4>
-                <span>Total Teachers</span>
-              </div>
-            </div>
-
-            <div className={`${base}__statCard`}>
-              <div className={`${base}__statIcon ${base}__statIcon--green`}>
-                <FaUserCheck />
-              </div>
-              <div>
-                <h4>{teachers.filter((item) => item.status === "Active").length}</h4>
-                <span>Active Teachers</span>
-              </div>
-            </div>
-          </div>
+      <div className={`${base}__header`}>
+        <div>
+          <p className={`${base}__eyebrow`}>Admin Panel</p>
+          <h2>Teacher Post Management</h2>
+          <p className={`${base}__subtext`}>
+            Add teacher profiles, preview the frontend design, and manage teacher
+            cards from one place.
+          </p>
         </div>
+      </div>
 
-        <div className={`${base}__topGrid`}>
-          <div className={`${base}__card ${base}__card--form`}>
-            <div className={`${base}__cardHeader`}>
-              <div>
-                <h3>{editId ? "Update Teacher Form" : "Add Teacher Form"}</h3>
-                <p>Fill the details and save the teacher profile.</p>
-              </div>
-            </div>
-
-            <form className={`${base}__form`} onSubmit={handleSubmit}>
-              <div className={`${base}__formGroup`}>
-                <label>Upload Teacher Image</label>
-                <label className={`${base}__uploadBox`}>
-                  <input type="file" accept="image/*" onChange={handleImage} />
-                  <div className={`${base}__uploadContent`}>
-                    <div className={`${base}__uploadIcon`}>
-                      <FaImage />
-                    </div>
-                    <h5>
-                      {previewImage || form.image ? "Change Image" : "Choose Image"}
-                    </h5>
-                    <span>Upload teacher profile image</span>
-                  </div>
-                </label>
-              </div>
-
-              <div className={`${base}__formGroup`}>
-                <label>Teacher Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="Enter teacher name"
-                />
-              </div>
-
-              <div className={`${base}__formGroup`}>
-                <label>Teacher Role / Designation</label>
-                <input
-                  type="text"
-                  name="role"
-                  value={form.role}
-                  onChange={handleChange}
-                  placeholder="Enter teacher role"
-                />
-              </div>
-
-              <div className={`${base}__formGroup`}>
-                <label>Short Description</label>
-                <textarea
-                  name="description"
-                  rows="5"
-                  value={form.description}
-                  onChange={handleChange}
-                  placeholder="Write short description"
-                />
-              </div>
-
-              <div className={`${base}__formRow`}>
-                <div className={`${base}__formGroup`}>
-                  <label>Phone Number</label>
-                  <input
-                    type="text"
-                    name="phone"
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="+91 9876543210"
-                  />
-                </div>
-
-                <div className={`${base}__formGroup`}>
-                  <label>Status</label>
-                  <select
-                    name="status"
-                    value={form.status}
-                    onChange={handleChange}
-                  >
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className={`${base}__buttonRow`}>
-                <button type="submit" className={`${base}__primaryBtn`}>
-                  <FaPlus />
-                  {editId ? "Update Teacher" : "Save Teacher"}
-                </button>
-
-                <button
-                  type="button"
-                  className={`${base}__secondaryBtn`}
-                  onClick={handleClear}
-                >
-                  <FaTimes />
-                  Clear Form
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <div className={`${base}__card ${base}__card--preview`}>
-            <div className={`${base}__cardHeader`}>
-              <div>
-                <h3>Live Preview Card</h3>
-                <p>Preview the teacher card before saving.</p>
-              </div>
-            </div>
-
-            <div className={`${base}__previewWrap`}>
-              <div className={`${base}__previewCard`}>
-                <div className={`${base}__previewImageWrap`}>
-                  <img
-                    src={displayPreview.image}
-                    alt={displayPreview.name}
-                    className={`${base}__previewImage`}
-                  />
-
-                  <button
-                    type="button"
-                    className={`${base}__previewStatus ${
-                      displayPreview.status === "Active"
-                        ? `${base}__previewStatus--active`
-                        : `${base}__previewStatus--inactive`
-                    }`}
-                  >
-                    <span className={`${base}__previewStatusDot`}></span>
-                    {displayPreview.status}
-                  </button>
-                </div>
-
-                <div className={`${base}__previewContent`}>
-                  <span className={`${base}__previewTag`}>Teacher Profile</span>
-                  <h4>{displayPreview.name}</h4>
-                  <h5>{displayPreview.role}</h5>
-                  <p>{displayPreview.description}</p>
-
-                  <div className={`${base}__line`}></div>
-
-                  <div className={`${base}__phone`}>
-                    <FaPhoneAlt />
-                    <span>{displayPreview.phone}</span>
-                  </div>
-
-                  <div className={`${base}__socials`}>
-                    <button type="button">
-                      <FaFacebookF />
-                    </button>
-                    <button type="button">
-                      <FaInstagram />
-                    </button>
-                    <button type="button">
-                      <FaEnvelope />
-                    </button>
-                    <button type="button">
-                      <FaWhatsapp />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className={`${base}__tableCard`}>
+      <div className={`${base}__topGrid`}>
+        <div className={`${base}__card`}>
           <div className={`${base}__cardHeader`}>
-            <div>
-              <h3>Teachers List Table</h3>
-              <p>Manage saved teacher profiles below.</p>
+            <h3>{editId ? "Update Teacher Form" : "Add Teacher Form"}</h3>
+            <p>Fill the details and save the teacher profile.</p>
+          </div>
+
+          <form className={`${base}__form`} onSubmit={handleSubmit}>
+            <div className={`${base}__formGroup`}>
+              <label>Upload Teacher Image</label>
+              <label className={`${base}__uploadBox`}>
+                <input type="file" accept="image/*" onChange={handleImage} />
+                <div className={`${base}__uploadContent`}>
+                  <FaImage />
+                  <span>
+                    {previewImage || form.image ? "Change Image" : "Choose Image"}
+                  </span>
+                </div>
+              </label>
+            </div>
+
+            <div className={`${base}__formGroup`}>
+              <label>Teacher Name</label>
+              <input
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Enter teacher name"
+              />
+            </div>
+
+            <div className={`${base}__formGroup`}>
+              <label>Teacher Role / Designation</label>
+              <input
+                type="text"
+                name="role"
+                value={form.role}
+                onChange={handleChange}
+                placeholder="Enter teacher role"
+              />
+            </div>
+
+            <div className={`${base}__formGroup`}>
+              <label>Short Description</label>
+              <textarea
+                name="description"
+                rows="5"
+                value={form.description}
+                onChange={handleChange}
+                placeholder="Write short description"
+              />
+            </div>
+
+            <div className={`${base}__formRow`}>
+              <div className={`${base}__formGroup`}>
+                <label>Phone Number</label>
+                <input
+                  type="text"
+                  name="phone"
+                  value={form.phone}
+                  onChange={handleChange}
+                  placeholder="+91 9876543210"
+                />
+              </div>
+
+              <div className={`${base}__formGroup`}>
+                <label>Status</label>
+                <select
+                  name="status"
+                  value={form.status}
+                  onChange={handleChange}
+                >
+                  <option value="Active">Active</option>
+                  <option value="Inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+
+            <div className={`${base}__buttonRow`}>
+              <button type="submit" className={`${base}__primaryBtn`}>
+                <FaPlus />
+                {editId ? "Update Teacher" : "Save Teacher"}
+              </button>
+
+              <button
+                type="button"
+                className={`${base}__secondaryBtn`}
+                onClick={handleClear}
+              >
+                <FaTimes />
+                Clear
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* PREVIEW SAME */}
+        <div className={`${base}__card`}>
+          <div className={`${base}__cardHeader`}>
+            <h3>Live Preview Card</h3>
+            <p>Preview the teacher card before saving.</p>
+          </div>
+
+          <div className={`${base}__previewCard`}>
+            <div className={`${base}__previewImageWrap`}>
+              <img
+                src={displayPreview.image}
+                alt={displayPreview.name}
+                className={`${base}__previewImage`}
+              />
+            </div>
+
+            <div className={`${base}__previewContent`}>
+              <span className={`${base}__tagBadge`}>Teacher</span>
+
+              <h4>{displayPreview.name}</h4>
+              <h5>{displayPreview.role}</h5>
+
+              <p>{displayPreview.description}</p>
+
+              <div className={`${base}__line`}></div>
+
+              <div className={`${base}__phone`}>
+                <FaPhoneAlt />
+                <span>{displayPreview.phone}</span>
+              </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className={`${base}__tableWrap`} ref={menuRef}>
-            <table className={`${base}__table`}>
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Teacher Name</th>
-                  <th>Role</th>
-                  <th>Phone</th>
-                  <th>Tag</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+      {/* TABLE SAME */}
+      <div className={`${base}__tableCard`}>
+        <div className={`${base}__tableWrap`}>
+          <table className={`${base}__table`}>
+            <tbody>
+              {sortedTeachers.map((teacher) => (
+                <tr key={teacher._id}>
+                  <td>
+                    <img
+                      src={IMAGE_URL + teacher.image}
+                      className={`${base}__tableImage`}
+                    />
+                  </td>
+                  <td>{teacher.name}</td>
+                  <td>{teacher.role}</td>
+                  <td>{teacher.phone}</td>
+
+                  <td>
+                    <button onClick={() => handleEdit(teacher)}>
+                      <FaEdit />
+                    </button>
+                    <button onClick={() => handleDelete(teacher._id)}>
+                      <FaTrash />
+                    </button>
+                  </td>
                 </tr>
-              </thead>
-
-              <tbody>
-                {sortedTeachers.length > 0 ? (
-                  sortedTeachers.map((teacher) => {
-                    const isOpen = openMenu === teacher.id;
-
-                    return (
-                      <tr
-                        key={teacher.id}
-                        className={isOpen ? `${base}__tableRow--open` : ""}
-                      >
-                        <td>
-                          <img
-                            src={teacher.image}
-                            alt={teacher.name}
-                            className={`${base}__tableImage`}
-                          />
-                        </td>
-                        <td className={`${base}__tableName`}>{teacher.name}</td>
-                        <td>{teacher.role}</td>
-                        <td>{teacher.phone}</td>
-                        <td>
-                          <span className={`${base}__tagMini`}>{teacher.tag}</span>
-                        </td>
-                        <td>
-                          <span
-                            className={`${base}__statusBadge ${
-                              teacher.status === "Active"
-                                ? `${base}__statusBadge--active`
-                                : `${base}__statusBadge--inactive`
-                            }`}
-                          >
-                            {teacher.status}
-                          </span>
-                        </td>
-                        <td className={`${base}__actionCell`}>
-                          <div
-                            className={`${base}__dropdown ${
-                              isOpen ? `${base}__dropdown--open` : ""
-                            }`}
-                          >
-                            <button
-                              type="button"
-                              className={`${base}__actionBtn`}
-                              onClick={() => setOpenMenu(isOpen ? null : teacher.id)}
-                            >
-                              <FaEllipsisV />
-                            </button>
-
-                            {isOpen && (
-                              <div className={`${base}__dropdownMenu`}>
-                                <button
-                                  type="button"
-                                  onClick={() => handleEdit(teacher)}
-                                >
-                                  <FaEdit />
-                                  Edit
-                                </button>
-
-                                <button
-                                  type="button"
-                                  onClick={() => handleDelete(teacher.id)}
-                                  className={`${base}__dropdownDelete`}
-                                >
-                                  <FaTrash />
-                                  Delete
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <tr>
-                    <td colSpan="7" className={`${base}__emptyRow`}>
-                      No teacher profiles added yet.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
