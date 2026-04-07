@@ -9,42 +9,46 @@ import musicImg from "../../assets/C-1.webp";
 
 const clubsLeft = [
   {
-    title: "Early Learning Club",
+    title: "Our Early Learning Club focuses on:",
     image: earlyImg,
     points: [
-      "Flexible early drop-off for working parents",
-      "Calm and guided morning activities",
-      "Helps children settle comfortably into their day",
+      "Providing flexible early drop-off for working parents",
+      "Creating a calm, safe, and supportive environment",
+      "Engaging children in guided and meaningful morning activities",
+      "Helping children settle comfortably and confidently into their day",
     ],
   },
   {
-    title: "Lunch & Care Club",
+    title: "🍽️ Lunch & Care Club",
     image: lunchImg,
     points: [
-      "Nutritious meals in a safe environment",
-      "Supervised care and rest time",
-      "Encourages healthy eating habits",
+      "Providing nutritious, hygienic, and balanced meals",
+      "Offering safe and supervised care during lunch hours",
+      "Ensuring rest and relaxation time for overall well-being",
+      "Encouraging healthy eating habits and social skills",
     ],
   },
 ];
 
 const clubsRight = [
   {
-    title: "Afternoon Activity Club",
+    title: "🎨 Afternoon Activity Club",
     image: afternoonImg,
     points: [
-      "Engaging after-school activities and games",
-      "Creative play in a safe and friendly setting",
-      "Supports social and emotional development",
+      "Providing engaging after-school activities and interactive games",
+      "Encouraging creative play and imagination",
+      "Creating a safe, friendly, and joyful environment",
+      "Supporting social, emotional, and communication development",
     ],
   },
   {
-    title: "Music & Creativity Club",
+    title: "🎵 Music & Creativity Club",
     image: musicImg,
     points: [
-      "Fun music and rhythm-based sessions",
-      "Introduction to basic instruments",
-      "Builds confidence and creative expression",
+      "Engaging children in fun music and rhythm-based activities",
+      "Introducing basic musical instruments and sound exploration",
+      "Encouraging creativity, imagination, and self-expression",
+      "Supporting cognitive, emotional, and sensory development",
     ],
   },
 ];
@@ -97,11 +101,11 @@ export default function ClubsSection() {
       {/* HEADER */}
       <div className="clubs-header reveal">
         <span className="clubs-badge">Our Programs</span>
-        <h2>Explore Our Learning Programs at Bright Stars Montessori</h2>
+        <h2>🌟 Explore Our Learning Programs at Bright Stars Montessori</h2>
         <p>
-          We offer thoughtfully designed programs that support early childhood
-          development, helping children learn, explore, and grow in a safe and
-          engaging environment.
+          At Bright Stars Montessori, we offer thoughtfully designed early childhood programs that nurture curiosity, creativity, and confidence in every child. Our curriculum is built on proven Montessori principles, helping children learn through hands-on activities, exploration, and interactive experiences.
+
+We provide a safe, engaging, and stimulating environment where young learners can develop essential life skills, strong academic foundations, and a lifelong love for learning. Each program is carefully structured to support holistic development — including cognitive, social, emotional, and physical growth.
         </p>
       </div>
 

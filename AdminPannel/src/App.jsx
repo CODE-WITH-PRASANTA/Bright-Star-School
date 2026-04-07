@@ -16,11 +16,25 @@ import ColdLead from "./Component/ColdLead/ColdLead";
 import Galleryposting from "./Component/Galleryposting/Galleryposting";
 import AdmissionTable from "./Component/AdmissionTable/AdmissionTable";
 import ColdLeadTable from "./Component/ColdLeadTable/ColdLeadTable";
+import Login from "./Pages/Login/Login";
+import Protected from "./Pages/Protected/Protected";
 
 function App() {
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <Routes>
+         <Route path="/login" element={<Login/>}/>
+         <Route
+          element={
+            <Protected>
+              
+              <AdminLayout />
+              </Protected>
+            
+          }
+        >
+
+        </Route>
         {/* Only Layout Route */}
 
         <Route element={<AdminLayout />}>
@@ -42,6 +56,7 @@ function App() {
           <Route path="/admin/Admission-Table" element={<AdmissionTable />} />
           <Route path="/admin/cold-lead" element={<ColdLead />} />
           <Route path="/admin/cold-lead-table" element={<ColdLeadTable />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>
