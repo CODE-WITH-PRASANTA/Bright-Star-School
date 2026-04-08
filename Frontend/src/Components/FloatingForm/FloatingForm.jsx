@@ -87,7 +87,7 @@ const Floatingform = () => {
         </button>
 
         <h2 className="Floatingform-title">
-          Bright star school
+          Bright stars school
         </h2>
 
         <p className="Floatingform-subtitle">Admission & Enquiry Form</p>

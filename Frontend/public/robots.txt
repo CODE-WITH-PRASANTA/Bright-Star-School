@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://brightstarsmontessori.school/sitemap.xml

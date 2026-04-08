@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./ProFilePicture.css";   // ✅ IMPORT CSS HERE
+import "./ProFilepicture.css";   
 
 const ProFilePicture = () => {
   const [profile, setProfile] = useState({
