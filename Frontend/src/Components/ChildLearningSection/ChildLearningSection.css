@@ -2,14 +2,13 @@
   width: 100%;
   padding: 120px 0;
   background: linear-gradient(180deg, #ffffff, #f6f7fb);
-  font-family: 'Baloo 2', cursive;
+  font-family: 'Baloo 2', cursive, sans-serif;
   overflow: hidden;
   position: relative;
 }
 
 /* BACKGROUND DECORATION */
-.ChildLearningSection::before {
-  content: "";
+.ChildLearningSection-bg {
   position: absolute;
   width: 500px;
   height: 500px;
@@ -18,19 +17,18 @@
   right: -150px;
   opacity: 0.5;
   z-index: 0;
+  pointer-events: none;
 }
 
 /* ================================
-HEADING
+   HEADING
 ================================ */
-
 .ChildLearningSection-heading {
   width: 90%;
   max-width: 1200px;
   margin: 0 auto 40px auto;
   position: relative;
   z-index: 2;
-
   opacity: 0;
   animation: fadeUp 0.8s ease forwards;
 }
@@ -41,6 +39,7 @@ HEADING
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
 .ChildLearningSection-title {
@@ -52,9 +51,8 @@ HEADING
 }
 
 /* ================================
-CONTAINER
+   CONTAINER
 ================================ */
-
 .ChildLearningSection-container {
   width: 90%;
   max-width: 1200px;
@@ -67,17 +65,27 @@ CONTAINER
 }
 
 /* ================================
-IMAGE
+   IMAGE (SQUARE FORMAT)
 ================================ */
-
 .ChildLearningSection-imageWrapper {
   flex: 1;
   position: relative;
+  width: 100%;
   max-width: 520px;
-
+  aspect-ratio: 1 / 1; /* Forces the perfect square */
+  margin: 0 auto; 
   opacity: 0;
   animation: fadeLeft 1s ease forwards;
   animation-delay: 0.3s;
+}
+
+.ChildLearningSection-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px; /* Smooth square corners */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1); /* Adds depth to the square */
+  animation: floatImage 6s ease-in-out infinite;
 }
 
 @keyframes floatImage {
@@ -86,34 +94,13 @@ IMAGE
   100% { transform: translateY(0); }
 }
 
-.ChildLearningSection-image {
-  width: 100%;
-  object-fit: cover;
-  animation: floatImage 6s ease-in-out infinite;
-
-  clip-path: polygon(
-    50% 0%,
-    75% 10%,
-    95% 30%,
-    100% 55%,
-    90% 80%,
-    65% 100%,
-    35% 100%,
-    10% 85%,
-    0% 60%,
-    5% 30%,
-    25% 10%
-  );
-}
-
 /* ================================
-BADGE
+   BADGE
 ================================ */
-
 .ChildLearningSection-badge {
   position: absolute;
-  top: 30px;
-  left: -40px;
+  top: -20px;
+  left: -20px;
   background: linear-gradient(135deg, #ff2d55, #8e2de2);
   width: 130px;
   height: 130px;
@@ -125,33 +112,32 @@ BADGE
   color: white;
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  z-index: 2;
-
+  box-shadow: 0 15px 30px rgba(255, 45, 85, 0.4);
+  z-index: 5;
   animation: pulseBadge 3s infinite;
 }
 
 @keyframes pulseBadge {
   0% { transform: scale(1); }
-  50% { transform: scale(1.08); }
+  50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
 .ChildLearningSection-badge span {
   font-size: 34px;
+  line-height: 1.1;
 }
 
 .ChildLearningSection-badge p {
   font-size: 14px;
+  margin: 0;
 }
 
 /* ================================
-CONTENT
+   CONTENT
 ================================ */
-
 .ChildLearningSection-content {
   flex: 1.2;
-
   opacity: 0;
   animation: fadeRight 1s ease forwards;
   animation-delay: 0.5s;
@@ -161,14 +147,13 @@ CONTENT
   color: #666;
   line-height: 1.8;
   margin-bottom: 30px;
-  max-width: 520px;
+  max-width: 550px;
   font-size: 16px;
 }
 
 /* ================================
-FEATURE CARDS
+   FEATURE CARDS
 ================================ */
-
 .ChildLearningSection-features {
   display: flex;
   gap: 30px;
@@ -180,7 +165,6 @@ FEATURE CARDS
   border-radius: 18px;
   background: white;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-
   opacity: 0;
   transform: translateY(30px);
   animation: cardReveal 0.8s ease forwards;
@@ -189,11 +173,10 @@ FEATURE CARDS
 
 .ChildLearningSection-featureCard:hover {
   transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.1);
 }
 
 /* ICON */
-
 .ChildLearningSection-icon {
   width: 70px;
   height: 70px;
@@ -206,67 +189,71 @@ FEATURE CARDS
   transition: 0.4s;
 }
 
-/* UNIQUE COLORS */
-.ChildLearningSection-featureCard:nth-child(1) .ChildLearningSection-icon {
-  background: #ffe5ea; color: #ff2d55;
+/* DYNAMIC ICON COLORS BASED ON ORDER */
+.ChildLearningSection-featureCard:nth-child(odd) .ChildLearningSection-icon {
+  background: #ffe5ea; 
+  color: #ff2d55;
 }
-.ChildLearningSection-featureCard:nth-child(2) .ChildLearningSection-icon {
-  background: #e6f0ff; color: #2979ff;
+
+.ChildLearningSection-featureCard:nth-child(even) .ChildLearningSection-icon {
+  background: #e6f0ff; 
+  color: #2979ff;
 }
 
 .ChildLearningSection-featureCard:hover .ChildLearningSection-icon {
   transform: scale(1.15) rotate(6deg);
 }
 
-/* TEXT */
-
 .ChildLearningSection-featureCard h3 {
   font-size: 20px;
   margin-bottom: 10px;
+  color: #333;
 }
 
 .ChildLearningSection-featureCard p {
   color: #666;
-  line-height: 1.7;
+  line-height: 1.6;
+  font-size: 15px;
 }
 
 /* ================================
-PAGINATION
+   PAGINATION
 ================================ */
-
 .ChildLearningSection-pagination {
-  margin-top: 25px;
+  margin-top: 35px;
   display: flex;
   gap: 12px;
   justify-content: flex-start;
 }
 
 .page-btn {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   border: none;
-  background: #eee;
+  background: #eef2f6;
+  color: #555;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 16px;
   transition: 0.3s;
 }
 
 .page-btn.active {
   background: linear-gradient(135deg, #ff2d55, #ff6a88);
   color: #fff;
+  box-shadow: 0 5px 15px rgba(255, 45, 85, 0.3);
 }
 
-.page-btn:hover {
+.page-btn:hover:not(.active) {
   background: #ff2d55;
   color: #fff;
   transform: translateY(-2px);
 }
 
 /* ================================
-ANIMATIONS
+   ANIMATIONS
 ================================ */
-
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
@@ -287,47 +274,82 @@ ANIMATIONS
 }
 
 /* ================================
-RESPONSIVE
+   RESPONSIVE DESIGN
 ================================ */
-
 @media (max-width: 992px) {
+  .ChildLearningSection {
+    padding: 80px 0;
+  }
+
   .ChildLearningSection-container {
     flex-direction: column;
     text-align: center;
+    gap: 50px;
   }
 
-  .ChildLearningSection-features {
-    flex-direction: column;
+  .ChildLearningSection-heading {
+    text-align: center;
+  }
+
+  .ChildLearningSection-title {
+    margin: 0 auto;
+  }
+
+  .ChildLearningSection-description {
+    margin: 0 auto 30px auto;
+  }
+
+  .ChildLearningSection-badge {
+    top: -15px;
+    left: -15px;
   }
 
   .ChildLearningSection-pagination {
     justify-content: center;
   }
 
-  .ChildLearningSection-badge {
-    left: 0;
+  .ChildLearningSection-features {
+    text-align: left; /* Keep cards readable */
   }
 }
 
 @media (max-width: 768px) {
+  .ChildLearningSection-features {
+    flex-direction: column;
+  }
+
   .ChildLearningSection-title {
-    font-size: 30px;
+    font-size: 34px;
   }
 }
 
 @media (max-width: 480px) {
+  .ChildLearningSection {
+    padding: 60px 0;
+  }
+
   .ChildLearningSection-title {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .ChildLearningSection-icon {
-    width: 55px;
-    height: 55px;
-    font-size: 22px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
 
   .ChildLearningSection-badge {
-    width: 85px;
-    height: 85px;
+    width: 90px;
+    height: 90px;
+    top: -10px;
+    left: -10px;
+  }
+
+  .ChildLearningSection-badge span {
+    font-size: 24px;
+  }
+
+  .ChildLearningSection-badge p {
+    font-size: 11px;
   }
 }

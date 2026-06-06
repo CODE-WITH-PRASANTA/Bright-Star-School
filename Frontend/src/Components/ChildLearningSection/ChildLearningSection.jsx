@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ChildLearningSection.css";
 
-import mainImg from "../../assets/emoji-2.webp";
+import mainImg from "../../assets/bsm-2.jpeg";
 
 // ICONS
 import {
@@ -77,13 +77,14 @@ const ChildLearningSection = () => {
 
   return (
     <section className="ChildLearningSection">
+      {/* BACKGROUND DECORATION */}
+      <div className="ChildLearningSection-bg"></div>
 
       {/* HEADING */}
       <div className="ChildLearningSection-heading">
         <p className="ChildLearningSection-topText">
           BEST SCHOOL IN BHUBANESWAR
         </p>
-
         <h2 className="ChildLearningSection-title">
           Bright Stars Montessori – A Trusted Learning Space for Young Minds
         </h2>
@@ -91,14 +92,13 @@ const ChildLearningSection = () => {
 
       {/* MAIN */}
       <div className="ChildLearningSection-container">
-
+        
         {/* IMAGE */}
         <div className="ChildLearningSection-imageWrapper">
           <div className="ChildLearningSection-badge">
             <span>100%</span>
             <p>Parent Trust</p>
           </div>
-
           <img
             src={mainImg}
             alt="Best Montessori school in Bhubaneswar"
@@ -108,7 +108,6 @@ const ChildLearningSection = () => {
 
         {/* CONTENT */}
         <div className="ChildLearningSection-content">
-
           <p className="ChildLearningSection-description">
             Bright Stars Montessori is recognized as one of the best schools in Bhubaneswar,
             offering a nurturing environment where children learn, grow, and build strong
@@ -122,7 +121,6 @@ const ChildLearningSection = () => {
                 <div className="ChildLearningSection-icon">
                   {item.icon}
                 </div>
-
                 <h3>{item.title}</h3>
                 <p>{item.desc}</p>
               </div>
@@ -141,11 +139,8 @@ const ChildLearningSection = () => {
               </button>
             ))}
           </div>
-
         </div>
-
       </div>
-
     </section>
   );
 };

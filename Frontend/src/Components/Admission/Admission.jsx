@@ -3,8 +3,8 @@ import "./Admission.css";
 import { FaCheckCircle } from "react-icons/fa";
 import { FiCalendar } from "react-icons/fi";
 
-import child1 from "../../assets/child-1.webp";
-import child2 from "../../assets/Child-2.webp";
+import child1 from "../../assets/bsm-4.jpeg";
+import child2 from "../../assets/bsm-2.jpeg";
 
 const Admission = () => {
 

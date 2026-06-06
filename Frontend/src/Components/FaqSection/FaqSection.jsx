@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./FaqSection.css";
-import faqImage from "../../assets/image-72.webp";
+import faqImage from "../../assets/bsm-1.jpeg";
 
 const faqData = [
   {
