@@ -4,63 +4,62 @@ import "./FloatingButtons.css";
 import { FaWhatsapp, FaPhoneAlt, FaArrowUp } from "react-icons/fa";
 
 const FloatingButtons = () => {
-
   const [showTop, setShowTop] = useState(false);
 
-  useEffect(() => {
+  // Your phone number
+  const phoneNumber = "917683941196";
 
+  useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setShowTop(true);
-      } else {
-        setShowTop(false);
-      }
+      setShowTop(window.scrollY > 300);
     };
 
     window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("scroll", handleScroll);
-
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
   return (
     <div className="FloatingButtons">
-
       {/* CALL BUTTON */}
       <a
-        href="tel:+917016201096"
+        href={`tel:+${phoneNumber}`}
         className="FloatingButtons-call"
+        aria-label="Call Us"
       >
         <FaPhoneAlt />
       </a>
 
       {/* WHATSAPP BUTTON */}
       <a
-        href="https://wa.me/917016201096"
+        href={`https://wa.me/${phoneNumber}`}
         target="_blank"
         rel="noopener noreferrer"
         className="FloatingButtons-whatsapp"
+        aria-label="WhatsApp Us"
       >
         <FaWhatsapp />
       </a>
 
-      {/* SCROLL TO TOP */}
+      {/* SCROLL TO TOP BUTTON */}
       {showTop && (
         <button
           className="FloatingButtons-top"
           onClick={scrollToTop}
+          aria-label="Scroll to Top"
         >
           <FaArrowUp />
         </button>
       )}
-
     </div>
   );
 };

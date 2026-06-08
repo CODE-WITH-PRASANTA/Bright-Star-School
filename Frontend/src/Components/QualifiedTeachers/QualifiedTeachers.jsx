@@ -137,7 +137,7 @@ const QualifiedTeachers = () => {
 
               <div className="line"></div>
 
-              <p className="phone">+91 7016201096</p>
+              <p className="phone">+91 76839 41196</p>
 
               <div className="socials">
                 <button>

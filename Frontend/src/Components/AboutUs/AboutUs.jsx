@@ -118,7 +118,7 @@ const AboutUs = () => {
 
 
             <a
-              href="tel:7016201096"
+              href="tel:+91 76839 41196"
               className="aboutus-call"
             >
 
@@ -128,7 +128,7 @@ const AboutUs = () => {
 
               <div>
                 <span>Call Now </span>
-                <strong>7016201096</strong>
+                <strong>+91 76839 41196</strong>
               </div>
 
             </a>

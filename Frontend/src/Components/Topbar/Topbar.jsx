@@ -73,17 +73,17 @@ const Topbar = () => {
 
           <div className="topbar-item">
             <FaPhoneAlt />
-            <span>7016201096</span>
+            <span>+91 76839 41196</span>
           </div>
         </div>
 
         <div className="topbar-right">
           <button
             className="topbar-contactBtn"
-            onClick={() => (window.location.href = "tel:7016201096")}
+            onClick={() => (window.location.href = "tel:+91 76839 41196")}
           >
             <FaPhoneAlt />
-            +91 7016201096
+            +91 76839 41196
           </button>
 
           <div className="topbar-menuIcon" onClick={toggleTopbarSidebar}>

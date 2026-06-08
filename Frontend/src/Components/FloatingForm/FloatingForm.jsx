@@ -138,7 +138,7 @@ const Floatingform = () => {
         <div className="Floatingform-actions">
           <button
             className="Floatingform-call"
-            onClick={() => (window.location.href = "tel:9876543210")}
+            onClick={() => (window.location.href = "tel:917683941196")}
           >
             <FaPhoneAlt /> Call Us
           </button>
@@ -147,7 +147,7 @@ const Floatingform = () => {
             className="Floatingform-whatsapp"
             onClick={() =>
               window.open(
-                `https://wa.me/919876543210?text=Hello, I want admission details`,
+                `https://wa.me/91768394?text=Hello, I want admission details`,
                 "_blank"
               )
             }

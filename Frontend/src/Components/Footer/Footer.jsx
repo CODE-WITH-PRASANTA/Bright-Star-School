@@ -56,7 +56,7 @@ const Footer = () => {
 
           <p className="footer-phone">
             <FaPhoneAlt className="footer-icon" />
-            <span>7016201096</span>
+            <span>+91 76839 41196</span>
           </p>
         </div>
 
@@ -76,7 +76,7 @@ const Footer = () => {
 
           <p className="footer-phone">
             <FaPhoneAlt className="footer-icon" />
-            <span>7016201096</span>
+            <span>+91 76839 41196</span>
           </p>
         </div>
       </div>
