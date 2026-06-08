@@ -5,8 +5,7 @@ import "./AboutUs.css";
 import MissionIcon from "../../assets/Mission-icon.svg";
 import VisionIcon from "../../assets/Vision-icon.svg";
 import authorimg from "../../assets/BrightPrincipal.webp";
-import Bordershape from "../../assets/border-shape.png";
-import lefthomeAboutimg from "../../assets/Home-About.webp";
+import lefthomeAboutimg from "../../assets/bsm-1.jpeg";
 import frame from "../../assets/frame.png";
 import lineshape from "../../assets/line-shape.png";
 
@@ -21,7 +20,7 @@ const AboutUs = () => {
         {/* LEFT */}
         <div className="aboutus-left">
 
-          <img src={Bordershape} alt="" className="aboutus-border" />
+          
 
           <div className="aboutus-imageWrap">
             <img

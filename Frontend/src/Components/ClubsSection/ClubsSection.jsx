@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./ClubsSection.css";
 
-import mainImg from "../../assets/Main-img.webp";
+import mainImg from "../../assets/bsm-3.jpeg";
 import earlyImg from "../../assets/C-3.webp";
 import lunchImg from "../../assets/C-4.webp";
 import afternoonImg from "../../assets/C-2.webp";
